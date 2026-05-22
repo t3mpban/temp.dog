@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/png" href="../../images/favicon.png">
+	<title>t3mp's portfolio (WebGL)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+	<style>
+		.poppins-medium {
+		font-family: "Poppins", sans-serif;
+		font-weight: 500;
+		font-style: normal;
+		}
+
+		.poppins-semibold {
+		font-family: "Poppins", sans-serif;
+		font-weight: 600;
+		font-style: normal;
+		}
+        
+		body, html {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			font-family: sans-serif;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: #111;
+			color: white;
+            font-family: "Poppins";
+		}
+		#mobile-warning {
+			text-align: center;
+			padding: 20px;
+		}
+		iframe {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
+
+        h1 {
+            filter: drop-shadow(0 0 5px #ffffff60);
+        }
+	</style>
+</head>
+<body>
+	<div id="mobile-warning" style="display: none;">
+		<h1>Unsupported on Mobile</h1>
+		<p>Sorry, this portfolio is not supported on mobile devices. Please view it on a desktop.</p>
+	</div>
+
+	<iframe id="portfolio-frame" src="https://t3mp.netlify.app" style="display: none;"></iframe>
+
+	<script>
+		const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+		if (isMobile) {
+			document.getElementById("mobile-warning").style.display = "block";
+		} else {
+			document.getElementById("portfolio-frame").style.display = "block";
+		}
+	</script>
+</body>
+</html>

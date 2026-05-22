@@ -1,0 +1,348 @@
+@font-face {
+  font-family: temp;
+  src: url(../font/t3mp.ttf);
+}
+
+#div4  {
+  resize: vertical;
+}
+
+#indeximg {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+body {
+  background-color: #ffd7b4;
+  background-size: cover;
+  background-attachment: fixed;
+  transition: background 1s ease;
+  text-align: center;
+  margin: 0;
+  overflow: hidden;
+}
+
+#index{
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  height:30px;
+  width:100%;
+  padding-bottom: .2%;
+}
+
+#div2 {
+  transform: translateY(10%);
+}
+
+body::after {
+  content: "";
+  background-image: url('../images/bg.png');
+  opacity: 0.2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  pointer-events: none;
+  z-index: -1;
+}
+
+a {
+  color: #005b91; /* Set the link color to white */
+  text-decoration: none; /* Remove the default underline style for links */
+}
+
+a:hover {
+  text-decoration: underline; /* Add underline on hover (optional) */
+}
+
+#showContentButton {
+  cursor: pointer;
+}
+
+p2 {
+  text-align: center;
+  position: absolute;
+  top: 95%;
+  left: 50%;
+  font-family: 'temp';
+  font-size: 20px;
+  color: #432656;
+}
+
+.additional-text {
+  transform: translateY(-30px);
+}
+
+p {
+  font-size: 20px;
+  color: #018bd4;
+  text-shadow: -2px 2px #89d6ff;
+}
+
+p1, p3 {
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%);
+  font-family: 'temp';
+  font-size: 20px;
+  color: #be1cfd;
+}
+
+p3 {
+  color: white;
+}
+
+p4 {
+  position: absolute;
+  top: 9.5%;
+  color: #1c1a1b;
+  text-shadow: -2px 2px rgba(112, 42, 42, 0.6);
+  transform: translateX(-50%);
+  font-family: 'temp';
+  font-size: 38px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+p5 {
+  text-align: center;
+  transform: translateX(-50%);
+  font-family: 'temp';
+  font-size: 24px;
+  color: #be1cfd;
+}
+
+
+p6 {
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%);
+  font-family: 'temp';
+  font-size: 20px;
+  color: #be1cfd;
+}
+
+.parallax-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#404 {
+  transform: translateY(100%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
+  justify-content: center;
+}
+
+#pmet {
+  transform: translateY(-200%) !important;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#div1 {
+  position: absolute;
+  transform: translate(-3500%, -1375%);
+}
+
+.social-container {
+  text-align: center;
+}
+
+.social-container button {
+  padding: 20px 10px;
+  cursor: pointer;
+}
+
+#divContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  width: 1200px;
+  height: 480px;
+  position: fixed;
+  transform: translate(-50%, -50%);
+}
+
+.nav-button {
+  display: flex;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.nav-button:hover {
+  filter: brightness(1.2); /* Adjust the brightness on hover */
+  transform: scale(1.1); /* Scale up slightly on hover */
+}
+
+.content-container {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#animation-container {
+  width: 1200px;
+  height: 480px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-size: 90%;
+  transform: translate(-50%, -50%);
+}
+
+#parallax {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  position: absolute;
+}
+
+.textarea {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  width: 840px;
+  height: 320px;
+  padding: 12px;
+  box-sizing: border-box;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+  font-family: 'temp', sans-serif;
+  font-size: 24px;
+  color: #1c1a1b;
+  white-space: pre-line;
+  text-align: left;
+  text-shadow: -2px 2px rgba(112, 42, 42, 0.6);
+  border: none;
+  z-index: 1;
+  outline: none; 
+  resize: none;
+  overflow: scroll; /* Enable scrolling with mouse wheel */
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
+}
+
+textarea::-webkit-scrollbar {
+  width: 0; /* Hide scrollbar for Webkit browsers (Chrome, Safari) */
+}
+
+textarea[readonly]::placeholder {
+  color: #be1cfd;
+}
+
+#div2 {
+  transform: translate(0%, 25%);
+}
+
+#animation-container2 {
+  background-size: cover;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-46%, -50%);
+}
+
+#animation-container3 {
+  animation: frameAnimation3 .75s linear infinite;
+  width: 50px;
+  height: 50px;
+  background-size: cover;
+  position: absolute;  
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#aboutme {
+  width: 1200px;
+  height: 480px;
+  background-size: cover;
+  position: absolute;  
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  z-index: 0;
+}
+
+.div-content-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#div5 {
+  transform: translateY(12%);
+}
+
+.grey {
+  color: #d9d9d9;
+  text-shadow: -2px 2px hsla(0, 0%, 38%, 0.6);
+  transform: translate(0%, -200%);
+}
+
+.div-content {
+    opacity: 0;
+    border: 0px solid #ccc;
+    padding: 10px;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    font-family: 'temp';
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* Disable interactions for hidden divs */
+  }
+  
+.div-content.active {
+    opacity: 1;
+    pointer-events: auto; /* Enable interactions for active divs */
+  }
+  
+button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1;
+  }
+  
+button:hover {
+    transform: scale(1.1);
+  }
+
+button:hover {
+  transform: scale(1.1);
+}

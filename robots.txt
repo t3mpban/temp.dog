@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /script.js
+Disallow: /style.css
+Disallow: /favicon.png
+
+# Allow Googlebot to crawl everything
+User-agent: Googlebot
+Allow: /
+
+# Reference to XML Sitemap
+Sitemap: http://www.t3mp.co.uk/sitemap.xml

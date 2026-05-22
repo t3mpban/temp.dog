@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+body 
+    {
+        padding: 0;
+        margin:0;
+        background: #2C2F33;
+    }
+
+h1 
+    {
+        font-size: 4em;
+        background-image: 
+        linear-gradient(to right, rgb(255, 65, 65), rgb(255, 96, 64), rgb(255, 128, 64), rgb(255, 160, 64), rgb(255, 191, 64), rgb(255, 223, 64), rgb(255, 255, 64), rgb(223, 255, 64), rgb(191, 255, 64), rgb(160, 255, 64), rgb(128, 255, 64), rgb(96, 255, 64), rgb(64, 255, 64), rgb(64, 255, 96), rgb(64, 255, 128), rgb(64, 255, 160), rgb(64, 255, 191), rgb(64, 255, 223), rgb(64, 255, 255), rgb(64, 223, 255), rgb(64, 191, 255), rgb(64, 160, 255), rgb(64, 128, 255), rgb(64, 96, 255), rgb(64, 64, 255), rgb(96, 64, 255), rgb(128, 64, 255), rgb(159, 64, 255), rgb(191, 64, 255), rgb(223, 64, 255), rgb(255, 64, 255), rgb(255, 64, 223), rgb(255, 64, 191), rgb(255, 64, 160), rgb(255, 64, 128), rgb(255, 64, 96), rgb(255, 64, 64));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;  
+        animation: move 35s linear infinite;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-background-size: 500%;
+        background-size: 500%;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        font-family: 'Poppins';
+        font-weight: 600;    
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+    }
+
+.shadow 
+    { 
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+@keyframes move 
+    { to {
+		background-position: 250vh;
+	}    }
+
+p
+    {
+        font-size: 0.6em;
+        color: #FFFFFF;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        font-family: 'Poppins' ;
+        font-weight: 300;    
+        position: absolute;
+        top: 95%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+    }   
+    
+.social
+    {
+        font-size: 0.8em;
+        color: #FFFFFF;
+        text-decoration: none;
+        background-size: 500%;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        font-family: 'Poppins';
+        font-weight: 600;    
+        position: absolute;
+        top: 57.5%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+    }
+
+a:hover, a:active 
+    {
+        font-size: 150%;
+    }

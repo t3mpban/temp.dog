@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/png" href="../images/favicon.png">
+    <title>t3mp's portfolio</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+		.poppins-medium {
+		font-family: "Poppins", sans-serif;
+		font-weight: 500;
+		font-style: normal;
+		}
+
+		.poppins-semibold {
+		font-family: "Poppins", sans-serif;
+		font-weight: 600;
+		font-style: normal;
+		}
+
+		body::after {
+		content: "";
+		background-image: url('../images/bg.png');
+		opacity: 0.2;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		pointer-events: none;
+		z-index: -1;
+		}
+		body {
+			background-color: #151515;
+			color: #fff;
+			text-shadow: -2px 2px rgba(28, 27, 26, 0.3);
+			background-size: cover;
+			background-attachment: fixed;
+			transition: background 1s ease;
+			text-align: center;
+			margin: 0;
+			overflow: auto;
+			font: 16px "Poppins";
+			}
+        .container {
+            max-width: 800px;
+			margin: 0;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			display: flex;
+			flex-direction: row;
+        }
+        h1 {
+            color: #ffffff;
+			filter: drop-shadow(0 0 5px #ffffff60);
+			font-size: 28px;
+        }
+		a {
+			color: #e1ca98;
+			text-decoration: none;
+		}
+		a:hover {
+			text-decoration: underline;
+		}
+		p {
+			text-align: center;
+		}
+		.imageOnLeft-textOnRight {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			align-items: center;
+			margin-left: 20px;
+			margin-right: 20px;
+		}
+
+		.box {
+			filter: drop-shadow(0 0 5px #000000);
+			border-radius: 10px;
+			width: 320px;
+			transition: outline 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+		}
+
+		#vid:hover {
+			transform: scale(1.05);
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+			outline: 5px solid #ffffff;
+			cursor: pointer;
+			}
+
+		@media (max-width: 600px) {
+			.container {
+				flex-direction: column;   /* stack vertically */
+				max-width: 100%;          /* use full width */
+				position: static;         /* optional: so it flows naturally on mobile */
+				transform: none;          /* remove centering transform */
+				margin: 20px auto;        /* some vertical spacing and center */
+			}
+			.imageOnLeft-textOnRight {
+				width: 100%;              /* full width on mobile */
+				margin: 10px 0;           /* vertical spacing */
+			}
+			/* Center the "or" text and add spacing */
+			.container > p {
+				font-size: 24px;
+				margin: 10px 0;
+			}
+		}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+		<div class="imageOnLeft-textOnRight">
+			<h1>3D WebGL Version</h1>
+			<video width="320" height="180" id="vid" class="box" src="../images/webgl.webm" onclick="window.location.href='https://t3mp.co.uk/portfolio/webgl';" inline autoplay muted loop></video>
+			
+			<p width="320" height="180">Experience my Portfolio like never before! (only for Desktop)</p>
+		</div>
+
+		<p style="display: flex; justify-content: center; align-items: center; font-size: 24px;">or</p>
+
+		<div class="imageOnLeft-textOnRight">
+			<h1>Standard Version</h1>
+			<img width="320" height="180" id="vid" class="box" src="../images/fallback.webp" onclick="window.location.href='https://t3mp.co.uk/portfolio/fallback';" inline autoplay muted loop></img>
+			<p>If you experience issues with the WebGL version, try this.</p>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/png" href="../../images/favicon.png">
+    <title>t3mp's portfolio (Fallback)</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+		.poppins-medium {
+		font-family: "Poppins", sans-serif;
+		font-weight: 500;
+		font-style: normal;
+		}
+
+		.poppins-semibold {
+		font-family: "Poppins", sans-serif;
+		font-weight: 600;
+		font-style: normal;
+		}
+
+		body::after {
+		content: "";
+		background-image: url('../images/bg.png');
+		opacity: 0.2;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		pointer-events: none;
+		z-index: -1;
+		}
+		body {
+			background-color: #151515;
+			color: #fff;
+			text-shadow: -2px 2px rgba(28, 27, 26, 0.3);
+			background-size: cover;
+			background-attachment: fixed;
+			transition: background 1s ease;
+			text-align: center;
+			margin: 0;
+			overflow: hidden;
+			font: 24px "Poppins";
+			}
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: calc(100vh - 100px);
+        }
+        h1 {
+            color: #ffffff;
+			filter: drop-shadow(0 0 5px #ffffff60);
+        }
+		a {
+			color: #e1ca98;
+			text-decoration: none;
+		}
+		a:hover {
+			text-decoration: underline;
+		}
+		p {
+			text-align: left;
+		}
+		.imageOnLeft-textOnRight {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			gap: 20px;
+		}
+		@media (max-width: 600px) {
+			.imageOnLeft-textOnRight {
+				flex-direction: column;
+				align-items: center; /* center images and text */
+				gap: 10px;
+			}
+			.imageOnLeft-textOnRight img {
+				max-width: 100%;
+				height: auto;
+				width: auto; /* optional, but prevents stretching */
+			}
+			iframe {
+				width: 100% !important;
+				height: auto !important;
+				aspect-ratio: 16 / 9; /* maintain 16:9 ratio */
+			}
+		}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to my portfolio</h1>
+        <p>If you cannot access my WebGL Portfolio, you can still view the same information here. Just to let you know, I recreated Minecraft in Unity to showcase my music, videos, and games. My goal was to demonstrate my proficiency in using Unity by building my Portfolio with it.</p>
+
+		<hr style="border: 1px solid #404040; margin: 1em 0;">
+
+		<h1>Games</h1>
+		<p>I have a lot of projects that I'm currently working on, so here are a few that you can read about!</p>
+		<div class="imageOnLeft-textOnRight">
+			<img src="../../images/lilyfrickingsucks.png" height="250" width="250">
+			<p>"Lily Fricking Sucks" is an atmospheric puzzle adventure game where players navigate a world filled with secrets as they unravel the lore surrounding Lily and her mysterious world. This is a passion project between me and my brother.</p>
+		</div>
+
+		<div class="imageOnLeft-textOnRight">
+			<img src="../../images/monkeyaim.png" height="250" width="250">
+			<p>Monkeyaim is a web-based FPS aim trainer with multiple modes that focus on various techniques, such as flicking, speed, accuracy, and tracking. As a gamer myself, I find that all the web-based aim trainers aren't to my liking, so I decided to try and make one of my own.</p>
+		</div>
+
+		<div class="imageOnLeft-textOnRight">
+			<img src="../../images/agameaboutaghost.png" height="250" width="250">
+			<p>"A Game About a Ghost" is a rogue-like fighting game where you unlock moves as you progress in the game, with an interesting gameplay mechanic of typing words to perform them. For example, to dash, you have to type "dash," and the faster you type it, the further you dash.</p>
+		</div>
+
+		<div class="imageOnLeft-textOnRight">
+			<img src="../../images/debatevsclub.png" height="250" width="250">
+			<p>In Debate vs. Club, you challenge your friends to debate on fun topics and let an AI judge which side makes a stronger case. Rack up points for your team with convincing arguments and may the best debaters win! A very fun online party game, and a very new project of mine.</p>
+		</div>
+
+		<hr style="border: 1px solid #404040; margin: 1em 0;">
+
+		<h1>Music</h1>
+		<p>I have been making music since 2015, feel free to listen for yourself. I use FL Studio and usually create whatever genre I'm fixated on, for fun!<br>Here are a few songs I've made over the years:</p>
+		<iframe style="border: 0; width: 700px; height: 400px;" src="https://bandcamp.com/EmbeddedPlayer/album=2903808893/size=large/bgcol=333333/linkcol=ffffff/artwork=small/transparent=true/" seamless><a href="https://t3mpban.bandcamp.com/album/portfolio-not-an-album">Portfolio (Not an album) by Temp</a></iframe>
+		
+		<hr style="border: 1px solid #404040; margin: 1em 0;">
+
+		<h1>Videos</h1>
+		<p>I have been editing and making videos since 2015, and I've gotten pretty good at it! I mainly use Premiere Pro and After Effects, and I've experimented with different editing styles.<br>Here's a video from my YouTube channel:</p>
+		<iframe width="700" height="400" src="https://www.youtube.com/embed/rmHkZiVEq9k" title="" frameBorder="0"   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"  allowFullScreen></iframe>
+		
+		<hr style="border: 1px solid #404040; margin: 1em 0;">
+
+		<p>I will dedicate 2024 - 2025 to expanding this portfolio until it is extremely impressive; Until then, thank you for visiting!</p>
+	</div>
+</body>
+</html>
