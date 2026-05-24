@@ -1,7 +1,7 @@
 // - temp <3
 
 if (screen.width <= 699) {
-  window.location.href = "https://t3mp.co.uk/mobile";
+  window.location.href = "https://temp.dog/mobile";
 }
 
 let waitingForFirstPress = true;
