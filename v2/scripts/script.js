@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (window.mobileAndTabletCheck()) {
     console.log("This is a mobile device");
-    window.location.replace("https://t3mp.co.uk/mobile");
+    window.location.replace("https://temp.dog/v2/mobile");
   } else {
     console.log("This is not a mobile device");
   }

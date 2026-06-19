@@ -9,7 +9,7 @@ personal website for **t3mp.** Game dev, editor, music producer and sort of arti
 ## how's this?
 - built with straight html, css and js
 - no frameworks
-- handwritten without AI
+- no ai slop
 
 ## who's this?
 discord → `@3vu`  

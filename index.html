@@ -4,147 +4,119 @@
     this code dosent write itself.. alright back to work.
      ====================== -->
 <!DOCTYPE html>
-	<html>
-		<head>
-			<meta name="title" content="t3mp's website">
-			<meta name="description" content="Hi, My name is Temp, and this website is a portal for all my socials, hosts my portfolio, and my biography, and me, Temp!!">
-			<meta name="keywords" content="t3mp, t3mpban, t3mpyt, 3vu, t3vu, temp, tempban, tempyt, temp youtube, t3wp, t3mp twitter, t3mp youtube, t3mp twitch, t3mps website, t3mp's website, temp's website, t3mp's Website V2, t3mp's Website">
-			<meta name="robots" content="index, follow">
-			<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-			<meta name="language" content="English">
-			<meta name="author" content="t3mp">
-			<meta content="https://www.temp.dog/" property="og:url" />
-			<meta content="https://temp.dog/images/pfp.png" property="og:image" />
-			<meta content="#be1cfd" data-react-helmet="true" name="theme-color" />
-			<meta charset="utf-8">
-			<title>t3mp's website V4</title>
-			<link rel="icon" type="image/png" href="images/favicon.png">
-			<link rel="stylesheet" type="text/css" href="scripts/style.css">
-			<script defer src="https://cloud.umami.is/script.js" data-website-id="f8a25eb1-84d1-48ab-b56d-03a37097f3af"></script>
-		</head>
-		<body>
-			<audio id="silentAudio" src="sounds/silent_audio.mp3" preload="auto"></audio>
-			<audio id="select" src="sounds/select.mp3" preload="auto"></audio>
-			<audio id="hover" src="sounds/hover.mp3" preload="auto"></audio>
-			<audio id="audio1" src="sounds/1.mp3" preload="auto" loop></audio>
-			<audio id="audio2" src="sounds/2.mp3" preload="auto" loop></audio>
-			<audio id="audio3" src="sounds/3.mp3" preload="auto" loop></audio>
-			<audio id="audio4" src="sounds/4.mp3" preload="auto" loop></audio>
-			<audio id="audio5" src="sounds/5.mp3" preload="auto" loop></audio>
-			<div id="divContainer">
-			<button id="prevButton" class="nav-button">
-				<img src="images/left.webp" height="100" width="130" alt="hmm maybe this button ?(???*)o">
+<html lang="en">
+	<head>
+		<meta name="title" content="t3mp's website">
+		<meta name="description" content="Hi, My name is Temp, and this website is a portal for all my socials, hosts my portfolio, and my biography, and me, Temp!!">
+		<meta name="keywords" content="t3mp, t3mpban, t3mpyt, 3vu, t3vu, temp, tempban, tempyt, temp youtube, t3wp, t3mp twitter, t3mp youtube, t3mp twitch, t3mps website, t3mp's website, temp's website, t3mp's Website">
+		<meta name="robots" content="index, follow">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="language" content="English">
+		<meta name="author" content="t3mp">
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+		<meta content="https://www.temp.dog/" property="og:url" />
+		<meta content="https://temp.dog/images/pfp.png" property="og:image" />
+		<meta content="#6f4e37" data-react-helmet="true" name="theme-color" />
+		<meta charset="utf-8">
+		<title>t3mp's website</title>
+		<link rel="icon" type="image/png" href="images/favicon.png">
+		<link rel="stylesheet" type="text/css" href="scripts/style.css">
+		<script defer src="https://cloud.umami.is/script.js" data-website-id="f8a25eb1-84d1-48ab-b56d-03a37097f3af"></script>
+	</head>
+	<body>
+		<!-- center stage: the loading bar -->
+		<main class="stage">
+			<div class="loader-wrap" id="loaderWrap">
+				<div class="loader cursorable" id="loader" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+					<div class="track"><div class="fill" id="fill"></div></div>
+				</div>
+			</div>
+		</main>
+
+		<!-- top-right settings: square container morphs to reveal options -->
+		<aside class="settings" id="settings">
+			<div class="panel">
+				<div class="panel-head">settings</div>
+				<div class="divider"></div>
+				<div class="opts">
+					<div class="grp">
+						<label class="opt opt--range" data-setting="music">
+							<span class="opt-label">music</span>
+							<input class="range cursorable" type="range" min="0" max="100" value="0" aria-label="music volume">
+							<span class="opt-val">0</span>
+						</label>
+						<label class="opt opt--range" data-setting="sounds">
+							<span class="opt-label">sounds</span>
+							<input class="range cursorable" type="range" min="0" max="100" value="0" aria-label="sounds volume">
+							<span class="opt-val">0</span>
+						</label>
+					</div>
+
+					<div class="grp">
+						<button class="opt opt--toggle cursorable" data-setting="fullscreen" aria-pressed="false">
+							<span class="opt-label">fullscreen</span>
+							<span class="opt-state">off</span>
+						</button>
+						<button class="opt opt--toggle cursorable" data-setting="fps" aria-pressed="false">
+							<span class="opt-label">show fps</span>
+							<span class="opt-state">off</span>
+						</button>
+						<div class="opt opt--select" data-setting="language">
+							<span class="opt-label">language</span>
+							<span class="sel-wrap">
+								<select class="select cursorable" aria-label="language">
+									<option value="en">english</option>
+									<option value="es">español</option>
+									<option value="pt">português</option>
+									<option value="fr">français</option>
+									<option value="de">deutsch</option>
+									<option value="jp">日本語</option>
+									<option value="kr">한국어</option>
+									<option value="zh">简体中文</option>
+								</select>
+								<span class="caret" aria-hidden="true">&#9662;</span>
+							</span>
+						</div>
+					</div>
+
+					<div class="grp">
+						<button class="opt opt--action cursorable" data-setting="cache">
+							<span class="opt-label">clear cache</span>
+							<span class="opt-glyph">
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+								</svg>
+							</span>
+						</button>
+						<!-- legacy: previous completed version of the site -->
+						<a class="opt opt--action cursorable" data-setting="legacy" href="/v4">
+							<span class="opt-label">legacy website</span>
+							<span class="opt-glyph">&#8599;</span>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<button class="gear cursorable" id="gear" aria-label="Settings" aria-expanded="false">
+				<svg viewBox="0 0 24 24" aria-hidden="true">
+					<path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+				</svg>
 			</button>
-			<div class="content-container">
-				<div id="div1" class="div-content">
-					<div class="layer" id="layer1">
-						<img src="images/1.webp" width="1375" height="550" alt="Layer 1">
-					</div>
-					<div class="layer" id="layer2">
-						<img src="images/2.webp" width="1375" height="550" alt="Layer 2">
-					</div>
-					<div class="layer" id="layer3">
-						<img src="images/3.webp" width="1375" height="550" alt="Layer 3">
-					</div>
-				</div>
-	
-				<div id="div2" class="div-content">
-					<div class="btn-group">
-						<div class="social-container">
-							<button id="youtube" class="nav-button" onclick="window.open('https://www.youtube.com/@t3mpban', '_blank');" alt="my youtube channel!">        
-								<img src="images/youtube.webp" data-original-src="images/youtube.webp" data-hover-src="images/youtubehighlighted.webp" type="image/svg+xml" height="150" width="150" alt="Where I create videos!">
-							</button>
-						</div>	
-						<div class="social-container">	
-							<button id="discord" class="nav-button" onclick="window.open('https://discord.com/users/565992682800021504', '_blank');" alt="my discord!">
-								<img src="images/discord.webp" data-original-src="images/discord.webp" data-hover-src="images/discordhighlighted.webp" type="image/svg+xml" height="150" width="150" alt="I talk here, every day!">
-							</button>
-						</div>
-						<div class="social-container">
-							<button id="twitter" class="nav-button" onclick="window.open('https://www.x.com/t3mpban', '_blank');" alt="my twitter or X!">
-								<img src="images/twitter.webp" data-original-src="images/twitter.webp" data-hover-src="images/twitterhighlighted.webp" type="image/svg+xml" height="150" width="150" alt="I don't tweet often.">
-							</button>
-						</div>
-						<div class="social-container">
-							<button id="twitch" class="nav-button" onclick="window.open('https://twitch.tv/t3mplive', '_blank');" alt="my twitch!">     
-								<img src="images/twitch.webp" data-original-src="images/twitch.webp" data-hover-src="images/twitchhighlighted.webp" type="image/svg+xml" height="150" width="150" alt="If I stream, It'll be here.">
-							</button>
-						</div>
-					</div>
-					<div class="additional-text">
-						<p>
-							My other less notable ones are
-							<a href="https://github.com/t3mpban" target="_blank">Github</a>,
-							<a href="https://steamcommunity.com/id/t3wp" target="_blank">Steam</a>, and
-							<a href="https://soundcloud.com/t3mpban" target="_blank">SoundCloud</a>.
-							I go by Temp, t3mp, t3mpban, t3mpyt, tempuchan, 3vu, t3vu, テンプ (tenpu) or 템프.
-						</p>
-					</div>
-				</div>
+		</aside>
 
-				<div id="div3" class="div-content">				
-					<div id="animation-container2">
-						<video id="vid" onclick="window.location.href='https://temp.dog/portfolio';" src="../images/portfolio.webm" playsinline autoplay muted loop></video>
-					</div>
-				</div>
-	
-				<div id="div4" class="div-content">
-					<p4 class="aboutmetext">Scroll to read! (INFP-T 2w3 He/Him)</p4>	
-					<div class="textarea">Hi, my name is Temp! I'm a creative individual who strives for excellence in any task. I specialize in Editing, Programming/Game Design, and Music Production. I love focusing on improving myself and mastering anything that seems fun, such as rapidly improving at games or exploring new skills that interest me. I take pride in my work and am a massive perfectionist; I always believe in quality over quantity. 
+		<!-- corner signature -->
+		<footer class="sig">t3mp &middot; 2026</footer>
 
-						Personality-wise, I'm chill and like adjusting to my surroundings to fit in and be everyone's friend. I've been a massive gamer since I was a kid, playing a variety of games, from FPS games to Story-Rich experiences. I also watch a lot of anime, cartoons, and movies.
-						
-						As for my skills, I consider myself a really great editor. It's one of the few skills I can happily be proud and honest about. But obviously, no matter how good you are, there's always room for improvement. While I work up the courage to build my YouTube Channel, I plan to become an editor, hopefully full-time or to gain experience. 
-						
-						I've been building my game design knowledge ever since I opened Unity around 2017. The first language I learned was C Sharp, and then I got the hang of others, such as Python and JavaScript (loosely), so I could understand how programming works. This website is written with HTML, CSS, and JS.
-						
-						I started making music at age eight, and a few years later, my songs started to sound decent. You can check out some of my tracks in my portfolio if you're interested.
-						
-						Before I sign off, thank you for stopping by my silly little website. As of writing this, my current dream is to become a Youtuber, Release multiple games, and have at least one of my songs get noticed. Then, I can die peacefully, knowing I left my mark on the Internet.
-						
-						- temp 6/5/25</div>
-					</div>
+		<!-- custom weighted cursor + helpers (decorative, no-op without JS / on touch) -->
+		<div class="cursor" id="cursor" aria-hidden="true"></div>
+		<div class="cursor-tip" id="tip" aria-hidden="true"><span class="bubble">0%</span></div>
+		<div class="fps" id="fps" aria-hidden="true">FPS 60</div>
 
-				<div id="div5" class="div-content">	
-					<div id="pmet">
-						<p class="grey">Thanks for visiting my website! If you have any questions, feel free to add me on Discord at <a style="color: #caaaff;" href="discord://-/users/565992682800021504">@3vu</a>. You can also email me at <a style="color: #caaaff;" href="mailto:hi@temp.dog">hi@temp.dog</a> for other inquiries.</p>
-					</div>
-			</div>
+		<!-- audio used by the music / sounds toggles -->
+		<audio id="music" src="v4/sounds/1.mp3" loop preload="none"></audio>
+		<audio id="sfxHover" src="v4/sounds/hover.mp3" preload="auto"></audio>
+		<audio id="sfxSelect" src="v4/sounds/select.mp3" preload="auto"></audio>
 
-			</div>
-				<button id="nextButton" class="nav-button">
-					<img src="images/right.webp" height="100" width="130" alt="orr maybe this one o((>?< ))o">
-				</button>
-			</div>
-
-			<div id="index">
-				<img id="indeximg" src="images/index1.webp" height="20" width="100" alt="page index"></img>
-			</div>
-			
-			<div class="btn-group">
-				<div class="social-container">	
-					<button id="info" class="nav-button" onclick="window.open('https://temp.dog/info', '_self');">
-						<img src="images/info.webp" height="40" width="40" alt="infomation about this website, faq and more">
-					</button>
-				</div>
-
-				<div class="social-container">
-					<button id="play" class="nav-button">
-						<img src="images/music1.webp" height="40" width="40" alt="music and sound toggle">
-					</button>
-				</div>
-
-				<div class="social-container">
-					<button id="back" class="nav-button" onclick="window.open('https://temp.dog/v3', '_self');">     
-						<img src="images/back.webp" height="40" width="40" alt="go back to v2...">
-					</button>
-				</div>
-			</div>
-
-			<video id="bgvid" playsinline autoplay muted loop>
-				<source src="images/bg.webm" type="video/webm">
-			</video>
-
-			<script src="scripts/script.js"></script>
-		</body>
-	</html>
+		<script src="scripts/script.js"></script>
+	</body>
+</html>
