@@ -1,6 +1,14 @@
 @font-face {
-	font-family: "t3mp";
+	font-family: "temp-v2";
+	src: url("../font/temp-v2.ttf") format("truetype");
+	font-weight: 400;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "temp-v2";
 	src: url("../font/t3mp.ttf") format("truetype");
+	font-weight: 700;
 	font-display: swap;
 }
 
@@ -9,11 +17,7 @@
 	--camel: #c19a6b;
 	--soft-apricot: #fed8b1;
 	--papaya-whip: #ffefd5;
-
-	--ink: var(--coffee-bean);
-	--accent: var(--camel);
-	--bg: var(--soft-apricot);
-	--surface: var(--papaya-whip);
+	--tan: #e0b98e;
 
 	--ease: cubic-bezier(0.87, 0, 0.13, 1);
 
@@ -26,6 +30,7 @@
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
+	font-weight: 700;
 }
 
 html,
@@ -36,9 +41,9 @@ body {
 body {
 	min-height: 100svh;
 	overflow: hidden;
-	background: var(--bg);
-	color: var(--ink);
-	font-family: "t3mp", "Trebuchet MS", system-ui, sans-serif;
+	background: var(--soft-apricot);
+	color: var(--coffee-bean);
+	font-family: "temp-v2", "Trebuchet MS", system-ui, sans-serif;
 	-webkit-font-smoothing: antialiased;
 }
 
@@ -47,7 +52,7 @@ body::before {
 	position: fixed;
 	inset: 0;
 	z-index: -1;
-	background-color: var(--camel);
+	background-color: var(--tan);
 	-webkit-mask-image: url("/images/bg.webp");
 	-webkit-mask-size: 256px 256px;
 	-webkit-mask-repeat: repeat;
@@ -104,7 +109,7 @@ html.cc-active * {
 	position: relative;
 	width: 100%;
 	height: 100%;
-	background: var(--accent);
+	background: var(--camel);
 	border-radius: 999px;
 	overflow: hidden;
 }
@@ -113,7 +118,7 @@ html.cc-active * {
 	position: absolute;
 	inset: 0 auto 0 0;
 	width: 0;
-	background: var(--ink);
+	background: var(--coffee-bean);
 	border-radius: 999px;
 }
 
@@ -123,10 +128,9 @@ html.cc-active * {
 	left: 50%;
 	z-index: 40;
 	transform: translateX(-50%);
-	color: var(--accent);
+	color: var(--camel);
 	font-size: 12px;
 	letter-spacing: 0.22em;
-	text-transform: uppercase;
 	white-space: nowrap;
 	pointer-events: none;
 	user-select: none;
@@ -142,21 +146,14 @@ html.cc-active * {
 	height: 56px;
 	overflow: hidden;
 	border-radius: 18px;
-	background: var(--surface);
+	background: var(--papaya-whip);
+	box-shadow: 0 8px 12px rgba(111, 78, 55, 0.1);
 	transform-origin: top right;
 	transition:
 		width 0.7s var(--ease),
 		height 0.7s var(--ease),
 		border-radius 0.7s var(--ease),
 		transform 0.5s var(--ease);
-}
-
-.settings.open {
-	border-radius: 22px;
-}
-
-.settings.poke {
-	transform: scale(1.06);
 }
 
 .panel {
@@ -166,7 +163,7 @@ html.cc-active * {
 	width: var(--panel-w);
 	display: flex;
 	flex-direction: column;
-	color: var(--ink);
+	color: var(--coffee-bean);
 }
 
 .panel-head {
@@ -177,14 +174,15 @@ html.cc-active * {
 	font-size: 14px;
 	letter-spacing: 0.24em;
 	text-transform: uppercase;
-	color: var(--accent);
+	color: var(--camel);
 	white-space: nowrap;
 }
 
 .divider {
-	height: 1.5px;
+	height: 2px;
 	margin: 0 16px;
-	background: linear-gradient(90deg, transparent, var(--accent), transparent);
+	background: var(--camel);
+	border-radius: 999px;
 }
 
 .opts {
@@ -227,12 +225,11 @@ a.opt {
 .opt--action:hover,
 .opt:focus-within,
 .opt:focus-visible {
-	background: var(--bg);
 	outline: none;
 }
 
 .opt:focus-visible {
-	outline: 2px solid var(--ink);
+	outline: 2px solid var(--coffee-bean);
 }
 
 .opt-label {
@@ -242,25 +239,29 @@ a.opt {
 .opt-state {
 	min-width: 48px;
 	padding: 3px 10px;
-	border: 1.6px solid var(--accent);
+	border: 1.6px solid var(--camel);
 	border-radius: 8px;
 	font-size: 13px;
 	letter-spacing: 0.03em;
 	text-align: center;
-	color: var(--accent);
+	color: var(--camel);
 	transition: background 0.35s var(--ease), color 0.35s var(--ease), border-color 0.35s var(--ease);
 }
 
+.opt-state:hover {
+	border-color: var(--coffee-bean);
+}
+
 .opt-state.on {
-	background: var(--ink);
-	border-color: var(--ink);
-	color: var(--surface);
+	background: var(--coffee-bean);
+	border-color: var(--coffee-bean);
+	color: var(--papaya-whip);
 }
 
 .opt-glyph {
 	display: inline-flex;
 	font-size: 16px;
-	color: var(--accent);
+	color: var(--camel);
 	transition: transform 0.35s var(--ease), color 0.35s var(--ease);
 }
 
@@ -271,13 +272,12 @@ a.opt {
 }
 
 .opt--action.confirm .opt-label {
-	color: var(--accent);
+	color: var(--camel);
 	font-size: 14px;
 }
 
 .opt--action:hover .opt-glyph {
-	color: var(--ink);
-	transform: translate(2px, -2px);
+	color: var(--coffee-bean);
 }
 
 /* ----- range slider ----- */
@@ -290,17 +290,24 @@ a.opt {
 	min-width: 30px;
 	font-size: 13px;
 	text-align: right;
-	color: var(--accent);
+	color: var(--camel);
 }
 
 .range {
 	-webkit-appearance: none;
 	appearance: none;
+	accent-color: var(--tan);
 	width: 108px;
 	height: 4px;
 	border-radius: 999px;
-	background: var(--accent);
+	background: var(--camel);
 	outline: none;
+}
+
+.range:focus-visible {
+	outline: 2px solid var(--coffee-bean);
+	outline-offset: 4px;
+	border-radius: 999px;
 }
 
 .range::-webkit-slider-thumb {
@@ -309,8 +316,8 @@ a.opt {
 	width: 14px;
 	height: 14px;
 	border-radius: 50%;
-	background: var(--ink);
-	border: 2px solid var(--surface);
+	background: var(--coffee-bean);
+	border: 2px solid var(--papaya-whip);
 	transition: transform 0.25s var(--ease);
 }
 
@@ -323,14 +330,26 @@ a.opt {
 	width: 14px;
 	height: 14px;
 	border-radius: 50%;
-	background: var(--ink);
-	border: 2px solid var(--surface);
+	background: var(--coffee-bean);
+	border: 2px solid var(--papaya-whip);
+	transition: transform 0.25s var(--ease);
+}
+
+.range:hover::-moz-range-thumb,
+.range:focus-visible::-moz-range-thumb {
+	transform: scale(1.18);
 }
 
 .range::-moz-range-track {
 	height: 4px;
 	border-radius: 999px;
-	background: var(--accent);
+	background: var(--camel);
+}
+
+.range::-moz-range-progress {
+	height: 4px;
+	border-radius: 999px;
+	background: var(--coffee-bean);
 }
 
 /* ----- language select ----- */
@@ -344,10 +363,10 @@ a.opt {
 	-webkit-appearance: none;
 	appearance: none;
 	padding: 5px 28px 5px 12px;
-	border: 1.6px solid var(--accent);
+	border: 1.6px solid var(--camel);
 	border-radius: 8px;
-	background: var(--surface);
-	color: var(--ink);
+	background: var(--papaya-whip);
+	color: var(--coffee-bean);
 	font: inherit;
 	font-size: 13px;
 	letter-spacing: 0.03em;
@@ -356,7 +375,7 @@ a.opt {
 
 .select:hover,
 .select:focus-visible {
-	border-color: var(--ink);
+	border-color: var(--coffee-bean);
 	outline: none;
 }
 
@@ -364,8 +383,62 @@ a.opt {
 	position: absolute;
 	right: 10px;
 	font-size: 11px;
-	color: var(--accent);
+	color: var(--camel);
 	pointer-events: none;
+}
+
+/* ----- language listbox (custom, so the cursor never has to leave the page) ----- */
+.lang-list {
+	position: fixed;
+	z-index: 60;
+	list-style: none;
+	margin: 0;
+	padding: 6px;
+	max-height: 240px;
+	overflow-y: auto;
+	border-radius: 10px;
+	background: var(--papaya-whip);
+	box-shadow: 0 8px 12px rgba(111, 78, 55, 0.1);
+	scrollbar-width: thin;
+	scrollbar-color: var(--camel) transparent;
+}
+
+.lang-list::-webkit-scrollbar {
+	width: 8px;
+}
+
+.lang-list::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.lang-list::-webkit-scrollbar-thumb {
+	background: var(--camel);
+	border-radius: 999px;
+}
+
+.lang-list::-webkit-scrollbar-thumb:hover {
+	background: var(--coffee-bean);
+}
+
+.lang-opt {
+	padding: 7px 12px;
+	border-radius: 8px;
+	font-size: 13px;
+	letter-spacing: 0.03em;
+	color: var(--coffee-bean);
+	white-space: nowrap;
+	transition: background 0.2s var(--ease);
+}
+
+.lang-opt:hover,
+.lang-opt[aria-selected="true"] {
+	background: var(--soft-apricot);
+}
+
+.lang-opt:focus-visible {
+	background: var(--soft-apricot);
+	outline: 2px solid var(--coffee-bean);
+	outline-offset: -2px;
 }
 
 /* ----- gear ----- */
@@ -380,8 +453,12 @@ a.opt {
 	height: 56px;
 	border: none;
 	background: transparent;
-	color: var(--ink);
+	color: var(--coffee-bean);
 	transition: transform 0.9s var(--ease);
+}
+
+.gear:focus-visible {
+	outline: none;
 }
 
 .gear svg {
@@ -398,7 +475,7 @@ a.opt {
 	z-index: 100;
 	width: 12px;
 	height: 12px;
-	border: 8px solid var(--ink);
+	border: 8px solid var(--coffee-bean);
 	border-radius: 50%;
 	background: transparent;
 	opacity: 0;
@@ -432,8 +509,8 @@ a.opt {
 	display: inline-block;
 	padding: 4px 12px;
 	border-radius: 999px;
-	background: var(--surface);
-	color: var(--ink);
+	background: var(--papaya-whip);
+	color: var(--coffee-bean);
 	font-size: 14px;
 	letter-spacing: 0.02em;
 	opacity: 0;
@@ -455,8 +532,8 @@ a.opt {
 	display: none;
 	padding: 4px 10px;
 	border-radius: 8px;
-	background: var(--surface);
-	color: var(--accent);
+	background: var(--papaya-whip);
+	color: var(--camel);
 	font-size: 13px;
 	letter-spacing: 0.12em;
 	pointer-events: none;

@@ -2,7 +2,7 @@
 	"use strict";
 
 	// constants
-	var CURSOR_TAU = 0.16;      // higher = heavier follow
+	var CURSOR_TAU = 0.1;      // higher = heavier follow
 	var TIP_TAU = 0.16;         // tooltip trails a touch tighter than the dot
 	var VEL_TAU = 0.08;         // how quickly the thin/fat reading settles
 	var CURSOR_VEL_REF = 1800;  // px/sec that maps to velocity 1.0
@@ -33,9 +33,13 @@
 	var sfxSelect = document.getElementById("sfxSelect");
 
 	// states
-	var KEY = "t3mp.settings.v2";
+	var KEY = "t3mp.settings";
 	var LANGS = ["en", "es", "pt", "fr", "de", "jp", "kr", "zh"];
-	var st = { music: 0, sounds: 0, fps: false, lang: "en" };
+	var LANG_NAMES = {
+		en: "english", es: "español", pt: "português", fr: "français",
+		de: "deutsch", jp: "日本語", kr: "한국어", zh: "简体中文"
+	};
+	var st = { music: 100, sounds: 100, fps: false, lang: "en" };
 
 	try {
 		var saved = JSON.parse(localStorage.getItem(KEY) || "{}");
@@ -47,6 +51,95 @@
 		}
 	} catch (e) { // ignore parse errors, keep defaults
 		}
+
+	// --- language: locale detection, manual override cookie, translations ---
+	var LANG_MANUAL_COOKIE = "t3mp.langManual";
+	var LANG_ALIASES = { ja: "jp", ko: "kr" }; // navigator's codes that differ from ours
+	var BCP47 = { en: "en", es: "es", pt: "pt", fr: "fr", de: "de", jp: "ja", kr: "ko", zh: "zh" };
+	var I18N = {};         // populated once scripts/script.json loads
+	var I18N_FALLBACK = {  // baked-in English so labels never sit blank pre-fetch
+		"settings-title": "settings",
+		"label-music": "music",
+		"label-sounds": "sounds",
+		"label-fullscreen": "fullscreen",
+		"label-fps": "show fps",
+		"label-language": "language",
+		"label-cache": "clear cache",
+		"label-cache-confirm": "click again to confirm",
+		"label-legacy": "legacy website",
+		"state-on": "on",
+		"state-off": "off",
+		"small-text": "made by t3mp"
+	};
+
+	function getCookie(name) {
+		var esc = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+		var m = document.cookie.match(new RegExp("(?:^|; )" + esc + "=([^;]*)"));
+		return m ? decodeURIComponent(m[1]) : null;
+	}
+	function setCookie(name, value, days) {
+		var expires = new Date(Date.now() + days * 86400000).toUTCString();
+		document.cookie = name + "=" + encodeURIComponent(value) + "; expires=" + expires + "; path=/; SameSite=Lax";
+	}
+	function deleteCookie(name) {
+		document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+	}
+
+	// navigator.languages[0] first, navigator.language as the old-browser fallback
+	function detectLang() {
+		var candidates = (navigator.languages || []).concat(navigator.language || []);
+		for (var i = 0; i < candidates.length; i++) {
+			var tag = (candidates[i] || "").toLowerCase().split("-")[0];
+			var code = LANG_ALIASES[tag] || tag;
+			if (LANGS.indexOf(code) !== -1) return code;
+		}
+		return null;
+	}
+
+	// only auto-detect when the user hasn't manually picked a language before;
+	// a manual pick (see the language dropdown handler) sets the cookie below
+	// and wins over locale detection on every later visit
+	if (getCookie(LANG_MANUAL_COOKIE) !== "1") {
+		var detected = detectLang();
+		if (detected) st.lang = detected;
+	}
+
+	function t(id) {
+		var entry = I18N[id];
+		if (entry && entry[st.lang]) return entry[st.lang];
+		if (entry && entry.en) return entry.en;
+		return I18N_FALLBACK[id] || "";
+	}
+
+	function applyI18n() {
+		var nodes = document.querySelectorAll("[data-i18n]");
+		for (var i = 0; i < nodes.length; i++) {
+			nodes[i].textContent = t(nodes[i].getAttribute("data-i18n"));
+		}
+		var ariaNodes = document.querySelectorAll("[data-i18n-aria]");
+		for (var j = 0; j < ariaNodes.length; j++) {
+			ariaNodes[j].setAttribute("aria-label", t(ariaNodes[j].getAttribute("data-i18n-aria")));
+		}
+		refreshCacheLabel();
+		setToggle("fullscreen", !!document.fullscreenElement);
+		setToggle("fps", st.fps);
+		html.lang = BCP47[st.lang] || "en";
+	}
+
+	// translations live in an external file so the script stays readable
+	fetch("scripts/script.json")
+		.then(function (res) { return res.json(); })
+		.then(function (data) {
+			data.forEach(function (entry) {
+				var map = {};
+				for (var i = 0; i < entry.strings.length; i++) {
+					map[entry.strings[i].lang] = entry.strings[i].text;
+				}
+				I18N[entry.id] = map;
+			});
+			applyI18n();
+		})
+		.catch(function (e) {}); // fall back to baked-in English on failure
 
 	function clampVol(v) {
 		v = Math.round(v);
@@ -68,7 +161,7 @@
 		if (!el) return;
 		var state = el.querySelector(".opt-state");
 		if (state) {
-			state.textContent = on ? "on" : "off";
+			state.textContent = on ? t("state-on") : t("state-off");
 			state.classList.toggle("on", on);
 		}
 		el.setAttribute("aria-pressed", on ? "true" : "false");
@@ -77,7 +170,7 @@
 	// paint the filled portion of a slider track with the ink colour
 	function paintRange(input, v) {
 		input.style.background =
-			"linear-gradient(90deg, var(--ink) " + v + "%, var(--accent) " + v + "%)";
+			"linear-gradient(90deg, var(--coffee-bean) " + v + "%, var(--camel) " + v + "%)";
 	}
 
 	function setRange(name, v) {
@@ -95,8 +188,7 @@
 		setRange("sounds", st.sounds);
 		setToggle("fps", st.fps);
 		setToggle("fullscreen", !!document.fullscreenElement);
-		var langSel = optFor("language").querySelector(".select");
-		langSel.value = st.lang;
+		langBtnLabel.textContent = LANG_NAMES[st.lang] || st.lang;
 		fpsEl.classList.toggle("show", st.fps);
 		music.volume = st.music / 100;
 	}
@@ -197,17 +289,26 @@
 
 	// cog: nudge forward a little on hover and never spin back; pop the container
 	var gearRot = 0;
-	gear.addEventListener("pointerenter", function () {
+	function nudgeGear() {
 		gearRot += GEAR_STEP;
 		gear.style.transform = "rotate(" + gearRot + "deg)";
 		if (!open) settings.classList.add("poke");
-	});
+	}
+	gear.addEventListener("pointerenter", nudgeGear);
 	gear.addEventListener("pointerleave", function () {
+		settings.classList.remove("poke");
+	});
+	// keyboard focus gets the same nudge instead of an outline (see .gear:focus-visible)
+	gear.addEventListener("focus", function () {
+		if (gear.matches(":focus-visible")) nudgeGear();
+	});
+	gear.addEventListener("blur", function () {
 		settings.classList.remove("poke");
 	});
 
 	// settings menu open/close — size is measured so any layout morphs cleanly
 	var open = false;
+	panel.inert = true; // collapsed panel must be unreachable by Tab, not just visually clipped
 	function setOpen(next) {
 		open = next;
 		if (open) {
@@ -219,7 +320,9 @@
 			settings.style.width = "";
 			settings.style.height = "";
 			settings.classList.remove("open");
+			closeLangList();
 		}
+		panel.inert = !open;
 		gear.setAttribute("aria-expanded", open ? "true" : "false");
 	}
 
@@ -229,10 +332,14 @@
 		blip(sfxSelect);
 	});
 	document.addEventListener("click", function (e) {
-		if (open && !settings.contains(e.target)) setOpen(false);
+		if (langList && !langList.contains(e.target) && e.target !== langBtn) closeLangList();
+		if (open && !settings.contains(e.target) && !(langList && langList.contains(e.target))) setOpen(false);
 	});
 	document.addEventListener("keydown", function (e) {
-		if (e.key === "Escape" && open) setOpen(false);
+		if (e.key === "Escape") {
+			if (langList) closeLangList();
+			else if (open) setOpen(false);
+		}
 	});
 
 	// music / sounds sliders
@@ -274,10 +381,136 @@
 		blip(sfxSelect);
 	});
 
-	// language dropdown
-	optFor("language").querySelector(".select").addEventListener("change", function () {
-		if (LANGS.indexOf(this.value) !== -1) st.lang = this.value;
-		save();
+	// language dropdown — built from scratch (instead of a native <select>) so the
+	// custom cursor never has to hand off to the OS-painted native popup
+	var langBtn = document.getElementById("langBtn");
+	var langBtnLabel = document.getElementById("langBtnLabel");
+	var langList = null;
+	var langAnchor = null; // {x, y} where the pointer landed; null when opened via keyboard
+
+	function positionLangList() {
+		var x, y;
+		if (langAnchor) {
+			x = langAnchor.x;
+			y = langAnchor.y;
+		} else {
+			var r = langBtn.getBoundingClientRect();
+			x = r.left;
+			y = r.bottom + 6;
+		}
+		var maxLeft = window.innerWidth - langList.offsetWidth - 8;
+		var maxTop = window.innerHeight - langList.offsetHeight - 8;
+		langList.style.left = Math.max(8, Math.min(x, maxLeft)) + "px";
+		langList.style.top = Math.max(8, Math.min(y, maxTop)) + "px";
+	}
+
+	function closeLangList(focusBtn) {
+		if (!langList) return;
+		langList.remove();
+		langList = null;
+		langBtn.setAttribute("aria-expanded", "false");
+		window.removeEventListener("resize", positionLangList);
+		window.removeEventListener("scroll", positionLangList, true);
+		if (focusBtn) langBtn.focus();
+	}
+
+	function pickLang(code) {
+		if (LANGS.indexOf(code) !== -1 && code !== st.lang) {
+			st.lang = code;
+			langBtnLabel.textContent = LANG_NAMES[code] || code;
+			setCookie(LANG_MANUAL_COOKIE, "1", 365);
+			applyI18n();
+			save();
+		}
+		blip(sfxSelect);
+		closeLangList(true);
+	}
+
+	function openLangList(anchor) {
+		langAnchor = anchor;
+		var items = [];
+		langList = document.createElement("ul");
+		langList.className = "lang-list";
+		langList.setAttribute("role", "listbox");
+		langList.setAttribute("aria-label", "language");
+
+		function focusOpt(i) {
+			if (i < 0) i = items.length - 1;
+			if (i >= items.length) i = 0;
+			items[i].focus();
+		}
+
+		LANGS.forEach(function (code) {
+			var li = document.createElement("li");
+			li.className = "lang-opt cursorable";
+			li.setAttribute("role", "option");
+			li.tabIndex = 0;
+			li.textContent = LANG_NAMES[code] || code;
+			if (code === st.lang) li.setAttribute("aria-selected", "true");
+			li.addEventListener("click", function (e) {
+				e.stopPropagation();
+				pickLang(code);
+			});
+			li.addEventListener("keydown", function (e) {
+				switch (e.key) {
+					case "Enter":
+					case " ":
+						e.preventDefault();
+						pickLang(code);
+						break;
+					case "ArrowDown":
+						e.preventDefault();
+						focusOpt(items.indexOf(li) + 1);
+						break;
+					case "ArrowUp":
+						e.preventDefault();
+						focusOpt(items.indexOf(li) - 1);
+						break;
+					case "Home":
+						e.preventDefault();
+						focusOpt(0);
+						break;
+					case "End":
+						e.preventDefault();
+						focusOpt(items.length - 1);
+						break;
+					case "Escape":
+						e.preventDefault();
+						e.stopPropagation();
+						closeLangList(true);
+						break;
+				}
+			});
+			items.push(li);
+			langList.appendChild(li);
+		});
+
+		// closing via Tab (or any focus change) falls out of the listbox naturally —
+		// just tear the popup down once focus actually leaves it
+		langList.addEventListener("focusout", function () {
+			setTimeout(function () {
+				if (langList && !langList.contains(document.activeElement)) closeLangList(false);
+			}, 0);
+		});
+
+		langBtn.insertAdjacentElement("afterend", langList);
+		positionLangList();
+		langBtn.setAttribute("aria-expanded", "true");
+		window.addEventListener("resize", positionLangList);
+		window.addEventListener("scroll", positionLangList, true);
+
+		var startIdx = LANGS.indexOf(st.lang);
+		focusOpt(startIdx === -1 ? 0 : startIdx);
+	}
+
+	langBtn.addEventListener("click", function (e) {
+		e.stopPropagation();
+		if (langList) {
+			closeLangList();
+		} else {
+			// detail is 0 for a keyboard-activated click, >=1 for a real pointer click
+			openLangList(e.detail ? { x: e.clientX, y: e.clientY } : null);
+		}
 		blip(sfxSelect);
 	});
 
@@ -287,10 +520,14 @@
 	var cacheArmed = false;
 	var cacheTimer = null;
 
+	function refreshCacheLabel() {
+		cacheLabel.textContent = cacheArmed ? t("label-cache-confirm") : t("label-cache");
+	}
+
 	function disarmCache() {
 		clearTimeout(cacheTimer);
 		cacheArmed = false;
-		cacheLabel.textContent = "clear cache";
+		refreshCacheLabel();
 		cacheBtn.classList.remove("confirm");
 	}
 
@@ -298,13 +535,14 @@
 		blip(sfxSelect);
 		if (!cacheArmed) {
 			cacheArmed = true;
-			cacheLabel.textContent = "click again to confirm";
+			refreshCacheLabel();
 			cacheBtn.classList.add("confirm");
 			cacheTimer = setTimeout(disarmCache, 3000);
 			return;
 		}
 		clearTimeout(cacheTimer);
 		try { localStorage.clear(); sessionStorage.clear(); } catch (e) {}
+		deleteCookie(LANG_MANUAL_COOKIE); // let locale auto-detection resume too
 		if (window.caches && caches.keys) {
 			caches.keys().then(function (keys) {
 				return Promise.all(keys.map(function (k) { return caches.delete(k); }));
@@ -367,8 +605,20 @@
 
 	// initial sync of settings visuals
 	syncVisuals();
+	applyI18n();
 	if (st.music > 0) {
-		// resume music if it was on last visit; ignore autoplay rejection
-		music.play().catch(function () {});
+		// try to autoplay; browsers blocking it will reject the promise
+		music.play().catch(function () {
+			// blocked until the user interacts with the page; start on first gesture
+			var resume = function () {
+				if (st.music > 0) music.play().catch(function () {});
+				document.removeEventListener("pointerdown", resume);
+				document.removeEventListener("keydown", resume);
+				document.removeEventListener("touchstart", resume);
+			};
+			document.addEventListener("pointerdown", resume, { once: true });
+			document.addEventListener("keydown", resume, { once: true });
+			document.addEventListener("touchstart", resume, { once: true });
+		});
 	}
 })();

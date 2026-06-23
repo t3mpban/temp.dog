@@ -1,0 +1,171 @@
+[
+	{
+		"id": "small-text",
+		"strings": [
+			{"lang": "en", "text": "made by t3mp"},
+			{"lang": "es", "text": "hecho por t3mp"},
+			{"lang": "pt", "text": "feito por t3mp"},
+			{"lang": "fr", "text": "fait par t3mp"},
+			{"lang": "de", "text": "erstellt von t3mp"},
+			{"lang": "jp", "text": "t3mp が作成"},
+			{"lang": "kr", "text": "t3mp 제작"},
+			{"lang": "zh", "text": "由 t3mp 制作"}
+		]
+	},
+	{
+		"id": "settings-title",
+		"strings": [
+			{"lang": "en", "text": "settings"},
+			{"lang": "es", "text": "ajustes"},
+			{"lang": "pt", "text": "configurações"},
+			{"lang": "fr", "text": "paramètres"},
+			{"lang": "de", "text": "einstellungen"},
+			{"lang": "jp", "text": "設定"},
+			{"lang": "kr", "text": "설정"},
+			{"lang": "zh", "text": "设置"}
+		]
+	},
+	{
+		"id": "label-music",
+		"strings": [
+			{"lang": "en", "text": "music"},
+			{"lang": "es", "text": "música"},
+			{"lang": "pt", "text": "música"},
+			{"lang": "fr", "text": "musique"},
+			{"lang": "de", "text": "musik"},
+			{"lang": "jp", "text": "音楽"},
+			{"lang": "kr", "text": "음악"},
+			{"lang": "zh", "text": "音乐"}
+		]
+	},
+	{
+		"id": "label-sounds",
+		"strings": [
+			{"lang": "en", "text": "sounds"},
+			{"lang": "es", "text": "sonidos"},
+			{"lang": "pt", "text": "sons"},
+			{"lang": "fr", "text": "sons"},
+			{"lang": "de", "text": "geräusche"},
+			{"lang": "jp", "text": "サウンド"},
+			{"lang": "kr", "text": "사운드"},
+			{"lang": "zh", "text": "音效"}
+		]
+	},
+	{
+		"id": "label-fullscreen",
+		"strings": [
+			{"lang": "en", "text": "fullscreen"},
+			{"lang": "es", "text": "pantalla completa"},
+			{"lang": "pt", "text": "tela cheia"},
+			{"lang": "fr", "text": "plein écran"},
+			{"lang": "de", "text": "vollbild"},
+			{"lang": "jp", "text": "全画面表示"},
+			{"lang": "kr", "text": "전체 화면"},
+			{"lang": "zh", "text": "全屏"}
+		]
+	},
+	{
+		"id": "label-fps",
+		"strings": [
+			{"lang": "en", "text": "show fps"},
+			{"lang": "es", "text": "mostrar fps"},
+			{"lang": "pt", "text": "mostrar fps"},
+			{"lang": "fr", "text": "afficher les fps"},
+			{"lang": "de", "text": "fps anzeigen"},
+			{"lang": "jp", "text": "FPS表示"},
+			{"lang": "kr", "text": "FPS 표시"},
+			{"lang": "zh", "text": "显示帧率"}
+		]
+	},
+	{
+		"id": "label-language",
+		"strings": [
+			{"lang": "en", "text": "language"},
+			{"lang": "es", "text": "idioma"},
+			{"lang": "pt", "text": "idioma"},
+			{"lang": "fr", "text": "langue"},
+			{"lang": "de", "text": "sprache"},
+			{"lang": "jp", "text": "言語"},
+			{"lang": "kr", "text": "언어"},
+			{"lang": "zh", "text": "语言"}
+		]
+	},
+	{
+		"id": "label-cache",
+		"strings": [
+			{"lang": "en", "text": "clear cache"},
+			{"lang": "es", "text": "borrar caché"},
+			{"lang": "pt", "text": "limpar cache"},
+			{"lang": "fr", "text": "vider le cache"},
+			{"lang": "de", "text": "cache leeren"},
+			{"lang": "jp", "text": "キャッシュを削除"},
+			{"lang": "kr", "text": "캐시 지우기"},
+			{"lang": "zh", "text": "清除缓存"}
+		]
+	},
+	{
+		"id": "label-cache-confirm",
+		"strings": [
+			{"lang": "en", "text": "click again to confirm"},
+			{"lang": "es", "text": "haz clic otra vez para confirmar"},
+			{"lang": "pt", "text": "clique novamente para confirmar"},
+			{"lang": "fr", "text": "cliquez à nouveau pour confirmer"},
+			{"lang": "de", "text": "zum bestätigen erneut klicken"},
+			{"lang": "jp", "text": "確認するにはもう一度クリック"},
+			{"lang": "kr", "text": "확인하려면 다시 클릭"},
+			{"lang": "zh", "text": "再次点击以确认"}
+		]
+	},
+	{
+		"id": "label-legacy",
+		"strings": [
+			{"lang": "en", "text": "legacy website"},
+			{"lang": "es", "text": "sitio web anterior"},
+			{"lang": "pt", "text": "site antigo"},
+			{"lang": "fr", "text": "ancien site web"},
+			{"lang": "de", "text": "alte website"},
+			{"lang": "jp", "text": "旧サイト"},
+			{"lang": "kr", "text": "이전 웹사이트"},
+			{"lang": "zh", "text": "旧版网站"}
+		]
+	},
+	{
+		"id": "state-on",
+		"strings": [
+			{"lang": "en", "text": "on"},
+			{"lang": "es", "text": "sí"},
+			{"lang": "pt", "text": "sim"},
+			{"lang": "fr", "text": "oui"},
+			{"lang": "de", "text": "an"},
+			{"lang": "jp", "text": "オン"},
+			{"lang": "kr", "text": "켜짐"},
+			{"lang": "zh", "text": "开"}
+		]
+	},
+	{
+		"id": "state-off",
+		"strings": [
+			{"lang": "en", "text": "off"},
+			{"lang": "es", "text": "no"},
+			{"lang": "pt", "text": "não"},
+			{"lang": "fr", "text": "non"},
+			{"lang": "de", "text": "aus"},
+			{"lang": "jp", "text": "オフ"},
+			{"lang": "kr", "text": "꺼짐"},
+			{"lang": "zh", "text": "关"}
+		]
+	},
+	{
+		"id": "aria-loading",
+		"strings": [
+			{"lang": "en", "text": "Loading"},
+			{"lang": "es", "text": "Cargando"},
+			{"lang": "pt", "text": "Carregando"},
+			{"lang": "fr", "text": "Chargement"},
+			{"lang": "de", "text": "Lädt"},
+			{"lang": "jp", "text": "読み込み中"},
+			{"lang": "kr", "text": "로딩 중"},
+			{"lang": "zh", "text": "加载中"}
+		]
+	}
+]
