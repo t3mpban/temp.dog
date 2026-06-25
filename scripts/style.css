@@ -1,614 +1,824 @@
 @font-face {
-	font-family: "temp-v2";
-	src: url("../font/temp-v2.ttf") format("truetype");
-	font-weight: 400;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "temp-v2";
-	src: url("../font/t3mp.ttf") format("truetype");
-	font-weight: 700;
-	font-display: swap;
+  font-family: "temp-v2";
+  src: url("../font/t3mp.ttf") format("truetype");
+  font-display: swap;
 }
 
 :root {
-	--coffee-bean: #6f4e37;
-	--camel: #c19a6b;
-	--soft-apricot: #fed8b1;
-	--papaya-whip: #ffefd5;
-	--tan: #e0b98e;
+  --coffee-bean: #6f4e37;
+  --camel: #c19a6b;
+  --soft-apricot: #fed8b1;
+  --papaya-whip: #ffefd5;
+  --tan: #e0b98e;
 
-	--ease: cubic-bezier(0.87, 0, 0.13, 1);
-	--t: 0.35s;
-	--t-fast: 0.25s;
-	--t-slow: 0.7s;
-	--tracking: 0.1em;
-	--tracking-wide: 0.2em;
-	--ui-sm: 15px;            /* secondary control text: values, on/off, selects */
-	--shadow: -3px 3px 6px rgba(111, 78, 55, 0.1);
+  --ease: cubic-bezier(0.87, 0, 0.13, 1);
+  --t: 0.35s;
+  --t-slow: 0.7s;
+  --t-grow: 1s; /* screen scale-in */
+  --t-pop: 1.4s; /* textbox scale-in (slower, graceful) */
+  --tracking: 0.1em;
+  --tracking-wide: 0.2em;
+  --ui-sm: 15px; /* secondary control text */
+  --shadow: -3px 3px 6px rgba(111, 78, 55, 0.1);
 
-	--panel-w: 270px;
+  --panel-w: 270px;
 }
 
 *,
 *::before,
 *::after {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-	font-weight: 700;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-weight: 700;
 }
 
 html,
 body {
-	height: 100%;
+  height: 100%;
 }
 
 body {
-	min-height: 100svh;
-	overflow: hidden;
-	background: var(--soft-apricot);
-	color: var(--coffee-bean);
-	font-family: "temp-v2", "Trebuchet MS", system-ui, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-webkit-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--soft-apricot);
+  color: var(--coffee-bean);
+  font-family: "temp-v2", "Trebuchet MS", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 body::before {
-	content: "";
-	position: fixed;
-	inset: 0;
-	z-index: -1;
-	background-color: var(--tan);
-	-webkit-mask-image: url("/images/bg.webp");
-	-webkit-mask-size: 256px 256px;
-	-webkit-mask-repeat: repeat;
-	mask-image: url("/images/bg.webp");
-	mask-size: 256px 256px;
-	mask-repeat: repeat;
-	animation: bg-scroll 14s linear infinite;
-	pointer-events: none;
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--tan);
+  -webkit-mask-image: url("/images/bg.webp");
+  -webkit-mask-size: 256px 256px;
+  -webkit-mask-repeat: repeat;
+  mask-image: url("/images/bg.webp");
+  mask-size: 256px 256px;
+  mask-repeat: repeat;
+  animation: bg-scroll 14s linear infinite;
+  pointer-events: none;
 }
 
 @keyframes bg-scroll {
-	from { -webkit-mask-position: 0 0; mask-position: 0 0; }
-	to { -webkit-mask-position: 256px -256px; mask-position: 256px -256px; }
+  from {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+  to {
+    -webkit-mask-position: 256px -256px;
+    mask-position: 256px -256px;
+  }
 }
 
 html.cc-active,
 html.cc-active * {
-	cursor: none;
+  cursor: none;
 }
 
 /* ----- placeholder screen ----- */
-/* a temporary rect inset an even 3% from every viewport edge (so the patterned bg peeks
-   through). vmin keys all four sides off the smaller viewport dimension, so the gap is the
-   same pixel width all the way around instead of stretching on the wider axis. revealed once
-   the loader finishes; being position:fixed the inset resolves against the viewport
-   regardless of any wrapper. low z-index keeps it behind the foreground UI, and it stays out
-   of the parallax layer set so it never nudges with the cursor */
+/* rect inset 4vmin, revealed after loader, behind ui */
+/* no fade: grows from scale 0 over 1s when revealed */
 .screen {
-	position: fixed;
-	inset: 4vmin;
-	z-index: 5;
-	border-radius: 24px;
-	background: var(--soft-apricot);
-	box-shadow: var(--shadow);
-	opacity: 0;
-	transform: scale(0.96);
-	pointer-events: none;
-	transition: opacity var(--t-slow) var(--ease), transform var(--t-slow) var(--ease);
+  position: fixed;
+  inset: 4vmin;
+  z-index: 5;
+  border-radius: 24px;
+  background: var(--soft-apricot);
+  transform: scale(0);
+  pointer-events: none;
+  transition: transform var(--t-grow) var(--ease);
 }
 
 .screen.show {
-	opacity: 1;
-	transform: scale(1);
+  transform: scale(1);
+}
+
+/* ----- visual-novel textbox ----- */
+/* centered via left/right + margin auto so transform stays free for the
+   scale pop and `translate` stays free for the mg parallax nudge */
+.textbox {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 6vmin;
+  z-index: 45; /* above screen, below settings + cursor */
+  width: min(760px, 90vw);
+  margin-inline: auto;
+  padding: 22px 52px 26px 26px;
+  border-radius: 22px;
+  background: var(--papaya-whip);
+  color: var(--coffee-bean);
+  box-shadow: var(--shadow);
+  transform: scale(0);
+  transform-origin: center; /* grow from the middle */
+  transition: transform 0.6s var(--ease); /* dismiss (scale-out) */
+}
+
+.textbox.show {
+  transform: scale(1);
+  transition: transform var(--t-pop) var(--ease); /* appear (scale-in), slower */
+}
+
+.textbox-text {
+  margin: 0;
+  min-height: 4.5em; /* reserve ~3 lines so the box doesn't jump while typing */
+  font-size: clamp(18px, 2.4vmin, 24px);
+  line-height: 1.5;
+  letter-spacing: var(--tracking);
+  white-space: pre-wrap; /* keep spaces, still wrap */
+  overflow-wrap: anywhere;
+}
+
+/* down chevron: hidden until the line finishes, then bobs up + down */
+.textbox-next {
+  position: absolute;
+  right: 20px;
+  bottom: 14px;
+  display: inline-flex;
+  color: var(--camel);
+  font-size: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t) var(--ease);
+}
+
+.textbox-next.show {
+  opacity: 1;
+  animation: tb-bob 0.9s var(--ease) infinite;
+}
+
+@keyframes tb-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+/* ----- achievement toast (xbox-360 style) ----- */
+/* centered via left/right + margin auto so transform stays free for the slide */
+.ach {
+  position: fixed;
+  top: 18px;
+  left: 0;
+  right: 0;
+  z-index: 80; /* above panels, below the cursor */
+  width: max-content;
+  max-width: min(440px, 92vw);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 20px 12px 12px;
+  border-radius: 999px; /* pill: each short end is a full semicircle */
+  background: var(--papaya-whip);
+  color: var(--coffee-bean);
+  box-shadow: var(--shadow);
+  transform: translateY(calc(-100% - 28px)); /* parked above the top edge */
+  transition: transform 0.5s var(--ease); /* keep in sync with ACH_SLIDE_MS */
+  pointer-events: none;
+}
+
+.ach.show {
+  transform: translateY(0);
+}
+
+/* circle container behind the icon */
+.ach-icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--coffee-bean);
+  color: var(--papaya-whip);
+  font-size: 20px;
+}
+
+.ach-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ach-title {
+  font-size: 16px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ach-desc {
+  font-size: 13px;
+  color: var(--camel);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* progress row: only on x-of-y achievements */
+.ach-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.ach-bar[hidden] {
+  display: none;
+}
+
+.ach-bar-track {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 120px;
+  height: 6px;
+  background: var(--camel);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.ach-bar-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background: var(--coffee-bean);
+  border-radius: 999px;
+  transition: width var(--t-slow) var(--ease);
+}
+
+.ach-bar-num {
+  flex: 0 0 auto;
+  font-size: 12px;
+  letter-spacing: var(--tracking);
+  color: var(--camel);
 }
 
 .stage {
-	position: relative;
-	z-index: 10;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	min-height: 100svh;
-	padding: 24px;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100svh;
+  padding: 24px;
 }
 
 .loader-wrap {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 16px;
-	transition: opacity 0.6s var(--ease), transform var(--t-slow) var(--ease);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  transition:
+    opacity 0.6s var(--ease),
+    transform var(--t-slow) var(--ease);
 }
 
 .loader-wrap.done {
-	opacity: 0;
-	transform: scale(0.92);
-	pointer-events: none;
+  opacity: 0;
+  transform: scale(0.92);
+  pointer-events: none;
 }
 
 .loader {
-	width: 200px;
-	height: 10px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  width: 200px;
+  height: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .track {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	background: var(--camel);
-	border-radius: 999px;
-	overflow: hidden;
-	box-shadow: var(--shadow);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--camel);
+  border-radius: 999px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
 }
 
 .fill {
-	position: absolute;
-	inset: 0 auto 0 0;
-	width: 0;
-	background: var(--coffee-bean);
-	border-radius: 999px;
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background: var(--coffee-bean);
+  border-radius: 999px;
 }
 
 .sig {
-	position: fixed;
-	bottom: 12px;
-	left: 50%;
-	z-index: 40;
-	transform: translateX(-50%);
-	color: var(--camel);
-	font-size: 12px;
-	letter-spacing: var(--tracking-wide);
-	white-space: nowrap;
-	pointer-events: none;
-	user-select: none;
-	text-shadow: var(--shadow);
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  z-index: 40;
+  transform: translateX(-50%);
+  color: var(--camel);
+  font-size: 12px;
+  letter-spacing: var(--tracking-wide);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  text-shadow: var(--shadow);
 }
 
 /* ----- settings shell ----- */
 .settings {
-	position: fixed;
-	top: 22px;
-	right: 22px;
-	z-index: 50;
-	width: 56px;
-	height: 56px;
-	overflow: hidden;
-	border-radius: 18px;
-	background: var(--papaya-whip);
-	box-shadow: var(--shadow);
-	transform-origin: top right;
-	transition:
-		width var(--t-slow) var(--ease),
-		height var(--t-slow) var(--ease),
-		border-radius var(--t-slow) var(--ease),
-		transform 0.5s var(--ease);
+  position: fixed;
+  top: 22px;
+  right: 22px;
+  z-index: 50;
+  width: 56px;
+  height: 56px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--papaya-whip);
+  box-shadow: var(--shadow);
+  transform-origin: top right;
+  transition:
+    width var(--t-slow) var(--ease),
+    height var(--t-slow) var(--ease),
+    border-radius var(--t-slow) var(--ease),
+    transform 0.5s var(--ease);
 }
 
 .panel {
-	position: absolute;
-	top: 0;
-	right: 0;
-	width: var(--panel-w);
-	display: flex;
-	flex-direction: column;
-	color: var(--coffee-bean);
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--panel-w);
+  display: flex;
+  flex-direction: column;
+  color: var(--coffee-bean);
 }
 
 .panel-head {
-	display: flex;
-	align-items: center;
-	height: 56px;
-	padding: 0 64px 0 22px;
-	font-size: 14px;
-	letter-spacing: var(--tracking-wide);
-	text-transform: uppercase;
-	color: var(--camel);
-	white-space: nowrap;
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 64px 0 22px;
+  font-size: 14px;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--camel);
+  white-space: nowrap;
 }
 
 .divider {
-	height: 2px;
-	margin: 0 16px;
-	background: var(--camel);
-	border-radius: 999px;
+  height: 2px;
+  margin: 0 16px;
+  background: var(--camel);
+  border-radius: 999px;
 }
 
 .opts {
-	display: flex;
-	flex-direction: column;
-	gap: 4px;
-	padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
 }
 
 .grp {
-	display: contents;
+  display: contents;
 }
 
 .opt {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 10px;
-	width: 100%;
-	min-height: 42px;
-	padding: 0 12px;
-	border: none;
-	border-radius: 12px;
-	background: transparent;
-	color: inherit;
-	font: inherit;
-	font-size: 18px;
-	text-align: left;
-	text-decoration: none;
-	white-space: nowrap;
-	transition: background var(--t) var(--ease), transform var(--t) var(--ease);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 18px;
+  text-align: left;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background var(--t) var(--ease),
+    transform var(--t) var(--ease);
 }
 
 button.opt,
 a.opt {
-	cursor: inherit;
+  cursor: inherit;
 }
 
 .opt--toggle:hover,
 .opt--action:hover,
 .opt:focus-within {
-	outline: none;
+  outline: none;
 }
 
 .opt:focus-visible {
-	outline: 2px solid var(--coffee-bean);
+  outline: 2px solid var(--coffee-bean);
 }
 
 .opt-label {
-	flex: 0 0 auto;
+  flex: 0 0 auto;
 }
 
 .opt-state {
-	min-width: 52px;
-	padding: 4px 12px;
-	border: 1.6px solid var(--camel);
-	border-radius: 8px;
-	font-size: var(--ui-sm);
-	letter-spacing: var(--tracking);
-	text-align: center;
-	color: var(--camel);
-	transition: background var(--t) var(--ease), color var(--t) var(--ease), border-color var(--t) var(--ease);
+  min-width: 52px;
+  padding: 4px 12px;
+  border: 1.6px solid var(--camel);
+  border-radius: 8px;
+  font-size: var(--ui-sm);
+  letter-spacing: var(--tracking);
+  text-align: center;
+  color: var(--camel);
+  transition:
+    background var(--t) var(--ease),
+    color var(--t) var(--ease),
+    border-color var(--t) var(--ease);
 }
 
 .opt-state:hover {
-	border-color: var(--coffee-bean);
+  border-color: var(--coffee-bean);
 }
 
 .opt-state.on {
-	background: var(--coffee-bean);
-	border-color: var(--coffee-bean);
-	color: var(--papaya-whip);
+  background: var(--coffee-bean);
+  border-color: var(--coffee-bean);
+  color: var(--papaya-whip);
 }
 
 .opt-glyph {
-	display: inline-flex;
-	font-size: 16px;
-	color: var(--camel);
-	transition: transform var(--t) var(--ease), color var(--t) var(--ease);
+  display: inline-flex;
+  font-size: 16px;
+  color: var(--camel);
+  transition:
+    transform var(--t) var(--ease),
+    color var(--t) var(--ease);
 }
 
 .opt-glyph svg {
-	width: 17px;
-	height: 17px;
-	fill: currentColor;
+  width: 17px;
+  height: 17px;
+  fill: currentColor;
+}
+
+.opt-glyph i {
+  font-size: 15px;
+  line-height: 1;
 }
 
 .opt--action.confirm .opt-label {
-	color: var(--camel);
-	font-size: 14px;
+  color: var(--camel);
+  font-size: 14px;
 }
 
 .opt--action:hover .opt-glyph {
-	color: var(--coffee-bean);
+  color: var(--coffee-bean);
 }
 
 /* ----- range slider ----- */
-/* typed percentage that inherits into the track pseudo; the fill snaps per step (no ease) */
+/* fill %, inherits into track */
 @property --fill {
-	syntax: "<percentage>";
-	inherits: true;
-	initial-value: 0%;
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 0%;
 }
 
-/* slider fills the gap between the pinned label and value, so the row stays balanced
-   in every language (label left, value right, track stretching to take up the rest) */
+/* slider fills gap between label and value */
 .opt--range .range {
-	flex: 1 1 auto;
-	min-width: 0;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .opt-val {
-	flex: 0 0 auto;
-	font-size: var(--ui-sm);
-	/* width is pinned by JS (reserveValWidth) to the widest reading so the column never
-	   resizes as digits change; text-align:right keeps the number flush-right, mirroring
-	   the label's left inset */
-	text-align: right;
-	color: var(--camel);
+  flex: 0 0 auto;
+  font-size: var(--ui-sm);
+  /* width pinned by js, flush-right */
+  text-align: right;
+  color: var(--camel);
 }
 
 .range {
-	-webkit-appearance: none;
-	appearance: none;
-	width: 108px;
-	/* tall transparent grab area — the visible 4px line lives on the track below */
-	height: 22px;
-	background: transparent;
-	outline: none;
-	/* very fast ease so the fill glides between snap steps instead of jumping */
-	transition: --fill 0.1s var(--ease);
+  -webkit-appearance: none;
+  appearance: none;
+  width: 108px;
+  /* tall grab area, 4px line on track */
+  height: 22px;
+  background: transparent;
+  outline: none;
+  /* fast ease between steps */
+  transition: --fill 0.1s var(--ease);
 }
 
 .range:focus-visible {
-	outline: 2px solid var(--coffee-bean);
-	outline-offset: 4px;
-	border-radius: 999px;
+  outline: 2px solid var(--coffee-bean);
+  outline-offset: 4px;
+  border-radius: 999px;
 }
 
-/* the visible track: a 4px gradient line centred in the tall hitbox.
-   --fill inherits in, so the eased fill still animates here */
+/* 4px gradient track */
 .range::-webkit-slider-runnable-track {
-	height: 4px;
-	border-radius: 999px;
-	background: linear-gradient(90deg, var(--coffee-bean) var(--fill, 0%), var(--camel) var(--fill, 0%));
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--coffee-bean) var(--fill, 0%),
+    var(--camel) var(--fill, 0%)
+  );
 }
 
 .range::-moz-range-track {
-	height: 4px;
-	border-radius: 999px;
-	background: linear-gradient(90deg, var(--coffee-bean) var(--fill, 0%), var(--camel) var(--fill, 0%));
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--coffee-bean) var(--fill, 0%),
+    var(--camel) var(--fill, 0%)
+  );
 }
 
-/* dot removed — the eased fill alone shows the level */
+/* no thumb */
 .range::-webkit-slider-thumb {
-	-webkit-appearance: none;
-	appearance: none;
-	width: 0;
-	height: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0;
+  height: 0;
 }
 
 .range::-moz-range-thumb {
-	width: 0;
-	height: 0;
-	border: none;
+  width: 0;
+  height: 0;
+  border: none;
 }
 
 /* ----- language select ----- */
 .sel-wrap {
-	position: relative;
-	display: inline-flex;
-	align-items: center;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
 }
 
 .select {
-	-webkit-appearance: none;
-	appearance: none;
-	padding: 5px 30px 5px 14px;
-	border: 1.6px solid var(--camel);
-	border-radius: 8px;
-	background: var(--papaya-whip);
-	color: var(--coffee-bean);
-	font: inherit;
-	font-size: var(--ui-sm);
-	letter-spacing: var(--tracking);
-	transition: border-color var(--t) var(--ease);
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 5px 30px 5px 14px;
+  border: 1.6px solid var(--camel);
+  border-radius: 8px;
+  background: var(--papaya-whip);
+  color: var(--camel);
+  font: inherit;
+  font-size: var(--ui-sm);
+  letter-spacing: var(--tracking);
+  transition: border-color var(--t) var(--ease);
 }
 
 .select:hover,
 .select:focus-visible {
-	border-color: var(--coffee-bean);
-	outline: none;
+  border-color: var(--coffee-bean);
+  outline: none;
 }
 
 .caret {
-	position: absolute;
-	right: 10px;
-	font-size: 11px;
-	color: var(--camel);
-	pointer-events: none;
+  position: absolute;
+  right: 10px;
+  font-size: 11px;
+  color: var(--camel);
+  pointer-events: none;
 }
 
-/* ----- language listbox (custom, so the cursor never has to leave the page) ----- */
+/* ----- language listbox (custom) ----- */
 .lang-list {
-	position: fixed;
-	z-index: 60;
-	list-style: none;
-	margin: 0;
-	padding: 6px;
-	max-height: 240px;
-	overflow-y: auto;
-	border-radius: 10px;
-	background: var(--papaya-whip);
-	box-shadow: var(--shadow);
-	scrollbar-width: thin;
-	scrollbar-color: var(--camel) transparent;
+  position: fixed;
+  z-index: 60;
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  max-height: 240px;
+  overflow-y: auto;
+  border-radius: 10px;
+  background: var(--papaya-whip);
+  box-shadow: var(--shadow);
+  scrollbar-width: thin;
+  scrollbar-color: var(--camel) transparent;
 }
 
 .lang-list::-webkit-scrollbar {
-	width: 8px;
+  width: 8px;
 }
 
 .lang-list::-webkit-scrollbar-track {
-	background: transparent;
+  background: transparent;
 }
 
 .lang-list::-webkit-scrollbar-thumb {
-	background: var(--camel);
-	border-radius: 999px;
+  background: var(--camel);
+  border-radius: 999px;
 }
 
 .lang-list::-webkit-scrollbar-thumb:hover {
-	background: var(--coffee-bean);
+  background: var(--coffee-bean);
 }
 
 .lang-opt {
-	padding: 8px 14px;
-	border-radius: 8px;
-	font-size: var(--ui-sm);
-	letter-spacing: var(--tracking);
-	color: var(--coffee-bean);
-	white-space: nowrap;
-	transition: background 0.2s var(--ease);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: var(--ui-sm);
+  letter-spacing: var(--tracking);
+  color: var(--coffee-bean);
+  white-space: nowrap;
+  transition: background 0.2s var(--ease);
 }
 
 .lang-opt:hover,
 .lang-opt[aria-selected="true"] {
-	background: var(--soft-apricot);
+  background: var(--soft-apricot);
 }
 
 .lang-opt:focus-visible {
-	background: var(--soft-apricot);
-	outline: 2px solid var(--coffee-bean);
-	outline-offset: -2px;
+  background: var(--soft-apricot);
+  outline: 2px solid var(--coffee-bean);
+  outline-offset: -2px;
 }
 
 /* ----- gear ----- */
 .gear {
-	position: absolute;
-	top: 0;
-	right: 0;
-	z-index: 2;
-	display: grid;
-	place-items: center;
-	width: 56px;
-	height: 56px;
-	border: none;
-	background: transparent;
-	color: var(--coffee-bean);
-	transition: transform 0.9s var(--ease);
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: none;
+  background: transparent;
+  color: var(--coffee-bean);
+  transition: transform 0.9s var(--ease);
 }
 
 .gear:focus-visible {
-	outline: none;
+  outline: none;
 }
 
 .gear svg {
-	width: 26px;
-	height: 26px;
-	fill: currentColor;
+  width: 26px;
+  height: 26px;
+  fill: currentColor;
+}
+
+.gear i {
+  font-size: 22px;
+  line-height: 1;
 }
 
 /* ----- cursor ----- */
-/* the outer node only translates (never rotates), so its drop-shadow offset stays
-   pinned in screen space; the inner dot carries the rotate/scale shape morph */
+/* outer translates, dot rotates/scales */
 .cursor {
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 100;
-	width: 0;
-	height: 0;
-	opacity: 0;
-	filter: drop-shadow(var(--shadow));
-	pointer-events: none;
-	will-change: transform;
-	transition: opacity 0.3s var(--ease);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  filter: drop-shadow(var(--shadow));
+  pointer-events: none;
+  will-change: transform;
+  transition: opacity 0.3s var(--ease);
 }
 
-.cursor.ready { opacity: 1; }
+.cursor.ready {
+  opacity: 1;
+}
 
-/* fade away (eased, via the opacity transition above) while a slider is held,
-   so the value/track stays readable under the pointer */
-.cursor.dragging { opacity: 0; }
+/* fade while dragging slider */
+.cursor.dragging {
+  opacity: 0;
+}
 
 .cursor-dot {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 12px;
-	height: 12px;
-	border: 8px solid var(--coffee-bean);
-	border-radius: 50%;
-	background: transparent;
-	will-change: transform, width, height, border-width;
-	transition:
-		width var(--t) var(--ease),
-		height var(--t) var(--ease),
-		border-width var(--t) var(--ease);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border: 8px solid var(--coffee-bean);
+  border-radius: 50%;
+  background: transparent;
+  will-change: transform, width, height, border-width;
+  transition:
+    width var(--t) var(--ease),
+    height var(--t) var(--ease),
+    border-width var(--t) var(--ease);
 }
 
 .cursor.ring .cursor-dot {
-	width: 24px;
-	height: 24px;
-	border-width: 4px;
+  width: 24px;
+  height: 24px;
+  border-width: 4px;
 }
 
 .cursor-tip {
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 90;
-	pointer-events: none;
-	will-change: transform;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 90;
+  pointer-events: none;
+  will-change: transform;
 }
 
 .cursor-tip .bubble {
-	display: inline-block;
-	padding: 4px 12px;
-	border-radius: 999px;
-	background: var(--papaya-whip);
-	color: var(--coffee-bean);
-	font-size: 14px;
-	letter-spacing: var(--tracking);
-	opacity: 0;
-	transform: scale(0.6);
-	transform-origin: left center;
-	transition: opacity 0.2s var(--ease), transform 0.28s var(--ease);
-	box-shadow: var(--shadow);
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--papaya-whip);
+  color: var(--coffee-bean);
+  font-size: 14px;
+  letter-spacing: var(--tracking);
+  opacity: 0;
+  transform: scale(0.6);
+  transform-origin: left center;
+  transition:
+    opacity 0.2s var(--ease),
+    transform 0.28s var(--ease);
+  box-shadow: var(--shadow);
 }
 
 .cursor-tip.show .bubble {
-	opacity: 1;
-	transform: scale(1);
+  opacity: 1;
+  transform: scale(1);
 }
 
 .fps {
-	position: fixed;
-	top: 22px;
-	left: 22px;
-	z-index: 60;
-	display: none;
-	padding: 4px 10px;
-	border-radius: 8px;
-	background: var(--papaya-whip);
-	color: var(--camel);
-	font-size: 13px;
-	letter-spacing: var(--tracking);
-	pointer-events: none;
+  position: fixed;
+  top: 22px;
+  left: 22px;
+  z-index: 60;
+  display: none;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: var(--papaya-whip);
+  color: var(--camel);
+  font-size: 13px;
+  letter-spacing: var(--tracking);
+  pointer-events: none;
+  box-shadow: var(--shadow);
 }
 
-.fps.show { display: block; }
+.fps.show {
+  display: block;
+}
 
 @media (max-width: 360px) {
-	:root {
-		--panel-w: calc(100vw - 44px);
-	}
-	.loader { width: min(300px, 78vw); }
+  :root {
+    --panel-w: calc(100vw - 44px);
+  }
+  .loader {
+    width: min(300px, 78vw);
+  }
 }
 
 @media (hover: none), (pointer: coarse) {
-	.cursor,
-	.cursor-tip { display: none; }
+  .cursor,
+  .cursor-tip {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-	body::before { animation: none; }
-	.gear { transition-duration: 0.001ms; }
-	.settings { transition-duration: 0.2s; }
-	.cursor,
-	.cursor-dot { transition-duration: 0.15s; }
+  body::before {
+    animation: none;
+  }
+  .gear {
+    transition-duration: 0.001ms;
+  }
+  .settings {
+    transition-duration: 0.2s;
+  }
+  .cursor,
+  .cursor-dot {
+    transition-duration: 0.15s;
+  }
+  .screen,
+  .textbox,
+  .textbox.show,
+  .ach,
+  .ach-bar-fill {
+    transition-duration: 0.2s;
+  }
+  .textbox-next.show {
+    animation: none;
+  }
 }

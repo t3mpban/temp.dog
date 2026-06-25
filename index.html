@@ -3,117 +3,193 @@
     but stop peeking darling' ヾ(≧▽≦*)o
     this code dosent write itself.. alright back to work.
      ====================== -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-	<head>
-		<meta name="title" content="t3mp's website">
-		<meta name="description" content="Hi, My name is Temp, and this website is a portal for all my socials, hosts my portfolio, and my biography, and me, Temp!!">
-		<meta name="keywords" content="t3mp, t3mpban, t3mpyt, 3vu, t3vu, temp, tempban, tempyt, temp youtube, t3wp, t3mp twitter, t3mp youtube, t3mp twitch, t3mps website, t3mp's website, temp's website, t3mp's Website">
-		<meta name="robots" content="index, follow">
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<meta name="language" content="English">
-		<meta name="author" content="t3mp">
-		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-		<meta content="https://www.temp.dog/" property="og:url" />
-		<meta content="https://temp.dog/images/pfp.png" property="og:image" />
-		<meta content="#6f4e37" data-react-helmet="true" name="theme-color" />
-		<meta charset="utf-8">
-		<title>t3mp's website</title>
-		<link rel="icon" type="image/png" href="images/favicon.png">
-		<link rel="stylesheet" type="text/css" href="scripts/style.css">
-		<script defer src="https://cloud.umami.is/script.js" data-website-id="f8a25eb1-84d1-48ab-b56d-03a37097f3af"></script>
-	</head>
-	<body>
-		<!-- placeholder content surface: a background rect revealed once loading finishes.
+  <head>
+    <meta name="title" content="t3mp's website" />
+    <meta
+      name="description"
+      content="Hi, My name is Temp, and this website is a portal for all my socials, hosts my portfolio, and my biography, and me, Temp!!"
+    />
+    <meta
+      name="keywords"
+      content="t3mp, t3mpban, t3mpyt, 3vu, t3vu, temp, tempban, tempyt, temp youtube, t3wp, t3mp twitter, t3mp youtube, t3mp twitch, t3mps website, t3mp's website, temp's website, t3mp's Website"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="language" content="English" />
+    <meta name="author" content="t3mp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta content="https://www.temp.dog/" property="og:url" />
+    <meta content="https://temp.dog/images/pfp.png" property="og:image" />
+    <meta content="#6f4e37" data-react-helmet="true" name="theme-color" />
+    <meta charset="utf-8" />
+    <title>t3mp's website</title>
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="scripts/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <script
+      defer
+      src="https://cloud.umami.is/script.js"
+      data-website-id="f8a25eb1-84d1-48ab-b56d-03a37097f3af"
+    ></script>
+  </head>
+  <body>
+    <!-- placeholder content surface: a background rect revealed once loading finishes.
 		     sits below the foreground UI and isn't one of the parallax-nudged layers -->
-		<div class="screen" id="screen" aria-hidden="true"></div>
+    <div class="screen" id="screen" aria-hidden="true"></div>
 
-		<!-- center stage: the loading bar -->
-		<main class="stage">
-			<div class="loader-wrap" id="loaderWrap">
-				<div class="loader cursorable" id="loader" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-					<div class="track"><div class="fill" id="fill"></div></div>
-				</div>
-			</div>
-		</main>
+    <!-- visual-novel textbox: hidden + inert until textbox("ref") is called from js.
+		     mid-ground layer (parallax-nudged), pops in/out by scaling from 0 -->
+    <div class="textbox cursorable" id="textbox" aria-hidden="true" inert>
+      <p class="textbox-text" id="textboxText"></p>
+      <span class="textbox-next" id="textboxNext" aria-hidden="true">
+        <i class="fa-solid fa-caret-down" aria-hidden="true"></i>
+      </span>
+    </div>
 
-		<!-- top-right settings: square container morphs to reveal options -->
-		<aside class="settings" id="settings">
-			<button class="gear cursorable" id="gear" data-i18n-aria="settings-title" aria-label="Settings" aria-expanded="false">
-				<svg viewBox="0 0 24 24" aria-hidden="true">
-					<path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
-				</svg>
-			</button>
+    <!-- achievement toast: slides down from the top (xbox-360 style) when
+		     achievement("id") is called. status region so it's announced -->
+    <div class="ach" id="ach" role="status" aria-live="polite">
+      <span class="ach-icon" id="achIcon"><i class="fa-solid" aria-hidden="true"></i></span>
+      <span class="ach-body">
+        <span class="ach-title" id="achTitle"></span>
+        <span class="ach-desc" id="achDesc"></span>
+        <span class="ach-bar" id="achBar" hidden>
+          <span class="ach-bar-track"><span class="ach-bar-fill" id="achBarFill"></span></span>
+          <span class="ach-bar-num" id="achBarNum"></span>
+        </span>
+      </span>
+    </div>
 
-			<div class="panel">
-				<div class="panel-head" data-i18n="settings-title">settings</div>
-				<div class="divider"></div>
-				<div class="opts">
-					<div class="grp">
-						<label class="opt opt--range" data-setting="music">
-							<span class="opt-label" data-i18n="label-music">music</span>
-							<input class="range cursorable" type="range" min="0" max="10" step="1" value="0" aria-label="music volume">
-							<span class="opt-val">0</span>
-						</label>
-						<label class="opt opt--range" data-setting="sounds">
-							<span class="opt-label" data-i18n="label-sounds">sound</span>
-							<input class="range cursorable" type="range" min="0" max="10" step="1" value="0" aria-label="sounds volume">
-							<span class="opt-val">0</span>
-						</label>
-					</div>
+    <!-- center stage: the loading bar -->
+    <main class="stage">
+      <div class="loader-wrap" id="loaderWrap">
+        <div
+          class="loader cursorable"
+          id="loader"
+          role="progressbar"
+          aria-label="Loading"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+        >
+          <div class="track"><div class="fill" id="fill"></div></div>
+        </div>
+      </div>
+    </main>
 
-					<div class="grp">
-						<button class="opt opt--toggle cursorable" data-setting="fullscreen" aria-pressed="false">
-							<span class="opt-label" data-i18n="label-fullscreen">fullscreen</span>
-							<span class="opt-state">off</span>
-						</button>
-						<button class="opt opt--toggle cursorable" data-setting="fps" aria-pressed="false">
-							<span class="opt-label" data-i18n="label-fps">show fps</span>
-							<span class="opt-state">off</span>
-						</button>
-						<div class="opt opt--select" data-setting="language">
-							<span class="opt-label" data-i18n="label-language">language</span>
-							<span class="sel-wrap">
-								<button type="button" class="select cursorable" id="langBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="language">
-									<span id="langBtnLabel">english</span>
-								</button>
-								<span class="caret" aria-hidden="true">&#9662;</span>
-							</span>
-						</div>
-					</div>
+    <!-- top-right settings: square container morphs to reveal options -->
+    <aside class="settings" id="settings">
+      <button
+        class="gear cursorable"
+        id="gear"
+        data-i18n-aria="settings-title"
+        aria-label="Settings"
+        aria-expanded="false"
+      >
+        <i class="fa-solid fa-gear" aria-hidden="true"></i>
+      </button>
 
-					<div class="grp">
-						<button class="opt opt--action cursorable" data-setting="cache">
-							<span class="opt-label" data-i18n="label-cache">clear cache</span>
-							<span class="opt-glyph">
-								<svg viewBox="0 0 24 24" aria-hidden="true">
-									<path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-								</svg>
-							</span>
-						</button>
-						<!-- legacy: previous completed version of the site -->
-						<a class="opt opt--action cursorable" data-setting="legacy" href="/v4">
-							<span class="opt-label" data-i18n="label-legacy">legacy website</span>
-							<span class="opt-glyph">&#8599;</span>
-						</a>
-					</div>
-				</div>
-			</div>
-		</aside>
+      <div class="panel">
+        <div class="panel-head" data-i18n="settings-title">settings</div>
+        <div class="divider"></div>
+        <div class="opts">
+          <div class="grp">
+            <label class="opt opt--range" data-setting="music">
+              <span class="opt-label" data-i18n="label-music">music</span>
+              <input
+                class="range cursorable"
+                type="range"
+                min="0"
+                max="10"
+                step="1"
+                value="0"
+                aria-label="music volume"
+              />
+              <span class="opt-val">0</span>
+            </label>
+            <label class="opt opt--range" data-setting="sounds">
+              <span class="opt-label" data-i18n="label-sounds">sound</span>
+              <input
+                class="range cursorable"
+                type="range"
+                min="0"
+                max="10"
+                step="1"
+                value="0"
+                aria-label="sounds volume"
+              />
+              <span class="opt-val">0</span>
+            </label>
+          </div>
 
-		<!-- corner signature -->
-		<footer class="sig" data-i18n="small-text">made by t3mp</footer>
+          <div class="grp">
+            <button
+              class="opt opt--toggle cursorable"
+              data-setting="fullscreen"
+              aria-pressed="false"
+            >
+              <span class="opt-label" data-i18n="label-fullscreen">fullscreen</span>
+              <span class="opt-state">off</span>
+            </button>
+            <button class="opt opt--toggle cursorable" data-setting="fps" aria-pressed="false">
+              <span class="opt-label" data-i18n="label-fps">show fps</span>
+              <span class="opt-state">off</span>
+            </button>
+            <div class="opt opt--select" data-setting="language">
+              <span class="opt-label" data-i18n="label-language">language</span>
+              <span class="sel-wrap">
+                <button
+                  type="button"
+                  class="select cursorable"
+                  id="langBtn"
+                  aria-haspopup="listbox"
+                  aria-expanded="false"
+                  aria-label="language"
+                >
+                  <span id="langBtnLabel">english</span>
+                </button>
+                <span class="caret" aria-hidden="true">&#9662;</span>
+              </span>
+            </div>
+          </div>
 
-		<!-- custom weighted cursor + helpers (decorative, no-op without JS / on touch) -->
-		<div class="cursor" id="cursor" aria-hidden="true"><div class="cursor-dot"></div></div>
-		<div class="cursor-tip" id="tip" aria-hidden="true"><span class="bubble">0%</span></div>
-		<div class="fps" id="fps" aria-hidden="true">FPS 60</div>
+          <div class="grp">
+            <button class="opt opt--action cursorable" data-setting="cache">
+              <span class="opt-label" data-i18n="label-cache">clear cache</span>
+              <span class="opt-glyph">
+                <i class="fa-solid fa-trash" aria-hidden="true"></i>
+              </span>
+            </button>
+            <!-- legacy: previous completed version of the site -->
+            <a class="opt opt--action cursorable" data-setting="legacy" href="/v4">
+              <span class="opt-label" data-i18n="label-legacy">legacy website</span>
+              <span class="opt-glyph"
+                ><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i
+              ></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </aside>
 
-		<!-- audio used by the music / sounds toggles -->
-		<audio id="music" src="v4/sounds/1.mp3" loop preload="none"></audio>
-		<audio id="sfxHover" src="v4/sounds/hover.mp3" preload="auto"></audio>
-		<audio id="sfxSelect" src="v4/sounds/select.mp3" preload="auto"></audio>
+    <!-- corner signature -->
+    <footer class="sig" data-i18n="small-text">made by t3mp</footer>
 
-		<script src="scripts/script.js"></script>
-	</body>
+    <!-- custom weighted cursor + helpers (decorative, no-op without JS / on touch) -->
+    <div class="cursor" id="cursor" aria-hidden="true"><div class="cursor-dot"></div></div>
+    <div class="cursor-tip" id="tip" aria-hidden="true"><span class="bubble">0%</span></div>
+    <div class="fps" id="fps" aria-hidden="true">FPS 60</div>
+
+    <!-- audio used by the music / sounds toggles -->
+    <audio id="music" src="v4/sounds/1.mp3" loop preload="none"></audio>
+    <audio id="sfxHover" src="v4/sounds/hover.mp3" preload="auto"></audio>
+    <audio id="sfxSelect" src="v4/sounds/select.mp3" preload="auto"></audio>
+
+    <script src="scripts/script.js"></script>
+  </body>
 </html>

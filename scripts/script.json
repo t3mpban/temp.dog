@@ -1,158 +1,275 @@
-[
-	{
-		"id": "small-text",
-		"strings": [
-			{"lang": "en", "text": "made by t3mp"},
-			{"lang": "es", "text": "hecho por t3mp"},
-			{"lang": "pt", "text": "feito por t3mp"},
-			{"lang": "fr", "text": "fait par t3mp"},
-			{"lang": "de", "text": "erstellt von t3mp"},
-			{"lang": "jp", "text": "t3mp が作成"},
-			{"lang": "kr", "text": "t3mp 제작"},
-			{"lang": "zh", "text": "由 t3mp 制作"}
-		]
-	},
-	{
-		"id": "settings-title",
-		"strings": [
-			{"lang": "en", "text": "settings"},
-			{"lang": "es", "text": "ajustes"},
-			{"lang": "pt", "text": "configurações"},
-			{"lang": "fr", "text": "paramètres"},
-			{"lang": "de", "text": "einstellungen"},
-			{"lang": "jp", "text": "設定"},
-			{"lang": "kr", "text": "설정"},
-			{"lang": "zh", "text": "设置"}
-		]
-	},
-	{
-		"id": "label-music",
-		"strings": [
-			{"lang": "en", "text": "music"},
-			{"lang": "es", "text": "música"},
-			{"lang": "pt", "text": "música"},
-			{"lang": "fr", "text": "musique"},
-			{"lang": "de", "text": "musik"},
-			{"lang": "jp", "text": "音楽"},
-			{"lang": "kr", "text": "음악"},
-			{"lang": "zh", "text": "音乐"}
-		]
-	},
-	{
-		"id": "label-sounds",
-		"strings": [
-			{"lang": "en", "text": "sound"},
-			{"lang": "es", "text": "sonidos"},
-			{"lang": "pt", "text": "sons"},
-			{"lang": "fr", "text": "sons"},
-			{"lang": "de", "text": "geräusche"},
-			{"lang": "jp", "text": "サウンド"},
-			{"lang": "kr", "text": "사운드"},
-			{"lang": "zh", "text": "音效"}
-		]
-	},
-	{
-		"id": "label-fullscreen",
-		"strings": [
-			{"lang": "en", "text": "fullscreen"},
-			{"lang": "es", "text": "pantalla completa"},
-			{"lang": "pt", "text": "tela cheia"},
-			{"lang": "fr", "text": "plein écran"},
-			{"lang": "de", "text": "vollbild"},
-			{"lang": "jp", "text": "全画面表示"},
-			{"lang": "kr", "text": "전체 화면"},
-			{"lang": "zh", "text": "全屏"}
-		]
-	},
-	{
-		"id": "label-fps",
-		"strings": [
-			{"lang": "en", "text": "show fps"},
-			{"lang": "es", "text": "mostrar fps"},
-			{"lang": "pt", "text": "mostrar fps"},
-			{"lang": "fr", "text": "afficher fps"},
-			{"lang": "de", "text": "fps anzeigen"},
-			{"lang": "jp", "text": "FPS表示"},
-			{"lang": "kr", "text": "FPS 표시"},
-			{"lang": "zh", "text": "显示帧率"}
-		]
-	},
-	{
-		"id": "label-language",
-		"strings": [
-			{"lang": "en", "text": "language"},
-			{"lang": "es", "text": "idioma"},
-			{"lang": "pt", "text": "idioma"},
-			{"lang": "fr", "text": "langue"},
-			{"lang": "de", "text": "sprache"},
-			{"lang": "jp", "text": "言語"},
-			{"lang": "kr", "text": "언어"},
-			{"lang": "zh", "text": "语言"}
-		]
-	},
-	{
-		"id": "label-cache",
-		"strings": [
-			{"lang": "en", "text": "clear cache"},
-			{"lang": "es", "text": "borrar caché"},
-			{"lang": "pt", "text": "limpar cache"},
-			{"lang": "fr", "text": "vider le cache"},
-			{"lang": "de", "text": "cache leeren"},
-			{"lang": "jp", "text": "キャッシュを削除"},
-			{"lang": "kr", "text": "캐시 지우기"},
-			{"lang": "zh", "text": "清除缓存"}
-		]
-	},
-	{
-		"id": "label-cache-confirm",
-		"strings": [
-			{"lang": "en", "text": "click again to confirm"},
-			{"lang": "es", "text": "haz clic otra vez"},
-			{"lang": "pt", "text": "clique novamente"},
-			{"lang": "fr", "text": "cliquez à nouveau"},
-			{"lang": "de", "text": "erneut klicken"},
-			{"lang": "jp", "text": "もう一度クリック"},
-			{"lang": "kr", "text": "다시 클릭"},
-			{"lang": "zh", "text": "再次点击"}
-		]
-	},
-	{
-		"id": "label-legacy",
-		"strings": [
-			{"lang": "en", "text": "legacy website"},
-			{"lang": "es", "text": "web anterior"},
-			{"lang": "pt", "text": "site antigo"},
-			{"lang": "fr", "text": "ancien site"},
-			{"lang": "de", "text": "alte website"},
-			{"lang": "jp", "text": "旧サイト"},
-			{"lang": "kr", "text": "이전 웹사이트"},
-			{"lang": "zh", "text": "旧版网站"}
-		]
-	},
-	{
-		"id": "state-on",
-		"strings": [
-			{"lang": "en", "text": "on"},
-			{"lang": "es", "text": "sí"},
-			{"lang": "pt", "text": "sim"},
-			{"lang": "fr", "text": "oui"},
-			{"lang": "de", "text": "an"},
-			{"lang": "jp", "text": "オン"},
-			{"lang": "kr", "text": "켜짐"},
-			{"lang": "zh", "text": "开"}
-		]
-	},
-	{
-		"id": "state-off",
-		"strings": [
-			{"lang": "en", "text": "off"},
-			{"lang": "es", "text": "no"},
-			{"lang": "pt", "text": "não"},
-			{"lang": "fr", "text": "non"},
-			{"lang": "de", "text": "aus"},
-			{"lang": "jp", "text": "オフ"},
-			{"lang": "kr", "text": "꺼짐"},
-			{"lang": "zh", "text": "关"}
-		]
-	}
-]
+{
+  "ui": [
+    {
+      "id": "small-text",
+      "strings": [
+        { "lang": "en", "text": "made by t3mp" },
+        { "lang": "es", "text": "hecho por t3mp" },
+        { "lang": "pt", "text": "feito por t3mp" },
+        { "lang": "fr", "text": "fait par t3mp" },
+        { "lang": "de", "text": "erstellt von t3mp" },
+        { "lang": "jp", "text": "t3mp が作成" },
+        { "lang": "kr", "text": "t3mp 제작" },
+        { "lang": "zh", "text": "由 t3mp 制作" }
+      ]
+    },
+    {
+      "id": "settings-title",
+      "strings": [
+        { "lang": "en", "text": "settings" },
+        { "lang": "es", "text": "ajustes" },
+        { "lang": "pt", "text": "configurações" },
+        { "lang": "fr", "text": "paramètres" },
+        { "lang": "de", "text": "einstellungen" },
+        { "lang": "jp", "text": "設定" },
+        { "lang": "kr", "text": "설정" },
+        { "lang": "zh", "text": "设置" }
+      ]
+    },
+    {
+      "id": "label-music",
+      "strings": [
+        { "lang": "en", "text": "music" },
+        { "lang": "es", "text": "música" },
+        { "lang": "pt", "text": "música" },
+        { "lang": "fr", "text": "musique" },
+        { "lang": "de", "text": "musik" },
+        { "lang": "jp", "text": "音楽" },
+        { "lang": "kr", "text": "음악" },
+        { "lang": "zh", "text": "音乐" }
+      ]
+    },
+    {
+      "id": "label-sounds",
+      "strings": [
+        { "lang": "en", "text": "sound" },
+        { "lang": "es", "text": "sonidos" },
+        { "lang": "pt", "text": "sons" },
+        { "lang": "fr", "text": "sons" },
+        { "lang": "de", "text": "geräusche" },
+        { "lang": "jp", "text": "サウンド" },
+        { "lang": "kr", "text": "사운드" },
+        { "lang": "zh", "text": "音效" }
+      ]
+    },
+    {
+      "id": "label-fullscreen",
+      "strings": [
+        { "lang": "en", "text": "fullscreen" },
+        { "lang": "es", "text": "pantalla completa" },
+        { "lang": "pt", "text": "tela cheia" },
+        { "lang": "fr", "text": "plein écran" },
+        { "lang": "de", "text": "vollbild" },
+        { "lang": "jp", "text": "全画面表示" },
+        { "lang": "kr", "text": "전체 화면" },
+        { "lang": "zh", "text": "全屏" }
+      ]
+    },
+    {
+      "id": "label-fps",
+      "strings": [
+        { "lang": "en", "text": "show fps" },
+        { "lang": "es", "text": "mostrar fps" },
+        { "lang": "pt", "text": "mostrar fps" },
+        { "lang": "fr", "text": "afficher fps" },
+        { "lang": "de", "text": "fps anzeigen" },
+        { "lang": "jp", "text": "FPS表示" },
+        { "lang": "kr", "text": "FPS 표시" },
+        { "lang": "zh", "text": "显示帧率" }
+      ]
+    },
+    {
+      "id": "label-language",
+      "strings": [
+        { "lang": "en", "text": "language" },
+        { "lang": "es", "text": "idioma" },
+        { "lang": "pt", "text": "idioma" },
+        { "lang": "fr", "text": "langue" },
+        { "lang": "de", "text": "sprache" },
+        { "lang": "jp", "text": "言語" },
+        { "lang": "kr", "text": "언어" },
+        { "lang": "zh", "text": "语言" }
+      ]
+    },
+    {
+      "id": "label-cache",
+      "strings": [
+        { "lang": "en", "text": "clear cache" },
+        { "lang": "es", "text": "borrar caché" },
+        { "lang": "pt", "text": "limpar cache" },
+        { "lang": "fr", "text": "vider le cache" },
+        { "lang": "de", "text": "cache leeren" },
+        { "lang": "jp", "text": "キャッシュを削除" },
+        { "lang": "kr", "text": "캐시 지우기" },
+        { "lang": "zh", "text": "清除缓存" }
+      ]
+    },
+    {
+      "id": "label-cache-confirm",
+      "strings": [
+        { "lang": "en", "text": "click again to confirm" },
+        { "lang": "es", "text": "haz clic otra vez" },
+        { "lang": "pt", "text": "clique novamente" },
+        { "lang": "fr", "text": "cliquez à nouveau" },
+        { "lang": "de", "text": "erneut klicken" },
+        { "lang": "jp", "text": "もう一度クリック" },
+        { "lang": "kr", "text": "다시 클릭" },
+        { "lang": "zh", "text": "再次点击" }
+      ]
+    },
+    {
+      "id": "label-legacy",
+      "strings": [
+        { "lang": "en", "text": "legacy website" },
+        { "lang": "es", "text": "web anterior" },
+        { "lang": "pt", "text": "site antigo" },
+        { "lang": "fr", "text": "ancien site" },
+        { "lang": "de", "text": "alte website" },
+        { "lang": "jp", "text": "旧サイト" },
+        { "lang": "kr", "text": "이전 웹사이트" },
+        { "lang": "zh", "text": "旧版网站" }
+      ]
+    },
+    {
+      "id": "state-on",
+      "strings": [
+        { "lang": "en", "text": "on" },
+        { "lang": "es", "text": "sí" },
+        { "lang": "pt", "text": "sim" },
+        { "lang": "fr", "text": "oui" },
+        { "lang": "de", "text": "an" },
+        { "lang": "jp", "text": "オン" },
+        { "lang": "kr", "text": "켜짐" },
+        { "lang": "zh", "text": "开" }
+      ]
+    },
+    {
+      "id": "state-off",
+      "strings": [
+        { "lang": "en", "text": "off" },
+        { "lang": "es", "text": "no" },
+        { "lang": "pt", "text": "não" },
+        { "lang": "fr", "text": "non" },
+        { "lang": "de", "text": "aus" },
+        { "lang": "jp", "text": "オフ" },
+        { "lang": "kr", "text": "꺼짐" },
+        { "lang": "zh", "text": "关" }
+      ]
+    }
+  ],
+  "dialogue": [
+    {
+      "id": "chair",
+      "lines": [
+        [
+          { "lang": "en", "text": "It's a chair." },
+          { "lang": "es", "text": "Es una silla." },
+          { "lang": "pt", "text": "É uma cadeira." },
+          { "lang": "fr", "text": "C'est une chaise." },
+          { "lang": "de", "text": "Es ist ein Stuhl." },
+          { "lang": "jp", "text": "ただの椅子だ。" },
+          { "lang": "kr", "text": "그냥 의자네." },
+          { "lang": "zh", "text": "这是一把椅子。" }
+        ],
+        [
+          { "lang": "en", "text": "Nothing special about it, really." },
+          { "lang": "es", "text": "Nada especial, la verdad." },
+          { "lang": "pt", "text": "Nada de especial, na verdade." },
+          { "lang": "fr", "text": "Rien de spécial, vraiment." },
+          { "lang": "de", "text": "Nichts Besonderes, ehrlich." },
+          { "lang": "jp", "text": "特に、何もないよ。" },
+          { "lang": "kr", "text": "딱히, 특별할 건 없어." },
+          { "lang": "zh", "text": "其实，没什么特别的。" }
+        ],
+        [
+          { "lang": "en", "text": "...why are you still looking at it?" },
+          { "lang": "es", "text": "...¿por qué sigues mirándola?" },
+          { "lang": "pt", "text": "...por que ainda está olhando?" },
+          { "lang": "fr", "text": "...pourquoi tu la regardes encore ?" },
+          { "lang": "de", "text": "...warum schaust du noch hin?" },
+          { "lang": "jp", "text": "…まだ見てるの？" },
+          { "lang": "kr", "text": "…아직도 보고 있어?" },
+          { "lang": "zh", "text": "……你怎么还在看它？" }
+        ]
+      ]
+    }
+  ],
+  "achievements": [
+    {
+      "id": "welcome",
+      "type": "normal",
+      "icon": "fa-mug-hot",
+      "title": [
+        { "lang": "en", "text": "Welcome In" },
+        { "lang": "es", "text": "Bienvenido" },
+        { "lang": "pt", "text": "Bem-vindo" },
+        { "lang": "fr", "text": "Bienvenue" },
+        { "lang": "de", "text": "Willkommen" },
+        { "lang": "jp", "text": "ようこそ" },
+        { "lang": "kr", "text": "환영합니다" },
+        { "lang": "zh", "text": "欢迎" }
+      ],
+      "desc": [
+        { "lang": "en", "text": "You opened the site." },
+        { "lang": "es", "text": "Abriste el sitio." },
+        { "lang": "pt", "text": "Você abriu o site." },
+        { "lang": "fr", "text": "Tu as ouvert le site." },
+        { "lang": "de", "text": "Du hast die Seite geöffnet." },
+        { "lang": "jp", "text": "サイトを開いた。" },
+        { "lang": "kr", "text": "사이트를 열었어요." },
+        { "lang": "zh", "text": "你打开了网站。" }
+      ]
+    },
+    {
+      "id": "explorer",
+      "type": "progress",
+      "icon": "fa-compass",
+      "goal": 5,
+      "title": [
+        { "lang": "en", "text": "Explorer" },
+        { "lang": "es", "text": "Explorador" },
+        { "lang": "pt", "text": "Explorador" },
+        { "lang": "fr", "text": "Explorateur" },
+        { "lang": "de", "text": "Entdecker" },
+        { "lang": "jp", "text": "探検家" },
+        { "lang": "kr", "text": "탐험가" },
+        { "lang": "zh", "text": "探索者" }
+      ],
+      "desc": [
+        { "lang": "en", "text": "Find every hidden corner." },
+        { "lang": "es", "text": "Encuentra cada rincón oculto." },
+        { "lang": "pt", "text": "Encontre cada canto escondido." },
+        { "lang": "fr", "text": "Trouve chaque coin caché." },
+        { "lang": "de", "text": "Finde jede versteckte Ecke." },
+        { "lang": "jp", "text": "隠れた場所を全て見つけよう。" },
+        { "lang": "kr", "text": "숨겨진 곳을 모두 찾으세요." },
+        { "lang": "zh", "text": "找到每一个隐藏角落。" }
+      ]
+    },
+    {
+      "id": "night_owl",
+      "type": "normal",
+      "icon": "fa-moon",
+      "title": [
+        { "lang": "en", "text": "Night Owl" },
+        { "lang": "es", "text": "Búho Nocturno" },
+        { "lang": "pt", "text": "Coruja Noturna" },
+        { "lang": "fr", "text": "Oiseau de Nuit" },
+        { "lang": "de", "text": "Nachteule" },
+        { "lang": "jp", "text": "夜更かし" },
+        { "lang": "kr", "text": "올빼미족" },
+        { "lang": "zh", "text": "夜猫子" }
+      ],
+      "desc": [
+        { "lang": "en", "text": "Visited after midnight." },
+        { "lang": "es", "text": "Visitaste pasada la medianoche." },
+        { "lang": "pt", "text": "Visitou depois da meia-noite." },
+        { "lang": "fr", "text": "Visité après minuit." },
+        { "lang": "de", "text": "Nach Mitternacht besucht." },
+        { "lang": "jp", "text": "深夜に訪れた。" },
+        { "lang": "kr", "text": "자정 이후에 방문했어요." },
+        { "lang": "zh", "text": "午夜后访问。" }
+      ]
+    }
+  ]
+}
