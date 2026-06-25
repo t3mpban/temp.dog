@@ -3,14 +3,21 @@
 
 	// constants
 	var CURSOR_TAU = 0.1;      // higher = heavier follow
-	var TIP_TAU = 0.16;         // tooltip trails a touch tighter than the dot
-	var VEL_TAU = 0.08;         // how quickly the thin/fat reading settles
+	var TIP_TAU = 0.2;         // tooltip trails a touch tighter than the dot
+	var VEL_TAU = 0.1;         // how quickly the thin/fat reading settles
 	var CURSOR_VEL_REF = 1800;  // px/sec that maps to velocity 1.0
-	var CURSOR_THIN_MAX = 0.25; // most the height may shrink (25%)
-	var CURSOR_WIDE_MAX = 0.5;  // most the width may grow (50%)
+	var CURSOR_THIN_MAX = 0.4; // most the height may shrink (25%)
+	var CURSOR_WIDE_MAX = 0.4;  // most the width may grow (50%)
 	var LOAD_DURATION = 10000;  // placeholder load time
 	var TIP_DELAY = 200;        // hovertime before the tooltip shows
 	var GEAR_STEP = 33;         // degrees the cog nudges per hover (never reverses)
+
+	// parallax: the mid/foreground layers get nudged by cursor velocity, then bounce home
+	var PARALLAX_REF = 2500;    // px/sec of cursor travel that maps to a full nudge
+	var PARALLAX_MG = 5;       // px the mid layer (settings, loading, small-text) may bounce
+	var PARALLAX_FG = 10;        // px the foreground (dropdowns) bounces — deliberately less
+	var PARALLAX_K = 100;       // spring stiffness — the snap back to the middle
+	var PARALLAX_D = 20;        // damping (< 2*sqrt(K)) so it overshoots into a bounce
 
 	var fine = window.matchMedia("(pointer: fine)").matches;
 	var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -19,12 +26,15 @@
 	// elements
 	var html = document.documentElement;
 	var cursor = document.getElementById("cursor");
+	var cursorDot = cursor.querySelector(".cursor-dot");
 	var tip = document.getElementById("tip");
 	var bubble = tip.querySelector(".bubble");
 	var fpsEl = document.getElementById("fps");
+	var screenEl = document.getElementById("screen");
 	var loaderWrap = document.getElementById("loaderWrap");
 	var loader = document.getElementById("loader");
 	var fill = document.getElementById("fill");
+	var sig = document.querySelector(".sig");
 	var settings = document.getElementById("settings");
 	var panel = settings.querySelector(".panel");
 	var gear = document.getElementById("gear");
@@ -39,13 +49,14 @@
 		en: "english", es: "español", pt: "português", fr: "français",
 		de: "deutsch", jp: "日本語", kr: "한국어", zh: "简体中文"
 	};
-	var st = { music: 100, sounds: 100, fps: false, lang: "en" };
+	var st = { music: 5, sounds: 5, fps: false, lang: "en" };
 
 	try {
 		var saved = JSON.parse(localStorage.getItem(KEY) || "{}");
 		if (saved && typeof saved === "object") {
-			if (typeof saved.music === "number") st.music = clampVol(saved.music);
-			if (typeof saved.sounds === "number") st.sounds = clampVol(saved.sounds);
+			// legacy saves used a 0–100 scale; fold anything above 10 down to the new 0–10
+			if (typeof saved.music === "number") st.music = clampVol(saved.music > 10 ? saved.music / 10 : saved.music);
+			if (typeof saved.sounds === "number") st.sounds = clampVol(saved.sounds > 10 ? saved.sounds / 10 : saved.sounds);
 			st.fps = !!saved.fps;
 			if (LANGS.indexOf(saved.lang) !== -1) st.lang = saved.lang;
 		}
@@ -60,7 +71,7 @@
 	var I18N_FALLBACK = {  // baked-in English so labels never sit blank pre-fetch
 		"settings-title": "settings",
 		"label-music": "music",
-		"label-sounds": "sounds",
+		"label-sounds": "sound",
 		"label-fullscreen": "fullscreen",
 		"label-fps": "show fps",
 		"label-language": "language",
@@ -111,6 +122,56 @@
 		return I18N_FALLBACK[id] || "";
 	}
 
+	// the two volume sliders flex-fill the space left of their value, so a longer label
+	// gives a shorter track. lock both tracks to the shorter of the two so they're the same
+	// size, then right-anchor them (margin-left:auto): each keeps the same right gap to its
+	// value, and the row with more room puts the surplus on the left. the shorter one shifts
+	// per language, so this recomputes on load and on every lang change (end of applyI18n).
+	// pin a value box to the width of its widest possible reading (e.g. "10"), so the column
+	// — and the track beside it — never resizes as the number's digit count changes (0/10)
+	function reserveValWidth(rangeInput) {
+		var valEl = rangeInput.parentNode.querySelector(".opt-val");
+		if (!valEl) return;
+		var lo = parseInt(rangeInput.min, 10) || 0;
+		var hi = parseInt(rangeInput.max, 10) || 0;
+		var stepv = parseInt(rangeInput.step, 10) || 1;
+		var prev = valEl.textContent;
+		valEl.style.width = "";
+		var widest = 0;
+		// restored synchronously below, so the swapped-in text never paints
+		for (var v = lo; v <= hi; v += stepv) {
+			valEl.textContent = String(v);
+			var w = valEl.getBoundingClientRect().width;
+			if (w > widest) widest = w;
+		}
+		valEl.textContent = prev;
+		if (widest > 0) valEl.style.width = Math.ceil(widest) + "px";
+	}
+
+	function equalizeSliders() {
+		var ranges = settings.querySelectorAll(".opt--range .range");
+		if (ranges.length < 2) return;
+		var i, min = Infinity;
+		// fix each value column first so the track measurement below accounts for it
+		for (i = 0; i < ranges.length; i++) reserveValWidth(ranges[i]);
+		// drop previous overrides so each track flex-fills to its natural width again
+		for (i = 0; i < ranges.length; i++) {
+			ranges[i].style.flex = "";
+			ranges[i].style.marginLeft = "";
+		}
+		// measure, find the shortest natural width
+		for (i = 0; i < ranges.length; i++) {
+			var w = ranges[i].getBoundingClientRect().width;
+			if (w < min) min = w;
+		}
+		if (!isFinite(min) || min <= 0) return;
+		// pin every track to that shared width and right-anchor it so the right gap matches
+		for (i = 0; i < ranges.length; i++) {
+			ranges[i].style.flex = "0 0 " + min + "px";
+			ranges[i].style.marginLeft = "auto";
+		}
+	}
+
 	function applyI18n() {
 		var nodes = document.querySelectorAll("[data-i18n]");
 		for (var i = 0; i < nodes.length; i++) {
@@ -121,9 +182,9 @@
 			ariaNodes[j].setAttribute("aria-label", t(ariaNodes[j].getAttribute("data-i18n-aria")));
 		}
 		refreshCacheLabel();
-		setToggle("fullscreen", !!document.fullscreenElement);
-		setToggle("fps", st.fps);
+		syncToggles();
 		html.lang = BCP47[st.lang] || "en";
+		equalizeSliders();
 	}
 
 	// translations live in an external file so the script stays readable
@@ -141,11 +202,9 @@
 		})
 		.catch(function (e) {}); // fall back to baked-in English on failure
 
+	// volume is an integer 0–10 (10 = full); snap to the nearest stop
 	function clampVol(v) {
-		v = Math.round(v);
-		if (v < 0) return 0;
-		if (v > 100) return 100;
-		return v;
+		return Math.min(10, Math.max(0, Math.round(v)));
 	}
 
 	function save() {
@@ -167,10 +226,17 @@
 		el.setAttribute("aria-pressed", on ? "true" : "false");
 	}
 
-	// paint the filled portion of a slider track with the ink colour
+	// fullscreen/fps toggles need re-syncing both on i18n changes (label text) and on init
+	function syncToggles() {
+		setToggle("fullscreen", !!document.fullscreenElement);
+		setToggle("fps", st.fps);
+	}
+
+	// move the slider's fill (the 0.1s ease between steps lives in CSS). the value is 0–10,
+	// so scale it to the 0–100% gradient stop the track expects
 	function paintRange(input, v) {
-		input.style.background =
-			"linear-gradient(90deg, var(--coffee-bean) " + v + "%, var(--camel) " + v + "%)";
+		var max = parseFloat(input.max) || 10;
+		input.style.setProperty("--fill", (max ? (v / max) * 100 : 0) + "%");
 	}
 
 	function setRange(name, v) {
@@ -186,18 +252,17 @@
 	function syncVisuals() {
 		setRange("music", st.music);
 		setRange("sounds", st.sounds);
-		setToggle("fps", st.fps);
-		setToggle("fullscreen", !!document.fullscreenElement);
+		syncToggles();
 		langBtnLabel.textContent = LANG_NAMES[st.lang] || st.lang;
 		fpsEl.classList.toggle("show", st.fps);
-		music.volume = st.music / 100;
+		music.volume = st.music / 10;
 	}
 
 	// sfx play helper (ignores errors if the user hasn't interacted yet)
 	function blip(el) {
 		if (!st.sounds) return;
 		try {
-			el.volume = st.sounds / 100;
+			el.volume = st.sounds / 10;
 			el.currentTime = 0;
 			el.play().catch(function () {});
 		} catch (e) {}
@@ -211,11 +276,15 @@
 	var ang = 0;                // facing angle (radians)
 	var cursorOn = fine;
 
+	// parallax: a single unit spring oscillating around 0 (the middle) drives both layers
+	var pux = 0, puy = 0;       // unit offset (-1..1, may overshoot)
+	var pvx = 0, pvy = 0;       // its velocity
+
 	if (cursorOn) {
 		html.classList.add("cc-active");
 		// position before revealing so it never flashes in the corner
-		cursor.style.transform =
-			"translate3d(" + cx + "px," + cy + "px,0) translate(-50%,-50%)";
+		cursor.style.transform = "translate3d(" + cx + "px," + cy + "px,0)";
+		cursorDot.style.transform = "translate(-50%,-50%)";
 		cursor.classList.add("ready");
 	}
 
@@ -259,6 +328,8 @@
 			hideTip();
 			setTimeout(function () {
 				loaderWrap.classList.add("done");
+				// reveal the placeholder screen as the loader fades, so they cross over
+				if (screenEl) screenEl.classList.add("show");
 				setTimeout(function () { loaderWrap.style.display = "none"; }, 750);
 			}, 350);
 		}
@@ -287,23 +358,16 @@
 		loader.addEventListener("pointerleave", hideTip);
 	}
 
-	// cog: nudge forward a little on hover and never spin back; pop the container
+	// cog: nudge forward a little on hover and never spin back
 	var gearRot = 0;
 	function nudgeGear() {
 		gearRot += GEAR_STEP;
 		gear.style.transform = "rotate(" + gearRot + "deg)";
-		if (!open) settings.classList.add("poke");
 	}
 	gear.addEventListener("pointerenter", nudgeGear);
-	gear.addEventListener("pointerleave", function () {
-		settings.classList.remove("poke");
-	});
 	// keyboard focus gets the same nudge instead of an outline (see .gear:focus-visible)
 	gear.addEventListener("focus", function () {
 		if (gear.matches(":focus-visible")) nudgeGear();
-	});
-	gear.addEventListener("blur", function () {
-		settings.classList.remove("poke");
 	});
 
 	// settings menu open/close — size is measured so any layout morphs cleanly
@@ -312,14 +376,11 @@
 	function setOpen(next) {
 		open = next;
 		if (open) {
-			settings.classList.remove("poke");
 			settings.style.width = panel.offsetWidth + "px";
 			settings.style.height = panel.offsetHeight + "px";
-			settings.classList.add("open");
 		} else {
 			settings.style.width = "";
 			settings.style.height = "";
-			settings.classList.remove("open");
 			closeLangList();
 		}
 		panel.inert = !open;
@@ -345,12 +406,16 @@
 	// music / sounds sliders
 	function bindRange(name) {
 		var input = optFor(name).querySelector(".range");
+		// hide the cursor while dragging so it doesn't sit on top of the value
+		input.addEventListener("pointerdown", function () {
+			cursor.classList.add("dragging");
+		});
 		input.addEventListener("input", function () {
 			var v = clampVol(parseInt(input.value, 10) || 0);
 			st[name] = v;
 			setRange(name, v);
 			if (name === "music") {
-				music.volume = v / 100;
+				music.volume = v / 10;
 				if (v > 0) music.play().catch(function () {});
 				else music.pause();
 			}
@@ -359,6 +424,11 @@
 	}
 	bindRange("music");
 	bindRange("sounds");
+
+	// restore the cursor when the drag ends, wherever the pointer is released
+	function endDrag() { cursor.classList.remove("dragging"); }
+	window.addEventListener("pointerup", endDrag);
+	window.addEventListener("pointercancel", endDrag);
 
 	// display toggles
 	optFor("fullscreen").addEventListener("click", function () {
@@ -493,7 +563,10 @@
 			}, 0);
 		});
 
-		langBtn.insertAdjacentElement("afterend", langList);
+		// appended to <body>, not after the button: the settings shell bounces (a non-none
+		// translate) and would otherwise become this fixed list's containing block and clip
+		// it inside the shell's overflow:hidden
+		document.body.appendChild(langList);
 		positionLangList();
 		langBtn.setAttribute("aria-expanded", "true");
 		window.addEventListener("resize", positionLangList);
@@ -580,15 +653,40 @@
 			// thin the height and widen the width by up to their max as it speeds up
 			var hs = 1 - vel * CURSOR_THIN_MAX;
 			var ws = 1 + vel * CURSOR_WIDE_MAX;
-			cursor.style.transform =
-				"translate3d(" + cx + "px," + cy + "px,0) translate(-50%,-50%) rotate(" +
-				ang + "rad) scale(" + ws + "," + hs + ")";
+			// outer node translates only (keeps the drop-shadow offset screen-fixed);
+			// the dot takes the rotation/scale so the shape still leans into motion
+			cursor.style.transform = "translate3d(" + cx + "px," + cy + "px,0)";
+			cursorDot.style.transform =
+				"translate(-50%,-50%) rotate(" + ang + "rad) scale(" + ws + "," + hs + ")";
 
 			var tk = 1 - Math.exp(-dt / TIP_TAU);
 			tx += (cx - tx) * tk;
 			ty += (cy - ty) * tk;
 			tip.style.transform =
 				"translate3d(" + (tx + 18) + "px," + (ty - 30) + "px,0)";
+		}
+
+		if (!reduce) {
+			// cursor velocity (px/sec) from this frame's smoothed travel, normalised + clamped
+			var ivx = dt > 0 ? (cx - px) / dt : 0;
+			var ivy = dt > 0 ? (cy - py) / dt : 0;
+			var txu = Math.max(-1, Math.min(ivx / PARALLAX_REF, 1));
+			var tyu = Math.max(-1, Math.min(ivy / PARALLAX_REF, 1));
+			// spring the offset toward the velocity target, then let it bounce back to the middle
+			pvx += (PARALLAX_K * (txu - pux) - PARALLAX_D * pvx) * dt;
+			pvy += (PARALLAX_K * (tyu - puy) - PARALLAX_D * pvy) * dt;
+			pux += pvx * dt;
+			puy += pvy * dt;
+
+			var mg = (pux * PARALLAX_MG).toFixed(1) + "px " + (puy * PARALLAX_MG).toFixed(1) + "px";
+			var fg = (pux * PARALLAX_FG).toFixed(1) + "px " + (puy * PARALLAX_FG).toFixed(1) + "px";
+			// move each mid-layer element as a whole (the settings shell shifts rigidly, so
+			// its contents never go off-centre); the language list lives on <body>, not in
+			// the shell, so this translate can't become its containing block and clip it.
+			loaderWrap.style.translate = mg;
+			sig.style.translate = mg;
+			settings.style.translate = mg;
+			if (langList) langList.style.translate = fg;
 		}
 
 		if (st.fps && dt > 0) {
@@ -606,6 +704,10 @@
 	// initial sync of settings visuals
 	syncVisuals();
 	applyI18n();
+	// label widths depend on the custom font's metrics, so re-equalize once it's ready;
+	// also recompute when the panel can change width (the narrow-screen breakpoint)
+	if (document.fonts && document.fonts.ready) document.fonts.ready.then(equalizeSliders);
+	window.addEventListener("resize", equalizeSliders);
 	if (st.music > 0) {
 		// try to autoplay; browsers blocking it will reject the promise
 		music.play().catch(function () {

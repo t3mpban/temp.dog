@@ -20,6 +20,13 @@
 	--tan: #e0b98e;
 
 	--ease: cubic-bezier(0.87, 0, 0.13, 1);
+	--t: 0.35s;
+	--t-fast: 0.25s;
+	--t-slow: 0.7s;
+	--tracking: 0.1em;
+	--tracking-wide: 0.2em;
+	--ui-sm: 15px;            /* secondary control text: values, on/off, selects */
+	--shadow: -3px 3px 6px rgba(111, 78, 55, 0.1);
 
 	--panel-w: 270px;
 }
@@ -45,6 +52,9 @@ body {
 	color: var(--coffee-bean);
 	font-family: "temp-v2", "Trebuchet MS", system-ui, sans-serif;
 	-webkit-font-smoothing: antialiased;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 body::before {
@@ -73,6 +83,28 @@ html.cc-active * {
 	cursor: none;
 }
 
+/* ----- placeholder screen ----- */
+/* a temporary rect inset 10% on every side (so the patterned bg peeks through),
+   revealed once the loader finishes. low z-index keeps it behind the foreground UI,
+   and it stays out of the parallax layer set so it never nudges with the cursor */
+.screen {
+	position: fixed;
+	inset: 10%;
+	z-index: 5;
+	border-radius: 24px;
+	background: var(--papaya-whip);
+	box-shadow: var(--shadow);
+	opacity: 0;
+	transform: scale(0.96);
+	pointer-events: none;
+	transition: opacity var(--t-slow) var(--ease), transform var(--t-slow) var(--ease);
+}
+
+.screen.show {
+	opacity: 1;
+	transform: scale(1);
+}
+
 .stage {
 	position: relative;
 	z-index: 10;
@@ -88,7 +120,7 @@ html.cc-active * {
 	flex-direction: column;
 	align-items: center;
 	gap: 16px;
-	transition: opacity 0.6s var(--ease), transform 0.7s var(--ease);
+	transition: opacity 0.6s var(--ease), transform var(--t-slow) var(--ease);
 }
 
 .loader-wrap.done {
@@ -112,6 +144,7 @@ html.cc-active * {
 	background: var(--camel);
 	border-radius: 999px;
 	overflow: hidden;
+	box-shadow: var(--shadow);
 }
 
 .fill {
@@ -130,10 +163,11 @@ html.cc-active * {
 	transform: translateX(-50%);
 	color: var(--camel);
 	font-size: 12px;
-	letter-spacing: 0.22em;
+	letter-spacing: var(--tracking-wide);
 	white-space: nowrap;
 	pointer-events: none;
 	user-select: none;
+	text-shadow: var(--shadow);
 }
 
 /* ----- settings shell ----- */
@@ -147,12 +181,12 @@ html.cc-active * {
 	overflow: hidden;
 	border-radius: 18px;
 	background: var(--papaya-whip);
-	box-shadow: 0 8px 12px rgba(111, 78, 55, 0.1);
+	box-shadow: var(--shadow);
 	transform-origin: top right;
 	transition:
-		width 0.7s var(--ease),
-		height 0.7s var(--ease),
-		border-radius 0.7s var(--ease),
+		width var(--t-slow) var(--ease),
+		height var(--t-slow) var(--ease),
+		border-radius var(--t-slow) var(--ease),
 		transform 0.5s var(--ease);
 }
 
@@ -172,7 +206,7 @@ html.cc-active * {
 	height: 56px;
 	padding: 0 64px 0 22px;
 	font-size: 14px;
-	letter-spacing: 0.24em;
+	letter-spacing: var(--tracking-wide);
 	text-transform: uppercase;
 	color: var(--camel);
 	white-space: nowrap;
@@ -213,7 +247,7 @@ html.cc-active * {
 	text-align: left;
 	text-decoration: none;
 	white-space: nowrap;
-	transition: background 0.35s var(--ease), transform 0.35s var(--ease);
+	transition: background var(--t) var(--ease), transform var(--t) var(--ease);
 }
 
 button.opt,
@@ -223,8 +257,7 @@ a.opt {
 
 .opt--toggle:hover,
 .opt--action:hover,
-.opt:focus-within,
-.opt:focus-visible {
+.opt:focus-within {
 	outline: none;
 }
 
@@ -237,15 +270,15 @@ a.opt {
 }
 
 .opt-state {
-	min-width: 48px;
-	padding: 3px 10px;
+	min-width: 52px;
+	padding: 4px 12px;
 	border: 1.6px solid var(--camel);
 	border-radius: 8px;
-	font-size: 13px;
-	letter-spacing: 0.03em;
+	font-size: var(--ui-sm);
+	letter-spacing: var(--tracking);
 	text-align: center;
 	color: var(--camel);
-	transition: background 0.35s var(--ease), color 0.35s var(--ease), border-color 0.35s var(--ease);
+	transition: background var(--t) var(--ease), color var(--t) var(--ease), border-color var(--t) var(--ease);
 }
 
 .opt-state:hover {
@@ -262,7 +295,7 @@ a.opt {
 	display: inline-flex;
 	font-size: 16px;
 	color: var(--camel);
-	transition: transform 0.35s var(--ease), color 0.35s var(--ease);
+	transition: transform var(--t) var(--ease), color var(--t) var(--ease);
 }
 
 .opt-glyph svg {
@@ -281,14 +314,26 @@ a.opt {
 }
 
 /* ----- range slider ----- */
+/* typed percentage that inherits into the track pseudo; the fill snaps per step (no ease) */
+@property --fill {
+	syntax: "<percentage>";
+	inherits: true;
+	initial-value: 0%;
+}
+
+/* slider fills the gap between the pinned label and value, so the row stays balanced
+   in every language (label left, value right, track stretching to take up the rest) */
 .opt--range .range {
-	margin-left: auto;
+	flex: 1 1 auto;
+	min-width: 0;
 }
 
 .opt-val {
 	flex: 0 0 auto;
-	min-width: 30px;
-	font-size: 13px;
+	font-size: var(--ui-sm);
+	/* width is pinned by JS (reserveValWidth) to the widest reading so the column never
+	   resizes as digits change; text-align:right keeps the number flush-right, mirroring
+	   the label's left inset */
 	text-align: right;
 	color: var(--camel);
 }
@@ -296,12 +341,13 @@ a.opt {
 .range {
 	-webkit-appearance: none;
 	appearance: none;
-	accent-color: var(--tan);
 	width: 108px;
-	height: 4px;
-	border-radius: 999px;
-	background: var(--camel);
+	/* tall transparent grab area — the visible 4px line lives on the track below */
+	height: 22px;
+	background: transparent;
 	outline: none;
+	/* very fast ease so the fill glides between snap steps instead of jumping */
+	transition: --fill 0.1s var(--ease);
 }
 
 .range:focus-visible {
@@ -310,46 +356,32 @@ a.opt {
 	border-radius: 999px;
 }
 
-.range::-webkit-slider-thumb {
-	-webkit-appearance: none;
-	appearance: none;
-	width: 14px;
-	height: 14px;
-	border-radius: 50%;
-	background: var(--coffee-bean);
-	border: 2px solid var(--papaya-whip);
-	transition: transform 0.25s var(--ease);
-}
-
-.range:hover::-webkit-slider-thumb,
-.range:focus-visible::-webkit-slider-thumb {
-	transform: scale(1.18);
-}
-
-.range::-moz-range-thumb {
-	width: 14px;
-	height: 14px;
-	border-radius: 50%;
-	background: var(--coffee-bean);
-	border: 2px solid var(--papaya-whip);
-	transition: transform 0.25s var(--ease);
-}
-
-.range:hover::-moz-range-thumb,
-.range:focus-visible::-moz-range-thumb {
-	transform: scale(1.18);
+/* the visible track: a 4px gradient line centred in the tall hitbox.
+   --fill inherits in, so the eased fill still animates here */
+.range::-webkit-slider-runnable-track {
+	height: 4px;
+	border-radius: 999px;
+	background: linear-gradient(90deg, var(--coffee-bean) var(--fill, 0%), var(--camel) var(--fill, 0%));
 }
 
 .range::-moz-range-track {
 	height: 4px;
 	border-radius: 999px;
-	background: var(--camel);
+	background: linear-gradient(90deg, var(--coffee-bean) var(--fill, 0%), var(--camel) var(--fill, 0%));
 }
 
-.range::-moz-range-progress {
-	height: 4px;
-	border-radius: 999px;
-	background: var(--coffee-bean);
+/* dot removed — the eased fill alone shows the level */
+.range::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 0;
+	height: 0;
+}
+
+.range::-moz-range-thumb {
+	width: 0;
+	height: 0;
+	border: none;
 }
 
 /* ----- language select ----- */
@@ -362,15 +394,15 @@ a.opt {
 .select {
 	-webkit-appearance: none;
 	appearance: none;
-	padding: 5px 28px 5px 12px;
+	padding: 5px 30px 5px 14px;
 	border: 1.6px solid var(--camel);
 	border-radius: 8px;
 	background: var(--papaya-whip);
 	color: var(--coffee-bean);
 	font: inherit;
-	font-size: 13px;
-	letter-spacing: 0.03em;
-	transition: border-color 0.35s var(--ease);
+	font-size: var(--ui-sm);
+	letter-spacing: var(--tracking);
+	transition: border-color var(--t) var(--ease);
 }
 
 .select:hover,
@@ -398,7 +430,7 @@ a.opt {
 	overflow-y: auto;
 	border-radius: 10px;
 	background: var(--papaya-whip);
-	box-shadow: 0 8px 12px rgba(111, 78, 55, 0.1);
+	box-shadow: var(--shadow);
 	scrollbar-width: thin;
 	scrollbar-color: var(--camel) transparent;
 }
@@ -421,10 +453,10 @@ a.opt {
 }
 
 .lang-opt {
-	padding: 7px 12px;
+	padding: 8px 14px;
 	border-radius: 8px;
-	font-size: 13px;
-	letter-spacing: 0.03em;
+	font-size: var(--ui-sm);
+	letter-spacing: var(--tracking);
 	color: var(--coffee-bean);
 	white-space: nowrap;
 	transition: background 0.2s var(--ease);
@@ -468,29 +500,45 @@ a.opt {
 }
 
 /* ----- cursor ----- */
+/* the outer node only translates (never rotates), so its drop-shadow offset stays
+   pinned in screen space; the inner dot carries the rotate/scale shape morph */
 .cursor {
 	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 100;
+	width: 0;
+	height: 0;
+	opacity: 0;
+	filter: drop-shadow(var(--shadow));
+	pointer-events: none;
+	will-change: transform;
+	transition: opacity 0.3s var(--ease);
+}
+
+.cursor.ready { opacity: 1; }
+
+/* fade away (eased, via the opacity transition above) while a slider is held,
+   so the value/track stays readable under the pointer */
+.cursor.dragging { opacity: 0; }
+
+.cursor-dot {
+	position: absolute;
+	top: 0;
+	left: 0;
 	width: 12px;
 	height: 12px;
 	border: 8px solid var(--coffee-bean);
 	border-radius: 50%;
 	background: transparent;
-	opacity: 0;
-	pointer-events: none;
 	will-change: transform, width, height, border-width;
 	transition:
-		width 0.35s var(--ease),
-		height 0.35s var(--ease),
-		border-width 0.35s var(--ease),
-		opacity 0.3s var(--ease);
+		width var(--t) var(--ease),
+		height var(--t) var(--ease),
+		border-width var(--t) var(--ease);
 }
 
-.cursor.ready { opacity: 1; }
-
-.cursor.ring {
+.cursor.ring .cursor-dot {
 	width: 24px;
 	height: 24px;
 	border-width: 4px;
@@ -512,11 +560,12 @@ a.opt {
 	background: var(--papaya-whip);
 	color: var(--coffee-bean);
 	font-size: 14px;
-	letter-spacing: 0.02em;
+	letter-spacing: var(--tracking);
 	opacity: 0;
 	transform: scale(0.6);
 	transform-origin: left center;
 	transition: opacity 0.2s var(--ease), transform 0.28s var(--ease);
+	box-shadow: var(--shadow);
 }
 
 .cursor-tip.show .bubble {
@@ -535,7 +584,7 @@ a.opt {
 	background: var(--papaya-whip);
 	color: var(--camel);
 	font-size: 13px;
-	letter-spacing: 0.12em;
+	letter-spacing: var(--tracking);
 	pointer-events: none;
 }
 
@@ -557,5 +606,6 @@ a.opt {
 	body::before { animation: none; }
 	.gear { transition-duration: 0.001ms; }
 	.settings { transition-duration: 0.2s; }
-	.cursor { transition-duration: 0.15s; }
+	.cursor,
+	.cursor-dot { transition-duration: 0.15s; }
 }

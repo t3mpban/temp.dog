@@ -41,7 +41,7 @@
 	{
 		"id": "label-sounds",
 		"strings": [
-			{"lang": "en", "text": "sounds"},
+			{"lang": "en", "text": "sound"},
 			{"lang": "es", "text": "sonidos"},
 			{"lang": "pt", "text": "sons"},
 			{"lang": "fr", "text": "sons"},
@@ -70,7 +70,7 @@
 			{"lang": "en", "text": "show fps"},
 			{"lang": "es", "text": "mostrar fps"},
 			{"lang": "pt", "text": "mostrar fps"},
-			{"lang": "fr", "text": "afficher les fps"},
+			{"lang": "fr", "text": "afficher fps"},
 			{"lang": "de", "text": "fps anzeigen"},
 			{"lang": "jp", "text": "FPS表示"},
 			{"lang": "kr", "text": "FPS 표시"},
@@ -107,22 +107,22 @@
 		"id": "label-cache-confirm",
 		"strings": [
 			{"lang": "en", "text": "click again to confirm"},
-			{"lang": "es", "text": "haz clic otra vez para confirmar"},
-			{"lang": "pt", "text": "clique novamente para confirmar"},
-			{"lang": "fr", "text": "cliquez à nouveau pour confirmer"},
-			{"lang": "de", "text": "zum bestätigen erneut klicken"},
-			{"lang": "jp", "text": "確認するにはもう一度クリック"},
-			{"lang": "kr", "text": "확인하려면 다시 클릭"},
-			{"lang": "zh", "text": "再次点击以确认"}
+			{"lang": "es", "text": "haz clic otra vez"},
+			{"lang": "pt", "text": "clique novamente"},
+			{"lang": "fr", "text": "cliquez à nouveau"},
+			{"lang": "de", "text": "erneut klicken"},
+			{"lang": "jp", "text": "もう一度クリック"},
+			{"lang": "kr", "text": "다시 클릭"},
+			{"lang": "zh", "text": "再次点击"}
 		]
 	},
 	{
 		"id": "label-legacy",
 		"strings": [
 			{"lang": "en", "text": "legacy website"},
-			{"lang": "es", "text": "sitio web anterior"},
+			{"lang": "es", "text": "web anterior"},
 			{"lang": "pt", "text": "site antigo"},
-			{"lang": "fr", "text": "ancien site web"},
+			{"lang": "fr", "text": "ancien site"},
 			{"lang": "de", "text": "alte website"},
 			{"lang": "jp", "text": "旧サイト"},
 			{"lang": "kr", "text": "이전 웹사이트"},
@@ -153,19 +153,6 @@
 			{"lang": "jp", "text": "オフ"},
 			{"lang": "kr", "text": "꺼짐"},
 			{"lang": "zh", "text": "关"}
-		]
-	},
-	{
-		"id": "aria-loading",
-		"strings": [
-			{"lang": "en", "text": "Loading"},
-			{"lang": "es", "text": "Cargando"},
-			{"lang": "pt", "text": "Carregando"},
-			{"lang": "fr", "text": "Chargement"},
-			{"lang": "de", "text": "Lädt"},
-			{"lang": "jp", "text": "読み込み中"},
-			{"lang": "kr", "text": "로딩 중"},
-			{"lang": "zh", "text": "加载中"}
 		]
 	}
 ]
