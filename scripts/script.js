@@ -8,7 +8,7 @@
 	var CURSOR_VEL_REF = 1800;  // px/sec that maps to velocity 1.0
 	var CURSOR_THIN_MAX = 0.4; // most the height may shrink (25%)
 	var CURSOR_WIDE_MAX = 0.4;  // most the width may grow (50%)
-	var LOAD_DURATION = 10000;  // placeholder load time
+	var LOAD_DURATION = 500;  // placeholder load time
 	var TIP_DELAY = 200;        // hovertime before the tooltip shows
 	var GEAR_STEP = 33;         // degrees the cog nudges per hover (never reverses)
 

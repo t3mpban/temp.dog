@@ -84,15 +84,18 @@ html.cc-active * {
 }
 
 /* ----- placeholder screen ----- */
-/* a temporary rect inset 10% on every side (so the patterned bg peeks through),
-   revealed once the loader finishes. low z-index keeps it behind the foreground UI,
-   and it stays out of the parallax layer set so it never nudges with the cursor */
+/* a temporary rect inset an even 3% from every viewport edge (so the patterned bg peeks
+   through). vmin keys all four sides off the smaller viewport dimension, so the gap is the
+   same pixel width all the way around instead of stretching on the wider axis. revealed once
+   the loader finishes; being position:fixed the inset resolves against the viewport
+   regardless of any wrapper. low z-index keeps it behind the foreground UI, and it stays out
+   of the parallax layer set so it never nudges with the cursor */
 .screen {
 	position: fixed;
-	inset: 10%;
+	inset: 4vmin;
 	z-index: 5;
 	border-radius: 24px;
-	background: var(--papaya-whip);
+	background: var(--soft-apricot);
 	box-shadow: var(--shadow);
 	opacity: 0;
 	transform: scale(0.96);
@@ -157,7 +160,7 @@ html.cc-active * {
 
 .sig {
 	position: fixed;
-	bottom: 18px;
+	bottom: 12px;
 	left: 50%;
 	z-index: 40;
 	transform: translateX(-50%);
