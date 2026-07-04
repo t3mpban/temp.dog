@@ -17,7 +17,7 @@
   --t-grow: 1s; /* screen scale-in */
   --t-pop: 1.4s; /* textbox scale-in (slower, graceful) */
   --tracking: 0.1em;
-  --tracking-wide: 0.2em;
+  --tracking-wide: 0.15em;
   --ui-sm: 15px; /* secondary control text */
   --shadow: -3px 3px 6px rgba(111, 78, 55, 0.1);
 

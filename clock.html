@@ -1,0 +1,211 @@
+<!-- ======================
+    This is just for my alexa.
+    Feel free to ignore this,
+    or heh use it if u want lol
+     ====================== -->
+<!doctype html>
+  <head>
+    <style>
+      :root {
+  --coffee-bean: #6f4e37;
+  --camel: #c19a6b;
+  --soft-apricot: #fed8b1;
+  --papaya-whip: #ffefd5;
+  --tan: #e0b98e;
+
+  --ease: cubic-bezier(0.87, 0, 0.13, 1);
+}
+      * {
+  -webkit-tap-highlight-color: transparent;
+}
+      body {
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--soft-apricot);
+  color: var(--coffee-bean);
+  font-family: "temp-v2", "Trebuchet MS", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-weight: 700;
+}
+
+      body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--tan);
+  -webkit-mask-image: url("/images/bg.webp");
+  -webkit-mask-size: 256px 256px;
+  -webkit-mask-repeat: repeat;
+  mask-image: url("/images/bg.webp");
+  mask-size: 256px 256px;
+  mask-repeat: repeat;
+  animation: bg-scroll 14s linear infinite;
+  pointer-events: none;
+}
+
+.screen {
+  position: fixed;
+  inset: 0;
+  cursor: pointer;
+  outline: none;
+}
+
+.view {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  padding: 4vmin;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.94);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+  pointer-events: none;
+}
+
+.view.active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.time {
+  font-size: 60vh;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  display: inline-block;
+  transform-origin: center;
+}
+
+.date {
+  font-size: 20vh;
+  line-height: 1;
+  white-space: nowrap;
+  display: inline-block;
+  transform-origin: center;
+}
+
+.sig {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  z-index: 40;
+  transform: translateX(-50%);
+  color: var(--camel);
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  text-shadow: var(--shadow);
+}
+
+@keyframes bg-scroll {
+  from {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+  to {
+    -webkit-mask-position: 256px -256px;
+    mask-position: 256px -256px;
+  }
+}
+
+@font-face {
+  font-family: "temp-v2";
+  src: url("../font/t3mp.ttf") format("truetype");
+  font-display: swap;
+}
+  </style>
+  </head>
+  <body>
+    <div class="screen" id="screen">
+      <div class="view active" id="clock-view">
+        <div class="time" id="clock-time"></div>
+      </div>
+      <div class="view" id="calendar-view">
+        <div class="date" id="calendar-date"></div>
+      </div>
+    </div>
+
+    <footer class="sig">made by t3mp</footer>
+
+    <script>
+      const TIMEZONE = "Europe/London";
+      const screen = document.getElementById("screen");
+      const clockView = document.getElementById("clock-view");
+      const clockTime = document.getElementById("clock-time");
+      const calendarView = document.getElementById("calendar-view");
+      const calendarDate = document.getElementById("calendar-date");
+
+      const timeFormatter = new Intl.DateTimeFormat("en-GB", {
+        timeZone: TIMEZONE,
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
+
+      const fullDateFormatter = new Intl.DateTimeFormat("en-GB", {
+        timeZone: TIMEZONE,
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+
+      let revertTimeout = null;
+
+      function fitToWidth(el) {
+        const container = el.parentElement;
+        const style = getComputedStyle(container);
+        const available =
+          container.clientWidth -
+          parseFloat(style.paddingLeft) -
+          parseFloat(style.paddingRight);
+
+        el.style.transform = "scale(1)";
+        const scale = Math.min(available / el.scrollWidth, 1);
+        el.style.transform = `scale(${scale})`;
+      }
+
+      function tick() {
+        const now = new Date();
+        clockTime.textContent = timeFormatter.format(now);
+        calendarDate.textContent = fullDateFormatter.format(now);
+
+        fitToWidth(clockTime);
+        fitToWidth(calendarDate);
+      }
+
+      tick();
+      setInterval(tick, 1000);
+      window.addEventListener("resize", tick);
+
+      function requestFullscreen() {
+        if (!document.fullscreenElement) {
+          screen.requestFullscreen().catch(() => {});
+        }
+      }
+
+      screen.addEventListener("click", () => {
+        requestFullscreen();
+        clockView.classList.remove("active");
+        calendarView.classList.add("active");
+
+        clearTimeout(revertTimeout);
+        revertTimeout = setTimeout(() => {
+          calendarView.classList.remove("active");
+          clockView.classList.add("active");
+        }, 5000);
+      });
+
+      document.addEventListener("mousemove", requestFullscreen);
+      document.addEventListener("touchstart", requestFullscreen);
+    </script>
+  </body>
+</html>
