@@ -4,12 +4,12 @@ For consistency purposes, refer to this.
 
 ## Colors
 
-- Every color has to be from this palette: a warm, coffee/beige theme.
+- Every color has to be from [this palette](https://coolors.co/6f4e37-c19a6b-e0b98e-fed8b1-ffefd5): a warm, coffee/beige theme.
 - coffee-bean: #6f4e37
 - camel: #c19a6b
+- tan: #e0b98e
 - soft-apricot: #fed8b1
 - papaya-whip: #ffefd5
-- tan: #e0b98e
 
 ## Animations
 
