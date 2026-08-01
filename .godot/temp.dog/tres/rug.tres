@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dvhg2tqevfupv"]
+
+[ext_resource type="Texture2D" uid="uid://ckthmdfscxkk3" path="res://pngs/rug.png" id="1_rug"]
+
+[resource]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = ExtResource("1_rug")

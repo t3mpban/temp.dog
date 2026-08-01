@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://ekm65ibblf80"]
+
+[ext_resource type="Texture2D" uid="uid://dwow8h2jk8noi" path="res://pngs/mousepad.png" id="1_mousepad"]
+
+[resource]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = ExtResource("1_mousepad")

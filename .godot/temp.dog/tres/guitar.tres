@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bxpyaqyqwf416"]
+
+[ext_resource type="Texture2D" uid="uid://1ioqph3j4m7c" path="res://pngs/guitar.png" id="1_jmf40"]
+
+[resource]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = ExtResource("1_jmf40")

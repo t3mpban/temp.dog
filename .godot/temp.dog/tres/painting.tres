@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://7b21da5mswo0"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_lngk7"]
+load_path = "res://.godot/imported/painting.png-99b3824c44b7c9c50ba3c92ae13a365f.s3tc.ctex"
+
+[resource]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = SubResource("CompressedTexture2D_lngk7")

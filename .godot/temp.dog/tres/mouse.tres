@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://c4tmnptx3kdkj"]
+
+[ext_resource type="Texture2D" uid="uid://dm45iheeiic0m" path="res://pngs/mouse.png" id="1_mouse"]
+
+[resource]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = ExtResource("1_mouse")

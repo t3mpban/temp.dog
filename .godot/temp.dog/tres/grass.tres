@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://choex7k48b0l5"]
+
+[ext_resource type="Texture2D" uid="uid://daiq0fw8hs82p" path="res://pngs/grass.png" id="1_0ivap"]
+
+[resource]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = ExtResource("1_0ivap")

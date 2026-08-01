@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://d0garnwjetlgf"]
+
+[ext_resource type="Texture2D" uid="uid://cl8mfrjd0f67f" path="res://pngs/fgday.png" id="1_clouds"]
+
+[resource]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = ExtResource("1_clouds")

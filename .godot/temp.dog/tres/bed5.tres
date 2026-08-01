@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://brui8dfhh1evo"]
+
+[ext_resource type="Texture2D" uid="uid://qvmbiybkb0si" path="res://pngs/bed5.png" id="1_advyl"]
+
+[resource]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = ExtResource("1_advyl")

@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://siphwfuu3ri7"]
+
+[ext_resource type="Texture2D" uid="uid://dr804p4of2ujm" path="res://pngs/wall.png" id="1_wall"]
+
+[resource]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = ExtResource("1_wall")

@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bpyb0cfjw12fj"]
+
+[ext_resource type="Texture2D" uid="uid://nmgcd8u41dk4" path="res://pngs/sidepanel.png" id="1_n1ic8"]
+
+[resource]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = ExtResource("1_n1ic8")

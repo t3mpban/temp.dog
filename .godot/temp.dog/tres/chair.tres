@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bgwk0kmwkys3a"]
+
+[ext_resource type="Texture2D" uid="uid://ddwk1qxmba3n5" path="res://pngs/chair.png" id="1_yjus1"]
+
+[resource]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = ExtResource("1_yjus1")

@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://5jho3jah41aj"]
+
+[ext_resource type="Texture2D" uid="uid://1iouq6oycibx" path="res://pngs/marketableplush.png" id="1_marketableplush"]
+
+[resource]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = ExtResource("1_marketableplush")

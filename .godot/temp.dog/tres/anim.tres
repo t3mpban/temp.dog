@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://d02h82q0kv7gw"]
+
+[ext_resource type="Texture2D" uid="uid://qhij8a2lkk57" path="res://anim/frame0006.png" id="1_c8jhr"]
+
+[resource]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = ExtResource("1_c8jhr")

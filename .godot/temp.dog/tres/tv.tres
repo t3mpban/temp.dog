@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bn4l6w6muphaq"]
+
+[ext_resource type="Texture2D" uid="uid://c2qusaobq0dfv" path="res://pngs/tv.png" id="1_0ogwr"]
+
+[resource]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = ExtResource("1_0ogwr")
