@@ -66,19 +66,6 @@
       ]
     },
     {
-      "id": "label-fps",
-      "strings": [
-        { "lang": "en", "text": "show fps" },
-        { "lang": "es", "text": "mostrar fps" },
-        { "lang": "pt", "text": "mostrar fps" },
-        { "lang": "fr", "text": "afficher fps" },
-        { "lang": "de", "text": "fps anzeigen" },
-        { "lang": "jp", "text": "FPS表示" },
-        { "lang": "kr", "text": "FPS 표시" },
-        { "lang": "zh", "text": "显示帧率" }
-      ]
-    },
-    {
       "id": "label-language",
       "strings": [
         { "lang": "en", "text": "language" },
@@ -89,6 +76,60 @@
         { "lang": "jp", "text": "言語" },
         { "lang": "kr", "text": "언어" },
         { "lang": "zh", "text": "语言" }
+      ]
+    },
+    {
+      "id": "label-achievements",
+      "strings": [
+        { "lang": "en", "text": "achievements" },
+        { "lang": "es", "text": "logros" },
+        { "lang": "pt", "text": "conquistas" },
+        { "lang": "fr", "text": "succès" },
+        { "lang": "de", "text": "erfolge" },
+        { "lang": "jp", "text": "実績" },
+        { "lang": "kr", "text": "도전 과제" },
+        { "lang": "zh", "text": "成就" }
+      ]
+    },
+    {
+      "id": "label-close",
+      "strings": [
+        { "lang": "en", "text": "close" },
+        { "lang": "es", "text": "cerrar" },
+        { "lang": "pt", "text": "fechar" },
+        { "lang": "fr", "text": "fermer" },
+        { "lang": "de", "text": "schließen" },
+        { "lang": "jp", "text": "閉じる" },
+        { "lang": "kr", "text": "닫기" },
+        { "lang": "zh", "text": "关闭" }
+      ]
+    },
+    {
+      "id": "notice-translation",
+      "strings": [
+        {
+          "lang": "en",
+          "text": "Translations are automatically generated and may be inaccurate."
+        },
+        {
+          "lang": "es",
+          "text": "Las traducciones se generan automáticamente y pueden ser inexactas."
+        },
+        {
+          "lang": "pt",
+          "text": "As traduções são geradas automaticamente e podem ser imprecisas."
+        },
+        {
+          "lang": "fr",
+          "text": "Les traductions sont générées automatiquement et peuvent être inexactes."
+        },
+        {
+          "lang": "de",
+          "text": "Übersetzungen werden automatisch erstellt und können ungenau sein."
+        },
+        { "lang": "jp", "text": "翻訳は自動生成されているため、正確でない場合があります。" },
+        { "lang": "kr", "text": "번역은 자동으로 생성되므로 정확하지 않을 수 있습니다." },
+        { "lang": "zh", "text": "翻译由自动生成，可能不准确。" }
       ]
     },
     {
@@ -196,79 +237,360 @@
   ],
   "achievements": [
     {
-      "id": "welcome",
+      "id": "hello-world",
       "type": "normal",
-      "icon": "fa-mug-hot",
-      "title": [
-        { "lang": "en", "text": "Welcome In" },
-        { "lang": "es", "text": "Bienvenido" },
-        { "lang": "pt", "text": "Bem-vindo" },
-        { "lang": "fr", "text": "Bienvenue" },
-        { "lang": "de", "text": "Willkommen" },
-        { "lang": "jp", "text": "ようこそ" },
-        { "lang": "kr", "text": "환영합니다" },
-        { "lang": "zh", "text": "欢迎" }
-      ],
+      "icon": "fa-globe",
+      "title": [{ "lang": "en", "text": "Hello, world!" }],
       "desc": [
-        { "lang": "en", "text": "You opened the site." },
-        { "lang": "es", "text": "Abriste el sitio." },
-        { "lang": "pt", "text": "Você abriu o site." },
-        { "lang": "fr", "text": "Tu as ouvert le site." },
-        { "lang": "de", "text": "Du hast die Seite geöffnet." },
-        { "lang": "jp", "text": "サイトを開いた。" },
-        { "lang": "kr", "text": "사이트를 열었어요." },
-        { "lang": "zh", "text": "你打开了网站。" }
+        { "lang": "en", "text": "thanks for visiting my website, enjoy!" },
+        { "lang": "es", "text": "gracias por visitar mi web, ¡disfruta!" },
+        { "lang": "pt", "text": "obrigado por visitar meu site, aproveite!" },
+        { "lang": "fr", "text": "merci de visiter mon site, profite bien !" },
+        { "lang": "de", "text": "danke für deinen besuch, viel spaß!" },
+        { "lang": "jp", "text": "サイトに来てくれてありがとう、楽しんで！" },
+        { "lang": "kr", "text": "제 사이트에 와줘서 고마워요, 즐겨주세요!" },
+        { "lang": "zh", "text": "感谢访问我的网站，玩得开心！" }
       ]
     },
     {
-      "id": "explorer",
+      "id": "gambling",
       "type": "progress",
-      "icon": "fa-compass",
+      "icon": "fa-dice",
       "goal": 5,
       "title": [
-        { "lang": "en", "text": "Explorer" },
-        { "lang": "es", "text": "Explorador" },
-        { "lang": "pt", "text": "Explorador" },
-        { "lang": "fr", "text": "Explorateur" },
-        { "lang": "de", "text": "Entdecker" },
-        { "lang": "jp", "text": "探検家" },
-        { "lang": "kr", "text": "탐험가" },
-        { "lang": "zh", "text": "探索者" }
+        { "lang": "en", "text": "gambling" },
+        { "lang": "es", "text": "apuestas" },
+        { "lang": "pt", "text": "apostas" },
+        { "lang": "fr", "text": "jeux d'argent" },
+        { "lang": "de", "text": "glücksspiel" },
+        { "lang": "jp", "text": "ギャンブル" },
+        { "lang": "kr", "text": "도박" },
+        { "lang": "zh", "text": "赌博" }
+      ],
+      "desc": [{ "lang": "en", "text": "i'm not addicted, your addicted..." }]
+    },
+    {
+      "id": "interstellar",
+      "type": "normal",
+      "icon": "fa-rocket",
+      "title": [
+        { "lang": "en", "text": "interstellar" },
+        { "lang": "es", "text": "interestelar" },
+        { "lang": "pt", "text": "interestelar" },
+        { "lang": "fr", "text": "interstellaire" },
+        { "lang": "de", "text": "interstellar" },
+        { "lang": "jp", "text": "インターステラー" },
+        { "lang": "kr", "text": "인터스텔라" },
+        { "lang": "zh", "text": "星际" }
       ],
       "desc": [
-        { "lang": "en", "text": "Find every hidden corner." },
-        { "lang": "es", "text": "Encuentra cada rincón oculto." },
-        { "lang": "pt", "text": "Encontre cada canto escondido." },
-        { "lang": "fr", "text": "Trouve chaque coin caché." },
-        { "lang": "de", "text": "Finde jede versteckte Ecke." },
-        { "lang": "jp", "text": "隠れた場所を全て見つけよう。" },
-        { "lang": "kr", "text": "숨겨진 곳을 모두 찾으세요." },
-        { "lang": "zh", "text": "找到每一个隐藏角落。" }
+        { "lang": "en", "text": "scroll to the bottom of the achievements page..." },
+        { "lang": "es", "text": "desplázate hasta el final de la página de logros..." },
+        { "lang": "pt", "text": "role até o fim da página de conquistas..." },
+        { "lang": "fr", "text": "fais défiler jusqu'en bas de la page des succès..." },
+        { "lang": "de", "text": "scrolle ans ende der erfolgsseite..." },
+        { "lang": "jp", "text": "実績ページの一番下までスクロールしよう…" },
+        { "lang": "kr", "text": "도전 과제 페이지 맨 아래까지 스크롤하세요…" },
+        { "lang": "zh", "text": "滚动到成就页面的底部……" }
       ]
     },
     {
-      "id": "night_owl",
+      "id": "carpet",
       "type": "normal",
-      "icon": "fa-moon",
+      "icon": "fa-heart",
       "title": [
-        { "lang": "en", "text": "Night Owl" },
-        { "lang": "es", "text": "Búho Nocturno" },
-        { "lang": "pt", "text": "Coruja Noturna" },
-        { "lang": "fr", "text": "Oiseau de Nuit" },
-        { "lang": "de", "text": "Nachteule" },
-        { "lang": "jp", "text": "夜更かし" },
-        { "lang": "kr", "text": "올빼미족" },
-        { "lang": "zh", "text": "夜猫子" }
+        { "lang": "en", "text": "carpet" },
+        { "lang": "es", "text": "alfombra" },
+        { "lang": "pt", "text": "tapete" },
+        { "lang": "fr", "text": "tapis" },
+        { "lang": "de", "text": "teppich" },
+        { "lang": "jp", "text": "カーペット" },
+        { "lang": "kr", "text": "카펫" },
+        { "lang": "zh", "text": "地毯" }
+      ],
+      "desc": [{ "lang": "en", "text": "<3" }]
+    },
+    {
+      "id": "money",
+      "type": "normal",
+      "icon": "fa-sack-dollar",
+      "title": [
+        { "lang": "en", "text": "money" },
+        { "lang": "es", "text": "dinero" },
+        { "lang": "pt", "text": "dinheiro" },
+        { "lang": "fr", "text": "argent" },
+        { "lang": "de", "text": "geld" },
+        { "lang": "jp", "text": "お金" },
+        { "lang": "kr", "text": "돈" },
+        { "lang": "zh", "text": "钱" }
+      ],
+      "desc": [{ "lang": "en", "text": "get that bag cuh" }]
+    },
+    {
+      "id": "log-on",
+      "type": "normal",
+      "icon": "fa-right-to-bracket",
+      "title": [
+        { "lang": "en", "text": "log on" },
+        { "lang": "es", "text": "iniciar sesión" },
+        { "lang": "pt", "text": "fazer login" },
+        { "lang": "fr", "text": "connexion" },
+        { "lang": "de", "text": "anmelden" },
+        { "lang": "jp", "text": "ログオン" },
+        { "lang": "kr", "text": "로그온" },
+        { "lang": "zh", "text": "登录" }
       ],
       "desc": [
-        { "lang": "en", "text": "Visited after midnight." },
-        { "lang": "es", "text": "Visitaste pasada la medianoche." },
-        { "lang": "pt", "text": "Visitou depois da meia-noite." },
-        { "lang": "fr", "text": "Visité après minuit." },
-        { "lang": "de", "text": "Nach Mitternacht besucht." },
-        { "lang": "jp", "text": "深夜に訪れた。" },
-        { "lang": "kr", "text": "자정 이후에 방문했어요." },
-        { "lang": "zh", "text": "午夜后访问。" }
+        { "lang": "en", "text": "log into temps computer" },
+        { "lang": "es", "text": "inicia sesión en el ordenador de temp" },
+        { "lang": "pt", "text": "faça login no computador do temp" },
+        { "lang": "fr", "text": "connecte-toi à l'ordinateur de temp" },
+        { "lang": "de", "text": "melde dich an temps computer an" },
+        { "lang": "jp", "text": "temp のパソコンにログインしよう" },
+        { "lang": "kr", "text": "temp의 컴퓨터에 로그인하세요" },
+        { "lang": "zh", "text": "登录 temp 的电脑" }
+      ]
+    },
+    {
+      "id": "mouse-ception",
+      "type": "normal",
+      "icon": "fa-computer-mouse",
+      "title": [{ "lang": "en", "text": "mouse-ception" }],
+      "desc": [
+        { "lang": "en", "text": "click on the mouse, with your mouse." },
+        { "lang": "es", "text": "haz clic en el ratón, con tu ratón." },
+        { "lang": "pt", "text": "clique no mouse, com o seu mouse." },
+        { "lang": "fr", "text": "clique sur la souris, avec ta souris." },
+        { "lang": "de", "text": "klicke mit deiner maus auf die maus." },
+        { "lang": "jp", "text": "マウスを、あなたのマウスでクリックしよう。" },
+        { "lang": "kr", "text": "마우스를, 당신의 마우스로 클릭하세요." },
+        { "lang": "zh", "text": "用你的鼠标，点击那只鼠标。" }
+      ]
+    },
+    {
+      "id": "honey-im-home",
+      "type": "normal",
+      "icon": "fa-house",
+      "title": [{ "lang": "en", "text": "honey, i'm home!" }],
+      "desc": [
+        { "lang": "en", "text": "visit the website twice" },
+        { "lang": "es", "text": "visita la web dos veces" },
+        { "lang": "pt", "text": "visite o site duas vezes" },
+        { "lang": "fr", "text": "visite le site deux fois" },
+        { "lang": "de", "text": "besuche die website zweimal" },
+        { "lang": "jp", "text": "サイトを二回訪れよう" },
+        { "lang": "kr", "text": "웹사이트를 두 번 방문하세요" },
+        { "lang": "zh", "text": "访问网站两次" }
+      ]
+    },
+    {
+      "id": "chair",
+      "type": "progress",
+      "icon": "fa-chair",
+      "goal": 8,
+      "title": [
+        { "lang": "en", "text": "chair achievement" },
+        { "lang": "es", "text": "logro de la silla" },
+        { "lang": "pt", "text": "conquista da cadeira" },
+        { "lang": "fr", "text": "succès de la chaise" },
+        { "lang": "de", "text": "stuhl-erfolg" },
+        { "lang": "jp", "text": "椅子の実績" },
+        { "lang": "kr", "text": "의자 도전 과제" },
+        { "lang": "zh", "text": "椅子成就" }
+      ],
+      "desc": [
+        {
+          "lang": "en",
+          "text": "don't click on the chair 8 times, otherwise you won't get this achievement."
+        },
+        { "lang": "es", "text": "no hagas clic en la silla 8 veces, o no conseguirás este logro." },
+        {
+          "lang": "pt",
+          "text": "não clique na cadeira 8 vezes, senão você não ganha esta conquista."
+        },
+        {
+          "lang": "fr",
+          "text": "ne clique pas 8 fois sur la chaise, sinon tu n'auras pas ce succès."
+        },
+        {
+          "lang": "de",
+          "text": "klicke nicht 8 mal auf den stuhl, sonst bekommst du diesen erfolg nicht."
+        },
+        { "lang": "jp", "text": "椅子を8回クリックしないで、しないとこの実績は取れないよ。" },
+        { "lang": "kr", "text": "의자를 8번 클릭하지 마세요, 안 그러면 이 도전 과제를 못 받아요." },
+        { "lang": "zh", "text": "别点椅子 8 次，否则你拿不到这个成就。" }
+      ]
+    },
+    {
+      "id": "marketable-plush",
+      "type": "progress",
+      "icon": "fa-paw",
+      "goal": 5,
+      "title": [{ "lang": "en", "text": "Marketable Plush" }],
+      "desc": [
+        { "lang": "en", "text": "obtain all knowledge from marketable plush" },
+        { "lang": "es", "text": "obtén todo el conocimiento del marketable plush" },
+        { "lang": "pt", "text": "obtenha todo o conhecimento do marketable plush" },
+        { "lang": "fr", "text": "obtiens tout le savoir du marketable plush" },
+        { "lang": "de", "text": "erlange das gesamte wissen des marketable plush" },
+        { "lang": "jp", "text": "marketable plush から全ての知識を得よう" },
+        { "lang": "kr", "text": "marketable plush에게서 모든 지식을 얻으세요" },
+        { "lang": "zh", "text": "从 marketable plush 那里获得全部知识" }
+      ]
+    },
+    {
+      "id": "tv-on",
+      "type": "normal",
+      "icon": "fa-tv",
+      "title": [
+        { "lang": "en", "text": "tv on" },
+        { "lang": "es", "text": "tele encendida" },
+        { "lang": "pt", "text": "tv ligada" },
+        { "lang": "fr", "text": "télé allumée" },
+        { "lang": "de", "text": "fernseher an" },
+        { "lang": "jp", "text": "テレビをつけた" },
+        { "lang": "kr", "text": "TV 켜짐" },
+        { "lang": "zh", "text": "电视开机" }
+      ],
+      "desc": [{ "lang": "en", "text": "kendrick lamar would be not be happy" }]
+    },
+    {
+      "id": "fast-learner",
+      "type": "normal",
+      "icon": "fa-guitar",
+      "title": [
+        { "lang": "en", "text": "fast learner" },
+        { "lang": "es", "text": "aprendiz rápido" },
+        { "lang": "pt", "text": "aprendiz rápido" },
+        { "lang": "fr", "text": "apprenti rapide" },
+        { "lang": "de", "text": "schnelllerner" },
+        { "lang": "jp", "text": "飲み込みが早い" },
+        { "lang": "kr", "text": "빠른 학습자" },
+        { "lang": "zh", "text": "学得真快" }
+      ],
+      "desc": [
+        { "lang": "en", "text": "learn how to play guitar" },
+        { "lang": "es", "text": "aprende a tocar la guitarra" },
+        { "lang": "pt", "text": "aprenda a tocar guitarra" },
+        { "lang": "fr", "text": "apprends à jouer de la guitare" },
+        { "lang": "de", "text": "lerne gitarre zu spielen" },
+        { "lang": "jp", "text": "ギターの弾き方を覚えよう" },
+        { "lang": "kr", "text": "기타 치는 법을 배우세요" },
+        { "lang": "zh", "text": "学会弹吉他" }
+      ]
+    },
+    {
+      "id": "philanthropist",
+      "type": "normal",
+      "icon": "fa-hand-holding-heart",
+      "title": [
+        { "lang": "en", "text": "philanthropist" },
+        { "lang": "es", "text": "filántropo" },
+        { "lang": "pt", "text": "filantropo" },
+        { "lang": "fr", "text": "philanthrope" },
+        { "lang": "de", "text": "philanthrop" },
+        { "lang": "jp", "text": "慈善家" },
+        { "lang": "kr", "text": "자선가" },
+        { "lang": "zh", "text": "慈善家" }
+      ],
+      "desc": [{ "lang": "en", "text": "unleash your inner mr beast and donate" }]
+    },
+    {
+      "id": "multilingual",
+      "type": "normal",
+      "icon": "fa-language",
+      "title": [
+        { "lang": "en", "text": "multilingual" },
+        { "lang": "es", "text": "multilingüe" },
+        { "lang": "pt", "text": "multilíngue" },
+        { "lang": "fr", "text": "polyglotte" },
+        { "lang": "de", "text": "mehrsprachig" },
+        { "lang": "jp", "text": "多言語話者" },
+        { "lang": "kr", "text": "다중 언어" },
+        { "lang": "zh", "text": "多语言" }
+      ],
+      "desc": [{ "lang": "en", "text": "no way he just put in the NARUTO reference in there" }]
+    },
+    {
+      "id": "thief",
+      "type": "normal",
+      "icon": "fa-mask",
+      "title": [
+        { "lang": "en", "text": "thief" },
+        { "lang": "es", "text": "ladrón" },
+        { "lang": "pt", "text": "ladrão" },
+        { "lang": "fr", "text": "voleur" },
+        { "lang": "de", "text": "dieb" },
+        { "lang": "jp", "text": "泥棒" },
+        { "lang": "kr", "text": "도둑" },
+        { "lang": "zh", "text": "小偷" }
+      ],
+      "desc": [{ "lang": "en", "text": "five-finger discount" }]
+    },
+    {
+      "id": "free-the-end",
+      "type": "progress",
+      "icon": "fa-bed",
+      "goal": 15,
+      "title": [{ "lang": "en", "text": "free the end" }],
+      "desc": [
+        { "lang": "en", "text": "finish the game and go to bed, your quest here is done." },
+        { "lang": "es", "text": "termina el juego y vete a la cama, tu misión aquí ha acabado." },
+        { "lang": "pt", "text": "termine o jogo e vá para a cama, sua missão aqui acabou." },
+        { "lang": "fr", "text": "termine le jeu et va te coucher, ta quête ici est finie." },
+        {
+          "lang": "de",
+          "text": "beende das spiel und geh ins bett, deine aufgabe hier ist erledigt."
+        },
+        { "lang": "jp", "text": "ゲームをクリアしてベッドへ、ここでの役目は終わりだ。" },
+        { "lang": "kr", "text": "게임을 끝내고 잠자리에 드세요, 여기서의 임무는 끝났어요." },
+        { "lang": "zh", "text": "通关然后去睡觉吧，你在这里的任务完成了。" }
+      ]
+    }
+  ],
+  "choices": [
+    {
+      "id": "pc-on",
+      "options": [
+        {
+          "id": "yes",
+          "text": [
+            { "lang": "en", "text": "Yes" },
+            { "lang": "es", "text": "Sí" },
+            { "lang": "pt", "text": "Sim" },
+            { "lang": "fr", "text": "Oui" },
+            { "lang": "de", "text": "Ja" },
+            { "lang": "jp", "text": "はい" },
+            { "lang": "kr", "text": "예" },
+            { "lang": "zh", "text": "是" }
+          ]
+        },
+        {
+          "id": "no",
+          "text": [
+            { "lang": "en", "text": "No" },
+            { "lang": "es", "text": "No" },
+            { "lang": "pt", "text": "Não" },
+            { "lang": "fr", "text": "Non" },
+            { "lang": "de", "text": "Nein" },
+            { "lang": "jp", "text": "いいえ" },
+            { "lang": "kr", "text": "아니오" },
+            { "lang": "zh", "text": "否" }
+          ]
+        },
+        {
+          "id": "ram",
+          "text": [
+            { "lang": "en", "text": "Steal the ram" },
+            { "lang": "es", "text": "Robar la RAM" },
+            { "lang": "pt", "text": "Roubar a RAM" },
+            { "lang": "fr", "text": "Voler la RAM" },
+            { "lang": "de", "text": "Den RAM stehlen" },
+            { "lang": "jp", "text": "メモリを盗む" },
+            { "lang": "kr", "text": "램을 훔치기" },
+            { "lang": "zh", "text": "偷走内存条" }
+          ]
+        }
       ]
     }
   ]

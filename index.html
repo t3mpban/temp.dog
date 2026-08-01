@@ -139,10 +139,6 @@
               <span class="opt-label" data-i18n="label-fullscreen">fullscreen</span>
               <span class="opt-state">off</span>
             </button>
-            <button class="opt opt--toggle cursorable" data-setting="fps" aria-pressed="false">
-              <span class="opt-label" data-i18n="label-fps">show fps</span>
-              <span class="opt-state">off</span>
-            </button>
             <div class="opt opt--select" data-setting="language">
               <span class="opt-label" data-i18n="label-language">language</span>
               <span class="sel-wrap">
@@ -159,6 +155,12 @@
                 <span class="caret" aria-hidden="true">&#9662;</span>
               </span>
             </div>
+            <button class="opt opt--action cursorable" data-setting="achievements">
+              <span class="opt-label" data-i18n="label-achievements">achievements</span>
+              <span class="opt-glyph">
+                <i class="fa-solid fa-trophy" aria-hidden="true"></i>
+              </span>
+            </button>
           </div>
 
           <div class="grp">
@@ -180,13 +182,42 @@
       </div>
     </aside>
 
+    <div class="dim" id="dim" hidden></div>
+    <div
+      class="achv"
+      id="achv"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="achvTitle"
+      hidden
+      inert
+    >
+      <div class="achv-head">
+        <span class="achv-title" id="achvTitle" data-i18n="label-achievements">achievements</span>
+        <span class="achv-count" id="achvCount"></span>
+        <button
+          class="achv-close cursorable"
+          id="achvClose"
+          data-i18n-aria="label-close"
+          aria-label="close"
+        >
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="divider"></div>
+      <div class="achv-list" id="achvList"></div>
+    </div>
+
+    <div class="choices" id="choices" hidden inert></div>
+
+    <div class="notice" id="notice" role="status" aria-live="polite"></div>
+
     <!-- corner signature -->
     <footer class="sig" data-i18n="small-text">made by t3mp</footer>
 
     <!-- custom weighted cursor + helpers (decorative, no-op without JS / on touch) -->
     <div class="cursor" id="cursor" aria-hidden="true"><div class="cursor-dot"></div></div>
     <div class="cursor-tip" id="tip" aria-hidden="true"><span class="bubble">0%</span></div>
-    <div class="fps" id="fps" aria-hidden="true">FPS 60</div>
 
     <!-- audio used by the music / sounds toggles -->
     <audio id="music" src="v4/sounds/1.mp3" loop preload="none"></audio>

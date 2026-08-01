@@ -22,6 +22,7 @@
   --shadow: -3px 3px 6px rgba(111, 78, 55, 0.1);
 
   --panel-w: 270px;
+  --tb-w: min(760px, 90vw);
 }
 
 *,
@@ -100,6 +101,19 @@ html.cc-active * {
   transform: scale(1);
 }
 
+html.is-fullscreen body::before {
+  display: none;
+}
+
+html.is-fullscreen .screen {
+  inset: 0;
+  border-radius: 0;
+  transition:
+    transform var(--t-grow) var(--ease),
+    inset var(--t) var(--ease),
+    border-radius var(--t) var(--ease);
+}
+
 /* ----- visual-novel textbox ----- */
 /* centered via left/right + margin auto so transform stays free for the
    scale pop and `translate` stays free for the mg parallax nudge */
@@ -109,7 +123,7 @@ html.cc-active * {
   right: 0;
   bottom: 6vmin;
   z-index: 45; /* above screen, below settings + cursor */
-  width: min(760px, 90vw);
+  width: var(--tb-w);
   margin-inline: auto;
   padding: 22px 52px 26px 26px;
   border-radius: 22px;
@@ -264,6 +278,272 @@ html.cc-active * {
   font-size: 12px;
   letter-spacing: var(--tracking);
   color: var(--camel);
+}
+
+/* ----- achievements viewer ----- */
+/* dim sits over everything but the toast + cursor; window is a 3:4 portrait
+   card that scales in from the middle and scrolls internally */
+.dim {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: rgba(111, 78, 55, 0.5);
+  opacity: 0;
+  transition: opacity var(--t) var(--ease);
+}
+
+.dim.show {
+  opacity: 1;
+}
+
+.achv {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 71;
+  display: flex;
+  flex-direction: column;
+  height: min(76vh, 720px);
+  aspect-ratio: 3 / 4;
+  max-width: 92vw;
+  overflow: hidden;
+  border-radius: 22px;
+  background: var(--papaya-whip);
+  color: var(--coffee-bean);
+  box-shadow: var(--shadow);
+  transform: translate(-50%, -50%) scale(0);
+  transform-origin: center;
+  transition: transform var(--t-slow) var(--ease);
+}
+
+.achv.show {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.achv[hidden] {
+  display: none;
+}
+
+.achv-head {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 16px 0 22px;
+}
+
+.achv-title {
+  flex: 1 1 auto;
+  font-size: 14px;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--camel);
+  white-space: nowrap;
+}
+
+.achv-count {
+  flex: 0 0 auto;
+  font-size: var(--ui-sm);
+  letter-spacing: var(--tracking);
+  color: var(--camel);
+}
+
+.achv-close {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--camel);
+  font: inherit;
+  font-size: 16px;
+  cursor: inherit;
+  transition: color var(--t) var(--ease);
+}
+
+.achv-close:hover {
+  color: var(--coffee-bean);
+}
+
+.achv-close:focus-visible {
+  outline: 2px solid var(--coffee-bean);
+}
+
+.achv-list {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--camel) transparent;
+}
+
+.achv-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.achv-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.achv-list::-webkit-scrollbar-thumb {
+  background: var(--camel);
+  border-radius: 999px;
+}
+
+.achv-list::-webkit-scrollbar-thumb:hover {
+  background: var(--coffee-bean);
+}
+
+/* unlocked rows sit on a filled plate, locked ones stay flat + muted */
+.achv-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+  padding: 10px;
+  border-radius: 14px;
+  background: var(--soft-apricot);
+}
+
+.achv-row.locked {
+  background: transparent;
+}
+
+.achv-icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--coffee-bean);
+  color: var(--papaya-whip);
+  font-size: 20px;
+}
+
+.achv-row.locked .achv-icon {
+  background: var(--camel);
+  color: var(--soft-apricot);
+}
+
+.achv-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.achv-name {
+  font-size: 16px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.achv-row.locked .achv-name {
+  color: var(--camel);
+}
+
+.achv-desc {
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--camel);
+  overflow-wrap: anywhere;
+}
+
+/* ----- multiple choice ----- */
+/* container spans viewport-top to textbox-top (height set by js), stack is
+   centred inside it. buttons are half the textbox width */
+.choices {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 46;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.choices[hidden] {
+  display: none;
+}
+
+.choice {
+  width: calc(var(--tb-w) * 0.5);
+  padding: 10px;
+  border: none;
+  border-radius: 14px;
+  background: var(--papaya-whip);
+  color: var(--coffee-bean);
+  font: inherit;
+  font-size: clamp(15px, 1.9vmin, 19px);
+  line-height: 1.3;
+  letter-spacing: var(--tracking);
+  text-align: center;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: auto;
+  cursor: inherit;
+  transition:
+    opacity var(--t) var(--ease),
+    transform var(--t) var(--ease),
+    background var(--t) var(--ease),
+    color var(--t) var(--ease);
+}
+
+.choices.show .choice {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.choice:hover {
+  background: var(--coffee-bean);
+  color: var(--papaya-whip);
+}
+
+.choice:focus-visible {
+  outline: 2px solid var(--coffee-bean);
+  outline-offset: 3px;
+}
+
+/* ----- language notice ----- */
+.notice {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 85;
+  width: max-content;
+  max-width: min(520px, 88vw);
+  padding: 10px 20px;
+  border-radius: 18px;
+  transform: translate(-50%, -50%);
+  background: rgba(111, 78, 55, 0.5);
+  color: var(--papaya-whip);
+  font-size: var(--ui-sm);
+  line-height: 1.3;
+  letter-spacing: var(--tracking);
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-slow) var(--ease);
+}
+
+.notice.show {
+  opacity: 1;
+  transition: opacity var(--t) var(--ease);
 }
 
 .stage {
@@ -437,7 +717,7 @@ a.opt {
 .opt-state {
   min-width: 52px;
   padding: 4px 12px;
-  border: 1.6px solid var(--camel);
+  border: 2px solid var(--camel);
   border-radius: 8px;
   font-size: var(--ui-sm);
   letter-spacing: var(--tracking);
@@ -574,7 +854,7 @@ a.opt {
   -webkit-appearance: none;
   appearance: none;
   padding: 5px 30px 5px 14px;
-  border: 1.6px solid var(--camel);
+  border: 2px solid var(--camel);
   border-radius: 8px;
   background: var(--papaya-whip);
   color: var(--camel);
@@ -708,6 +988,10 @@ a.opt {
   opacity: 0;
 }
 
+.cursor.hide {
+  opacity: 0;
+}
+
 .cursor-dot {
   position: absolute;
   top: 0;
@@ -761,26 +1045,6 @@ a.opt {
   transform: scale(1);
 }
 
-.fps {
-  position: fixed;
-  top: 22px;
-  left: 22px;
-  z-index: 60;
-  display: none;
-  padding: 4px 10px;
-  border-radius: 8px;
-  background: var(--papaya-whip);
-  color: var(--camel);
-  font-size: 13px;
-  letter-spacing: var(--tracking);
-  pointer-events: none;
-  box-shadow: var(--shadow);
-}
-
-.fps.show {
-  display: block;
-}
-
 @media (max-width: 360px) {
   :root {
     --panel-w: calc(100vw - 44px);
@@ -815,7 +1079,12 @@ a.opt {
   .textbox,
   .textbox.show,
   .ach,
-  .ach-bar-fill {
+  .ach-bar-fill,
+  .dim,
+  .achv,
+  .choice,
+  .notice,
+  .notice.show {
     transition-duration: 0.2s;
   }
   .textbox-next.show {

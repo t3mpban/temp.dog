@@ -103,10 +103,15 @@ def visible_len(text):
 
 
 def wrap_to_width(text, width):
-    words = text.split(" ")
     lines = []
     current = ""
-    for word in words:
+    for word in text.split(" "):
+        while visible_len(word) > width:
+            if current:
+                lines.append(current)
+                current = ""
+            lines.append(word[:width])
+            word = word[width:]
         candidate = word if not current else current + " " + word
         if current and visible_len(candidate) > width:
             lines.append(current)
@@ -144,22 +149,6 @@ def write_line(text=""):
         _commit_line(sub_line)
 
 
-def type_line(text="", char_delay=CHAR_DELAY):
-    for sub_line in wrap_to_width(text, MAX_WIDTH):
-        words = sub_line.split(" ")
-        for i, word in enumerate(words):
-            sys.stdout.write(word)
-            sys.stdout.flush()
-            if word:
-                time.sleep(len(word) * char_delay)
-            if i < len(words) - 1:
-                sys.stdout.write(" ")
-                sys.stdout.flush()
-        sys.stdout.write("\n")
-        sys.stdout.flush()
-        _commit_line(sub_line)
-
-
 def type_line_no_newline(text, char_delay=CHAR_DELAY):
     words = text.split(" ")
     for i, word in enumerate(words):
@@ -170,6 +159,14 @@ def type_line_no_newline(text, char_delay=CHAR_DELAY):
         if i < len(words) - 1:
             sys.stdout.write(" ")
             sys.stdout.flush()
+
+
+def type_line(text="", char_delay=CHAR_DELAY):
+    for sub_line in wrap_to_width(text, MAX_WIDTH):
+        type_line_no_newline(sub_line, char_delay)
+        sys.stdout.write("\n")
+        sys.stdout.flush()
+        _commit_line(sub_line)
 
 
 def type_out(text, char_delay=CHAR_DELAY):
@@ -345,13 +342,19 @@ def get_suggestion(buffer):
     return candidates[0] if candidates else None
 
 
+def max_buffer_len(prompt):
+    return max(0, MAX_WIDTH - len(prompt))
+
+
 def redraw_line(prompt, buffer):
     suggestion = get_suggestion(buffer)
     sys.stdout.write("\r\033[K" + prompt + buffer)
     if suggestion:
         remainder = suggestion[len(buffer):]
-        sys.stdout.write(GREY + remainder + RESET)
-        sys.stdout.write(f"\033[{len(remainder)}D")
+        remainder = remainder[: max(0, max_buffer_len(prompt) - len(buffer))]
+        if remainder:
+            sys.stdout.write(GREY + remainder + RESET)
+            sys.stdout.write(f"\033[{len(remainder)}D")
     sys.stdout.flush()
 
 
@@ -378,11 +381,11 @@ def read_command(prompt):
             elif ch == "\t":
                 suggestion = get_suggestion(buffer)
                 if suggestion:
-                    buffer = suggestion
+                    buffer = suggestion[: max_buffer_len(prompt)]
             elif ch == "\x1b":
                 sys.stdin.read(1)
                 sys.stdin.read(1)
-            elif ch.isprintable():
+            elif ch.isprintable() and len(buffer) < max_buffer_len(prompt):
                 buffer += ch
             redraw_line(prompt, buffer)
     finally:

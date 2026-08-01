@@ -33,7 +33,6 @@
   var cursorDot = cursor.querySelector(".cursor-dot");
   var tip = document.getElementById("tip");
   var bubble = tip.querySelector(".bubble");
-  var fpsEl = document.getElementById("fps");
   var screenEl = document.getElementById("screen");
   var loaderWrap = document.getElementById("loaderWrap");
   var loader = document.getElementById("loader");
@@ -59,7 +58,7 @@
     kr: "한국어",
     zh: "简体中文",
   };
-  var st = { music: 5, sounds: 5, fps: false, lang: "en" };
+  var st = { music: 5, sounds: 5, lang: "en", ach: {} };
 
   try {
     var saved = JSON.parse(localStorage.getItem(KEY) || "{}");
@@ -69,8 +68,8 @@
         st.music = clampVol(saved.music > 10 ? saved.music / 10 : saved.music);
       if (typeof saved.sounds === "number")
         st.sounds = clampVol(saved.sounds > 10 ? saved.sounds / 10 : saved.sounds);
-      st.fps = !!saved.fps;
       if (LANGS.indexOf(saved.lang) !== -1) st.lang = saved.lang;
+      if (saved.ach && typeof saved.ach === "object") st.ach = saved.ach;
     }
   } catch (e) {
     // keep defaults
@@ -83,20 +82,23 @@
   var I18N = {}; // filled when script.json loads
   var DIALOGUE = {}; // textbox scripts, id -> array of { lang: text } lines
   var ACH = {}; // achievements, id -> { type, icon, goal, title, desc }
+  var CHOICES = {}; // multiple choice sets, id -> array of { id, text }
   var I18N_FALLBACK = {
     // baked-in fallback
     "settings-title": "settings",
     "label-music": "music",
     "label-sounds": "sound",
     "label-fullscreen": "fullscreen",
-    "label-fps": "show fps",
     "label-language": "language",
+    "label-achievements": "achievements",
+    "label-close": "close",
     "label-cache": "clear cache",
     "label-cache-confirm": "click again to confirm",
     "label-legacy": "legacy website",
     "state-on": "on",
     "state-off": "off",
     "small-text": "made by t3mp",
+    "notice-translation": "Translations are automatically generated and may be inaccurate.",
   };
 
   function getCookie(name) {
@@ -207,6 +209,7 @@
     syncToggles();
     html.lang = BCP47[st.lang] || "en";
     equalizeSliders();
+    renderAchList();
   }
 
   // translations + dialogue in external file
@@ -233,6 +236,12 @@
           title: toLangMap(entry.title),
           desc: toLangMap(entry.desc),
         };
+      });
+      var choiceList = (data && data.choices) || [];
+      choiceList.forEach(function (entry) {
+        CHOICES[entry.id] = (entry.options || []).map(function (opt, i) {
+          return { id: opt.id == null ? i : opt.id, text: toLangMap(opt.text) };
+        });
       });
       applyI18n();
     })
@@ -267,7 +276,6 @@
   // resync toggles on i18n + init
   function syncToggles() {
     setToggle("fullscreen", !!document.fullscreenElement);
-    setToggle("fps", st.fps);
   }
 
   // scale 0-10 to 0-100% fill
@@ -291,7 +299,6 @@
     setRange("sounds", st.sounds);
     syncToggles();
     langBtnLabel.textContent = LANG_NAMES[st.lang] || st.lang;
-    fpsEl.classList.toggle("show", st.fps);
     music.volume = st.music / 10;
   }
 
@@ -345,16 +352,24 @@
   function within(node) {
     return node && node.closest && node.closest(".cursorable");
   }
+  function hides(node) {
+    return node && node.closest && node.closest(".choice");
+  }
+  function showCursor() {
+    cursor.classList.remove("hide");
+  }
   document.addEventListener("pointerover", function (e) {
     if (within(e.target)) {
       cursor.classList.add("ring");
       blip(sfxHover);
     }
+    if (hides(e.target)) cursor.classList.add("hide");
   });
   document.addEventListener("pointerout", function (e) {
     if (within(e.target) && !within(e.relatedTarget)) {
       cursor.classList.remove("ring");
     }
+    if (hides(e.target) && !hides(e.relatedTarget)) showCursor();
   });
 
   // loading bar
@@ -368,7 +383,7 @@
     pct = Math.round(p * 100);
     fill.style.width = p * 100 + "%";
     loader.setAttribute("aria-valuenow", String(pct));
-    if (tipShown) bubble.textContent = pct + "%";
+    if (tipLoader) bubble.textContent = pct + "%";
     if (p < 1) {
       requestAnimationFrame(loadFrame);
     } else {
@@ -388,21 +403,34 @@
 
   // tip show/hide, delayed
   var tipTimer = null;
-  var tipShown = false;
+  var tipLoader = false; // loader owns the bubble, so it may keep repainting it
+
+  function showTip(text) {
+    clearTimeout(tipTimer);
+    bubble.textContent = text;
+    tip.classList.add("show");
+  }
 
   function hideTip() {
     clearTimeout(tipTimer);
-    tipShown = false;
+    tipLoader = false;
     tip.classList.remove("show");
   }
+
+  // tooltip("text") sets the bubble, tooltip() / tooltip(null) unsets it
+  function tooltip(text) {
+    if (text == null || text === "") hideTip();
+    else showTip(String(text));
+  }
+
+  window.tooltip = tooltip;
 
   if (cursorOn) {
     loader.addEventListener("pointerenter", function () {
       if (loadDone) return;
       tipTimer = setTimeout(function () {
-        tipShown = true;
-        bubble.textContent = pct + "%";
-        tip.classList.add("show");
+        tipLoader = true;
+        showTip(pct + "%");
       }, TIP_DELAY);
     });
     loader.addEventListener("pointerleave", hideTip);
@@ -449,7 +477,8 @@
   });
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") {
-      if (langList) closeLangList();
+      if (achvOpen) setAchvOpen(false);
+      else if (langList) closeLangList();
       else if (open) setOpen(false);
     }
   });
@@ -494,14 +523,7 @@
   });
   document.addEventListener("fullscreenchange", function () {
     setToggle("fullscreen", !!document.fullscreenElement);
-  });
-
-  optFor("fps").addEventListener("click", function () {
-    st.fps = !st.fps;
-    setToggle("fps", st.fps);
-    fpsEl.classList.toggle("show", st.fps);
-    save();
-    blip(sfxSelect);
+    document.documentElement.classList.toggle("is-fullscreen", !!document.fullscreenElement);
   });
 
   // custom dropdown so cursor stays on page
@@ -536,6 +558,20 @@
     if (focusBtn) langBtn.focus();
   }
 
+  // machine-translation disclaimer, shown in the language just picked
+  var notice = document.getElementById("notice");
+  var noticeTimer = null;
+  var NOTICE_MS = 4000;
+
+  function showNotice(text) {
+    clearTimeout(noticeTimer);
+    notice.textContent = text;
+    notice.classList.add("show");
+    noticeTimer = setTimeout(function () {
+      notice.classList.remove("show");
+    }, NOTICE_MS);
+  }
+
   function pickLang(code) {
     if (LANGS.indexOf(code) !== -1 && code !== st.lang) {
       st.lang = code;
@@ -543,6 +579,7 @@
       setCookie(LANG_MANUAL_COOKIE, "1", 365);
       applyI18n();
       save();
+      if (code !== "en") showNotice(t("notice-translation"));
     }
     blip(sfxSelect);
     closeLangList(true);
@@ -870,7 +907,7 @@
 
   // click/tap (or enter/space) skips the reveal, then advances to the next line
   function tbAdvance() {
-    if (!tbActive) return;
+    if (!tbActive || choiceResolve) return;
     // still popping in -> begin the first line now instead of waiting it out
     if (tbStartTimer) {
       clearTimeout(tbStartTimer);
@@ -944,6 +981,74 @@
   // let the webgl game call it: textbox("chair")
   window.textbox = textbox;
 
+  // ----- multiple choice -----
+  // choice("pc-on") pulls a set from script.json; choice(["yes","no"]) takes a
+  // literal list. 2-4 options, stacked + centred above the textbox. resolves to
+  // the picked option's id (or its index when the option has none).
+  var choicesEl = document.getElementById("choices");
+  var CHOICE_OUT_MS = 350; // keep in sync with .choice transition
+  var choiceResolve = null;
+  var choiceHideTimer = null;
+
+  // stack sits between the viewport top and the textbox top
+  function choicePosition() {
+    var top = tb.classList.contains("show") ? tb.getBoundingClientRect().top : window.innerHeight;
+    choicesEl.style.height = Math.max(0, top) + "px";
+  }
+
+  function choiceSettle(value) {
+    var done = choiceResolve;
+    choiceResolve = null;
+    showCursor();
+    choicesEl.classList.remove("show");
+    choicesEl.setAttribute("inert", "");
+    choiceHideTimer = setTimeout(function () {
+      if (!choiceResolve) {
+        choicesEl.hidden = true;
+        choicesEl.textContent = "";
+      }
+    }, CHOICE_OUT_MS);
+    if (done) done(value);
+  }
+
+  function choice(list) {
+    var opts = typeof list === "string" ? CHOICES[list] : list;
+    if (!opts || opts.length < 2 || opts.length > 4) {
+      if (window.console) console.warn("choice: needs 2-4 options");
+      return Promise.resolve(null);
+    }
+    // interrupt anything in flight and settle its promise first
+    if (choiceResolve) choiceSettle(null);
+    clearTimeout(choiceHideTimer);
+    choicesEl.textContent = "";
+
+    opts.forEach(function (opt, i) {
+      var value = opt && opt.id != null ? opt.id : i;
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "choice cursorable";
+      btn.textContent = typeof opt === "string" ? opt : langText(opt.text || opt);
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        blip(sfxSelect);
+        choiceSettle(value);
+      });
+      choicesEl.appendChild(btn);
+    });
+
+    choicesEl.hidden = false;
+    choicesEl.removeAttribute("inert");
+    choicePosition();
+    void choicesEl.offsetWidth; // commit the collapsed state before the pop
+    choicesEl.classList.add("show");
+
+    return new Promise(function (res) {
+      choiceResolve = res;
+    });
+  }
+
+  window.choice = choice;
+
   // ----- achievement toast -----
   // achievement("id") pops an xbox-360-style toast down from the top. progress
   // achievements take the current value: achievement("explorer", 3) -> 3 / 5.
@@ -1005,22 +1110,193 @@
     }, ACH_HOLD_MS);
   }
 
+  // normal achievements are 0/1, progress ones 0..goal
+  function achGoal(a) {
+    return a.type === "progress" ? a.goal || 0 : 1;
+  }
+
+  function achValue(id) {
+    var v = st.ach[id];
+    return typeof v === "number" ? v : 0;
+  }
+
+  function achDone(id, a) {
+    var goal = achGoal(a);
+    return goal > 0 && achValue(id) >= goal;
+  }
+
+  // records progress, then toasts only when it actually moved forward
   function achievement(ref, value) {
     var a = ACH[ref];
     if (!a) {
       if (window.console) console.warn('achievement: unknown id "' + ref + '"');
       return;
     }
-    achQueue.push({ a: a, value: value });
+    var goal = achGoal(a);
+    var next = value == null ? goal : value;
+    if (next < 0) next = 0;
+    if (goal && next > goal) next = goal;
+    if (next <= achValue(ref)) return;
+    st.ach[ref] = next;
+    save();
+    renderAchList();
+    achQueue.push({ a: a, value: next });
     if (!achBusy) achNext();
   }
 
   window.achievement = achievement;
 
+  // ----- achievements viewer -----
+  // completed first, then started-but-unfinished, then the rest; alphabetical
+  // by the active language's title within each band
+  var dim = document.getElementById("dim");
+  var achv = document.getElementById("achv");
+  var achvList = document.getElementById("achvList");
+  var achvCount = document.getElementById("achvCount");
+  var achvClose = document.getElementById("achvClose");
+  var ACHV_OUT_MS = 700; // keep in sync with .achv transition (--t-slow)
+  var achvOpen = false;
+  var achvHideTimer = null;
+
+  function achBand(id) {
+    var a = ACH[id];
+    if (achDone(id, a)) return 0;
+    return achValue(id) > 0 ? 1 : 2;
+  }
+
+  function achOrder() {
+    return Object.keys(ACH).sort(function (x, y) {
+      var bx = achBand(x),
+        by = achBand(y);
+      if (bx !== by) return bx - by;
+      return langText(ACH[x].title).localeCompare(langText(ACH[y].title), BCP47[st.lang] || "en");
+    });
+  }
+
+  function achRow(id) {
+    var a = ACH[id];
+    var goal = achGoal(a);
+    var value = achValue(id);
+    var complete = achDone(id, a);
+
+    var row = document.createElement("div");
+    row.className = complete ? "achv-row" : "achv-row locked";
+
+    var icon = document.createElement("span");
+    icon.className = "achv-icon";
+    var glyph = document.createElement("i");
+    glyph.className = "fa-solid " + a.icon;
+    glyph.setAttribute("aria-hidden", "true");
+    icon.appendChild(glyph);
+
+    var body = document.createElement("span");
+    body.className = "achv-body";
+
+    var name = document.createElement("span");
+    name.className = "achv-name";
+    name.textContent = langText(a.title);
+
+    var desc = document.createElement("span");
+    desc.className = "achv-desc";
+    desc.textContent = langText(a.desc);
+
+    body.appendChild(name);
+    body.appendChild(desc);
+
+    if (a.type === "progress") {
+      var bar = document.createElement("span");
+      bar.className = "ach-bar";
+      var track = document.createElement("span");
+      track.className = "ach-bar-track";
+      var barFill = document.createElement("span");
+      barFill.className = "ach-bar-fill";
+      barFill.style.width = (goal > 0 ? (value / goal) * 100 : 0) + "%";
+      track.appendChild(barFill);
+      var num = document.createElement("span");
+      num.className = "ach-bar-num";
+      num.textContent = value + " / " + goal;
+      bar.appendChild(track);
+      bar.appendChild(num);
+      body.appendChild(bar);
+    }
+
+    row.appendChild(icon);
+    row.appendChild(body);
+    return row;
+  }
+
+  function renderAchList() {
+    if (!achvList) return;
+    var ids = achOrder();
+    var scroll = achvList.scrollTop;
+    var done = 0;
+    achvList.textContent = "";
+    ids.forEach(function (id) {
+      if (achDone(id, ACH[id])) done++;
+      achvList.appendChild(achRow(id));
+    });
+    achvCount.textContent = done + " / " + ids.length;
+    achvList.scrollTop = scroll;
+  }
+
+  function setAchvOpen(next) {
+    if (next === achvOpen) return;
+    achvOpen = next;
+    if (next) {
+      clearTimeout(achvHideTimer);
+      renderAchList();
+      dim.hidden = false;
+      achv.hidden = false;
+      achv.removeAttribute("inert");
+      void achv.offsetWidth; // commit the collapsed state before the pop
+      dim.classList.add("show");
+      achv.classList.add("show");
+      achvList.scrollTop = 0;
+      settings.inert = true; // nothing behind the dim should stay reachable
+      achvClose.focus();
+    } else {
+      dim.classList.remove("show");
+      achv.classList.remove("show");
+      achv.setAttribute("inert", "");
+      settings.inert = false;
+      achvHideTimer = setTimeout(function () {
+        if (!achvOpen) {
+          dim.hidden = true;
+          achv.hidden = true;
+        }
+      }, ACHV_OUT_MS);
+    }
+  }
+
+  optFor("achievements").addEventListener("click", function (e) {
+    e.stopPropagation();
+    blip(sfxSelect);
+    setOpen(false);
+    setAchvOpen(true);
+  });
+
+  achvClose.addEventListener("click", function () {
+    blip(sfxSelect);
+    setAchvOpen(false);
+  });
+
+  dim.addEventListener("click", function () {
+    setAchvOpen(false);
+  });
+
+  // "interstellar": reach the bottom of this list
+  achvList.addEventListener(
+    "scroll",
+    function () {
+      if (achvList.scrollTop + achvList.clientHeight >= achvList.scrollHeight - 2) {
+        achievement("interstellar");
+      }
+    },
+    { passive: true }
+  );
+
   // animation loop
   var last = performance.now();
-  var fpsSmooth = 60,
-    fpsLast = 0;
 
   function frame(now) {
     var dt = (now - last) / 1000;
@@ -1075,18 +1351,13 @@
       loaderWrap.style.translate = mg;
       sig.style.translate = mg;
       settings.style.translate = mg;
-      fpsEl.style.translate = mg;
       if (tbActive) tb.style.translate = mg;
+      if (choiceResolve) choicesEl.style.translate = mg;
       if (langList) langList.style.translate = fg;
     }
 
-    if (st.fps && dt > 0) {
-      fpsSmooth = fpsSmooth * 0.9 + (1 / dt) * 0.1;
-      if (now - fpsLast > 200) {
-        fpsEl.textContent = "FPS " + Math.round(fpsSmooth);
-        fpsLast = now;
-      }
-    }
+    // textbox height moves while it pops in / wraps, so keep re-centring
+    if (choiceResolve) choicePosition();
 
     requestAnimationFrame(frame);
   }
@@ -1097,7 +1368,10 @@
   applyI18n();
   // re-equalize when font ready + on resize
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(equalizeSliders);
-  window.addEventListener("resize", equalizeSliders);
+  window.addEventListener("resize", function () {
+    equalizeSliders();
+    choicePosition();
+  });
   if (st.music > 0) {
     // try autoplay
     music.play().catch(function () {
