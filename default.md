@@ -1,7 +1,4 @@
-read and follow /home/temp/linux/temp.dog.md
+- make only shake also offset pos aswell as rot
+- some objects arent clickable, can you make the ones that arent mentioned on the object list, have the camera not lookAt.
 
-you're job is to do as much as you can the godot project.
-
-for now, focus on just the camera and zones logic, then we can get to the other ones later.
-
-go through your plan with me before starting.
+after this refractor and clean up/simplify code.
