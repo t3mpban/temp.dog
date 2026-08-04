@@ -198,40 +198,833 @@
       ]
     }
   ],
-  "dialogue": [
+  "tooltips": [
+    {
+      "id": "pc",
+      "strings": [
+        { "lang": "en", "text": "pc" },
+        { "lang": "es", "text": "pc" },
+        { "lang": "pt", "text": "pc" },
+        { "lang": "fr", "text": "pc" },
+        { "lang": "de", "text": "pc" },
+        { "lang": "jp", "text": "pc" },
+        { "lang": "kr", "text": "pc" },
+        { "lang": "zh", "text": "电脑" }
+      ]
+    },
+    {
+      "id": "monitor",
+      "strings": [
+        { "lang": "en", "text": "monitor" },
+        { "lang": "es", "text": "monitor" },
+        { "lang": "pt", "text": "monitor" },
+        { "lang": "fr", "text": "écran" },
+        { "lang": "de", "text": "monitor" },
+        { "lang": "jp", "text": "モニター" },
+        { "lang": "kr", "text": "모니터" },
+        { "lang": "zh", "text": "显示器" }
+      ]
+    },
+    {
+      "id": "monitor2",
+      "strings": [
+        { "lang": "en", "text": "second monitor" },
+        { "lang": "es", "text": "segundo monitor" },
+        { "lang": "pt", "text": "segundo monitor" },
+        { "lang": "fr", "text": "deuxième écran" },
+        { "lang": "de", "text": "zweiter monitor" },
+        { "lang": "jp", "text": "2台目のモニター" },
+        { "lang": "kr", "text": "두 번째 모니터" },
+        { "lang": "zh", "text": "第二显示器" }
+      ]
+    },
+    {
+      "id": "mousepad",
+      "strings": [
+        { "lang": "en", "text": "mouse pad" },
+        { "lang": "es", "text": "alfombrilla" },
+        { "lang": "pt", "text": "mouse pad" },
+        { "lang": "fr", "text": "tapis de souris" },
+        { "lang": "de", "text": "mauspad" },
+        { "lang": "jp", "text": "マウスパッド" },
+        { "lang": "kr", "text": "마우스 패드" },
+        { "lang": "zh", "text": "鼠标垫" }
+      ]
+    },
+    {
+      "id": "mouse",
+      "strings": [
+        { "lang": "en", "text": "mouse" },
+        { "lang": "es", "text": "ratón" },
+        { "lang": "pt", "text": "mouse" },
+        { "lang": "fr", "text": "souris" },
+        { "lang": "de", "text": "maus" },
+        { "lang": "jp", "text": "マウス" },
+        { "lang": "kr", "text": "마우스" },
+        { "lang": "zh", "text": "鼠标" }
+      ]
+    },
+    {
+      "id": "keyboard",
+      "strings": [
+        { "lang": "en", "text": "keyboard" },
+        { "lang": "es", "text": "teclado" },
+        { "lang": "pt", "text": "teclado" },
+        { "lang": "fr", "text": "clavier" },
+        { "lang": "de", "text": "tastatur" },
+        { "lang": "jp", "text": "キーボード" },
+        { "lang": "kr", "text": "키보드" },
+        { "lang": "zh", "text": "键盘" }
+      ]
+    },
+    {
+      "id": "clock",
+      "strings": [
+        { "lang": "en", "text": "clock" },
+        { "lang": "es", "text": "reloj" },
+        { "lang": "pt", "text": "relógio" },
+        { "lang": "fr", "text": "horloge" },
+        { "lang": "de", "text": "uhr" },
+        { "lang": "jp", "text": "時計" },
+        { "lang": "kr", "text": "시계" },
+        { "lang": "zh", "text": "时钟" }
+      ]
+    },
     {
       "id": "chair",
+      "strings": [
+        { "lang": "en", "text": "chair" },
+        { "lang": "es", "text": "silla" },
+        { "lang": "pt", "text": "cadeira" },
+        { "lang": "fr", "text": "chaise" },
+        { "lang": "de", "text": "stuhl" },
+        { "lang": "jp", "text": "椅子" },
+        { "lang": "kr", "text": "의자" },
+        { "lang": "zh", "text": "椅子" }
+      ]
+    },
+    {
+      "id": "couch",
+      "strings": [
+        { "lang": "en", "text": "couch" },
+        { "lang": "es", "text": "sofá" },
+        { "lang": "pt", "text": "sofá" },
+        { "lang": "fr", "text": "canapé" },
+        { "lang": "de", "text": "couch" },
+        { "lang": "jp", "text": "ソファ" },
+        { "lang": "kr", "text": "소파" },
+        { "lang": "zh", "text": "沙发" }
+      ]
+    },
+    {
+      "id": "bed",
+      "strings": [
+        { "lang": "en", "text": "bed" },
+        { "lang": "es", "text": "cama" },
+        { "lang": "pt", "text": "cama" },
+        { "lang": "fr", "text": "lit" },
+        { "lang": "de", "text": "bett" },
+        { "lang": "jp", "text": "ベッド" },
+        { "lang": "kr", "text": "침대" },
+        { "lang": "zh", "text": "床" }
+      ]
+    },
+    {
+      "id": "marketableplush",
+      "strings": [
+        { "lang": "en", "text": "marketable plush" },
+        { "lang": "es", "text": "peluche comercializable" },
+        { "lang": "pt", "text": "pelúcia comercializável" },
+        { "lang": "fr", "text": "peluche commercialisable" },
+        { "lang": "de", "text": "vermarktbares plüschtier" },
+        { "lang": "jp", "text": "商品化ぬいぐるみ" },
+        { "lang": "kr", "text": "상품화 인형" },
+        { "lang": "zh", "text": "可量产玩偶" }
+      ]
+    },
+    {
+      "id": "guitar",
+      "strings": [
+        { "lang": "en", "text": "guitar" },
+        { "lang": "es", "text": "guitarra" },
+        { "lang": "pt", "text": "guitarra" },
+        { "lang": "fr", "text": "guitare" },
+        { "lang": "de", "text": "gitarre" },
+        { "lang": "jp", "text": "ギター" },
+        { "lang": "kr", "text": "기타" },
+        { "lang": "zh", "text": "吉他" }
+      ]
+    },
+    {
+      "id": "window",
+      "strings": [
+        { "lang": "en", "text": "window" },
+        { "lang": "es", "text": "ventana" },
+        { "lang": "pt", "text": "janela" },
+        { "lang": "fr", "text": "fenêtre" },
+        { "lang": "de", "text": "fenster" },
+        { "lang": "jp", "text": "窓" },
+        { "lang": "kr", "text": "창문" },
+        { "lang": "zh", "text": "窗户" }
+      ]
+    },
+    {
+      "id": "painting",
+      "strings": [
+        { "lang": "en", "text": "picture" },
+        { "lang": "es", "text": "cuadro" },
+        { "lang": "pt", "text": "quadro" },
+        { "lang": "fr", "text": "tableau" },
+        { "lang": "de", "text": "bild" },
+        { "lang": "jp", "text": "絵" },
+        { "lang": "kr", "text": "그림" },
+        { "lang": "zh", "text": "画" }
+      ]
+    },
+    {
+      "id": "tv",
+      "strings": [
+        { "lang": "en", "text": "tv" },
+        { "lang": "es", "text": "tv" },
+        { "lang": "pt", "text": "tv" },
+        { "lang": "fr", "text": "tv" },
+        { "lang": "de", "text": "tv" },
+        { "lang": "jp", "text": "テレビ" },
+        { "lang": "kr", "text": "tv" },
+        { "lang": "zh", "text": "电视" }
+      ]
+    },
+    {
+      "id": "shelf",
+      "strings": [
+        { "lang": "en", "text": "shelf" },
+        { "lang": "es", "text": "estante" },
+        { "lang": "pt", "text": "prateleira" },
+        { "lang": "fr", "text": "étagère" },
+        { "lang": "de", "text": "regal" },
+        { "lang": "jp", "text": "棚" },
+        { "lang": "kr", "text": "선반" },
+        { "lang": "zh", "text": "架子" }
+      ]
+    },
+    {
+      "id": "rug",
+      "strings": [
+        { "lang": "en", "text": "rug" },
+        { "lang": "es", "text": "alfombra" },
+        { "lang": "pt", "text": "tapete" },
+        { "lang": "fr", "text": "tapis" },
+        { "lang": "de", "text": "teppich" },
+        { "lang": "jp", "text": "ラグ" },
+        { "lang": "kr", "text": "러그" },
+        { "lang": "zh", "text": "地毯" }
+      ]
+    }
+  ],
+  "dialogue": [
+    {
+      "id": "pc-off",
+      "lines": [[{ "lang": "en", "text": "Turn the PC on?" }]]
+    },
+    {
+      "id": "pc-off-yes",
+      "lines": [
+        [{ "lang": "en", "text": "You turned the PC on" }],
+        [{ "lang": "en", "text": "It's quieter than you thought." }]
+      ]
+    },
+    {
+      "id": "pc-off-no",
+      "lines": [
+        [{ "lang": "en", "text": "You feel weirdly powerful and in control" }],
+        [{ "lang": "en", "text": "But I assure you, you're not." }]
+      ]
+    },
+    {
+      "id": "pc-on",
+      "lines": [[{ "lang": "en", "text": "Turn the PC off?" }]]
+    },
+    {
+      "id": "pc-on-yes",
+      "lines": [[{ "lang": "en", "text": "You turned the PC off" }]]
+    },
+    {
+      "id": "pc-on-no",
       "lines": [
         [
-          { "lang": "en", "text": "It's a chair." },
-          { "lang": "es", "text": "Es una silla." },
-          { "lang": "pt", "text": "É uma cadeira." },
-          { "lang": "fr", "text": "C'est une chaise." },
-          { "lang": "de", "text": "Es ist ein Stuhl." },
-          { "lang": "jp", "text": "ただの椅子だ。" },
-          { "lang": "kr", "text": "그냥 의자네." },
-          { "lang": "zh", "text": "这是一把椅子。" }
-        ],
-        [
-          { "lang": "en", "text": "Nothing special about it, really." },
-          { "lang": "es", "text": "Nada especial, la verdad." },
-          { "lang": "pt", "text": "Nada de especial, na verdade." },
-          { "lang": "fr", "text": "Rien de spécial, vraiment." },
-          { "lang": "de", "text": "Nichts Besonderes, ehrlich." },
-          { "lang": "jp", "text": "特に、何もないよ。" },
-          { "lang": "kr", "text": "딱히, 특별할 건 없어." },
-          { "lang": "zh", "text": "其实，没什么特别的。" }
-        ],
-        [
-          { "lang": "en", "text": "...why are you still looking at it?" },
-          { "lang": "es", "text": "...¿por qué sigues mirándola?" },
-          { "lang": "pt", "text": "...por que ainda está olhando?" },
-          { "lang": "fr", "text": "...pourquoi tu la regardes encore ?" },
-          { "lang": "de", "text": "...warum schaust du noch hin?" },
-          { "lang": "jp", "text": "…まだ見てるの？" },
-          { "lang": "kr", "text": "…아직도 보고 있어?" },
-          { "lang": "zh", "text": "……你怎么还在看它？" }
+          {
+            "lang": "en",
+            "text": "You decided you like the ambient noise of the fans spinning and wanted to keep the PC on"
+          }
         ]
+      ]
+    },
+    {
+      "id": "pc-ram",
+      "lines": [
+        [{ "lang": "en", "text": "..." }],
+        [{ "lang": "en", "text": "No. Stealing is wrong." }],
+        [{ "lang": "en", "text": "Shame on you." }],
+        [{ "lang": "en", "text": "I know ram prices are high but come on..." }]
+      ]
+    },
+    {
+      "id": "mousepad",
+      "lines": [
+        [{ "lang": "en", "text": "It's a mouse pad" }],
+        [{ "lang": "en", "text": "made out of glass" }],
+        [{ "lang": "en", "text": "so its a glass pad." }]
+      ]
+    },
+    {
+      "id": "mouse",
+      "lines": [
+        [
+          {
+            "lang": "en",
+            "text": "You notice the fact this mouse moves based on where your mouse is"
+          }
+        ],
+        [
+          {
+            "lang": "en",
+            "text": "but there's a small chance you have a track pad or using touch pad."
+          }
+        ],
+        [{ "lang": "en", "text": "..." }],
+        [{ "lang": "en", "text": "This is why we can't have nice things." }]
+      ]
+    },
+    {
+      "id": "keyboard",
+      "lines": [
+        [{ "lang": "en", "text": "It's a keyboard" }],
+        [{ "lang": "en", "text": "Made out of magnets" }],
+        [{ "lang": "en", "text": "It's a magnetic keyboard" }],
+        [{ "lang": "en", "text": "You wonder why such a thing exists" }],
+        [{ "lang": "en", "text": "Maybe it's something to do with global warming?" }]
+      ]
+    },
+    {
+      "id": "clock",
+      "lines": [
+        [{ "lang": "en", "text": "The time is {time}" }],
+        [{ "lang": "en", "text": "in this timezone..." }]
+      ]
+    },
+    {
+      "id": "monitor-off",
+      "lines": [[{ "lang": "en", "text": "The computer is turned off, and so is the monitor." }]]
+    },
+    {
+      "id": "monitor2-off",
+      "lines": [
+        [
+          {
+            "lang": "en",
+            "text": "You'd think a second monitor positioned in such a way would be meaningless..."
+          }
+        ]
+      ]
+    },
+    {
+      "id": "monitor2-on",
+      "lines": [
+        [{ "lang": "en", "text": "Even with the PC on, the second monitor is useless." }],
+        [{ "lang": "en", "text": "..." }],
+        [{ "lang": "en", "text": "It makes you feel better about yourself." }]
+      ]
+    },
+    {
+      "id": "chair-1",
+      "lines": [[{ "lang": "en", "text": "It's a chair" }]]
+    },
+    {
+      "id": "chair-2",
+      "lines": [[{ "lang": "en", "text": "Seriously, it's a chair" }]]
+    },
+    {
+      "id": "chair-3",
+      "lines": [[{ "lang": "en", "text": "Do you not believe me?" }]]
+    },
+    {
+      "id": "chair-4",
+      "lines": [
+        [{ "lang": "en", "text": "You-" }],
+        [{ "lang": "en", "text": "why are you clicking on the chair" }]
+      ]
+    },
+    {
+      "id": "chair-5",
+      "lines": [[{ "lang": "en", "text": "there's no achievement for this btw" }]]
+    },
+    {
+      "id": "chair-6",
+      "lines": [[{ "lang": "en", "text": "you're wasting your time" }]]
+    },
+    {
+      "id": "chair-7",
+      "lines": [[{ "lang": "en", "text": "..." }]]
+    },
+    {
+      "id": "chair-8",
+      "lines": [[{ "lang": "en", "text": "ok fine, leave me alone." }]]
+    },
+    {
+      "id": "bed-busy-1",
+      "lines": [[{ "lang": "en", "text": "Your job isn't done yet." }]]
+    },
+    {
+      "id": "bed-busy-2",
+      "lines": [[{ "lang": "en", "text": "You can't sleep now, you have a job to do." }]]
+    },
+    {
+      "id": "bed-busy-3",
+      "lines": [[{ "lang": "en", "text": "No, you must finish what you started." }]]
+    },
+    {
+      "id": "bed-busy-4",
+      "lines": [[{ "lang": "en", "text": "You can sleep when your finished." }]]
+    },
+    {
+      "id": "plush-open-1",
+      "lines": [[{ "lang": "en", "text": "You feel like it's watching you..." }]]
+    },
+    {
+      "id": "plush-open-2",
+      "lines": [[{ "lang": "en", "text": "You feel it's holding back..." }]]
+    },
+    {
+      "id": "plush-open-3",
+      "lines": [[{ "lang": "en", "text": "You feel an ominous presence..." }]]
+    },
+    {
+      "id": "plush-open-4",
+      "lines": [[{ "lang": "en", "text": "You feel like it could speak..." }]]
+    },
+    {
+      "id": "plush-open-5",
+      "lines": [[{ "lang": "en", "text": "You feel an overwhelming amount of pressure..." }]]
+    },
+    {
+      "id": "plush-interact",
+      "lines": [[{ "lang": "en", "text": "Interact with it?" }]]
+    },
+    {
+      "id": "plush-topics",
+      "lines": [[{ "lang": "en", "text": "..." }]]
+    },
+    {
+      "id": "plush-password",
+      "lines": [
+        [{ "lang": "en", "text": "You ask the [Marketable Plush] what the password is" }],
+        [{ "lang": "en", "text": "..." }],
+        [
+          {
+            "lang": "en",
+            "text": "As you wait for a response, you hear the shelf under the TV become a bit louder"
+          }
+        ],
+        [{ "lang": "en", "text": "Which is strange because shelves are usually silent" }],
+        [{ "lang": "en", "text": "..." }],
+        [{ "lang": "en", "text": "You have a feeling that [Marketable Plush] is onto something" }],
+        [{ "lang": "en", "text": "Or your on something..." }]
+      ]
+    },
+    {
+      "id": "plush-guitar",
+      "lines": [
+        [{ "lang": "en", "text": "You ask the [Marketable Plush] how to play guitar" }],
+        [{ "lang": "en", "text": "..." }],
+        [
+          {
+            "lang": "en",
+            "text": "As you wait for a response, you feel as if the answer already resides inside you"
+          }
+        ],
+        [{ "lang": "en", "text": "and a melody starts to form inside your head!" }],
+        [{ "lang": "en", "text": "..." }],
+        [
+          {
+            "lang": "en",
+            "text": "You now know how to play guitar, all thanks to [Marketable Plush]"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "plush-remote",
+      "lines": [
+        [{ "lang": "en", "text": "You ask the [Marketable Plush] where the TV remote is" }],
+        [{ "lang": "en", "text": "..." }],
+        [
+          {
+            "lang": "en",
+            "text": "As you wait for a response, you feel as if the answer is staring right at you..."
+          }
+        ],
+        [
+          {
+            "lang": "en",
+            "text": "So without thinking, you squeeze [Marketable Plush] and the TV turns on!"
+          }
+        ],
+        [{ "lang": "en", "text": "How awesome is that!" }],
+        [{ "lang": "en", "text": "Now you can watch TV, all thanks to [Marketable Plush]" }],
+        [{ "lang": "en", "text": "..." }],
+        [{ "lang": "en", "text": "Though you should've asked for permission before squeezing him" }]
+      ]
+    },
+    {
+      "id": "plush-donate",
+      "lines": [
+        [{ "lang": "en", "text": "You try to give the [Marketable Plush] your money" }],
+        [{ "lang": "en", "text": "but then realize you have no money on you..." }],
+        [{ "lang": "en", "text": "..." }],
+        [
+          {
+            "lang": "en",
+            "text": "So instead, you ask the [Marketable Plush] how it's day has been"
+          }
+        ],
+        [{ "lang": "en", "text": "As you wait for a response, you feel a bit stupid..." }],
+        [{ "lang": "en", "text": "Unless... that's how it's day has been" }],
+        [{ "lang": "en", "text": "Stupid." }],
+        [{ "lang": "en", "text": "You learn that [Marketable Plush] has had a stupid day" }]
+      ]
+    },
+    {
+      "id": "plush-donate-coin",
+      "lines": [
+        [{ "lang": "en", "text": "You try give the [Marketable Plush] your money" }],
+        [{ "lang": "en", "text": "..." }],
+        [{ "lang": "en", "text": "As you wait for a response, you feel a sense of gratitude..." }],
+        [
+          {
+            "lang": "en",
+            "text": "Despite the fact you could just take your money back, very easily"
+          }
+        ],
+        [{ "lang": "en", "text": "You decide not to." }],
+        [{ "lang": "en", "text": "Thank you for donating to [Marketable Plush]" }]
+      ]
+    },
+    {
+      "id": "plush-empty",
+      "lines": [
+        [
+          {
+            "lang": "en",
+            "text": "You feel stressed out knowing you read all of the dialogue that [Marketable Plush] has to offer..."
+          }
+        ],
+        [{ "lang": "en", "text": "Or have you..?" }]
+      ]
+    },
+    {
+      "id": "guitar-before",
+      "lines": [
+        [{ "lang": "en", "text": "You don't remember how to play" }],
+        [{ "lang": "en", "text": "Try to play anyways?" }]
+      ]
+    },
+    {
+      "id": "guitar-before-play-1",
+      "lines": [
+        [{ "lang": "en", "text": "You start to strum the guitar-" }],
+        [{ "lang": "en", "text": "and..." }],
+        [{ "lang": "en", "text": "..." }],
+        [{ "lang": "en", "text": "yikes..." }],
+        [{ "lang": "en", "text": "that was-" }],
+        [{ "lang": "en", "text": "we don't have to tell anyone about it..." }]
+      ]
+    },
+    {
+      "id": "guitar-before-play-2",
+      "lines": [
+        [{ "lang": "en", "text": "..." }],
+        [{ "lang": "en", "text": "No, I won't let you." }]
+      ]
+    },
+    {
+      "id": "guitar-after",
+      "lines": [
+        [{ "lang": "en", "text": "You remember what the marketable plush taught you" }],
+        [{ "lang": "en", "text": "Give it a try?" }]
+      ]
+    },
+    {
+      "id": "guitar-after-play-1",
+      "lines": [
+        [{ "lang": "en", "text": "You start to absolutely shred." }],
+        [{ "lang": "en", "text": "Your fingers are just perfectly hitting every riff perfectly" }],
+        [
+          {
+            "lang": "en",
+            "text": "You're so good that your playing percussion, bass and piano, all on the guitar"
+          }
+        ],
+        [{ "lang": "en", "text": "..." }],
+        [{ "lang": "en", "text": "If only you could hear what I'm hearing right now" }],
+        [{ "lang": "en", "text": "This is the greatest song in the world" }]
+      ]
+    },
+    {
+      "id": "guitar-after-play-2",
+      "lines": [
+        [{ "lang": "en", "text": "Once again, you start to absolutely shred." }],
+        [{ "lang": "en", "text": "Despite you not remembering the last song you played" }],
+        [{ "lang": "en", "text": "You decide to play a tribute" }],
+        [{ "lang": "en", "text": "..." }],
+        [{ "lang": "en", "text": "And it's almost even better" }],
+        [{ "lang": "en", "text": "..." }],
+        [{ "lang": "en", "text": "If only you could hear what I'm hearing right now" }],
+        [{ "lang": "en", "text": "You are the greatest guitarist in this world" }],
+        [{ "lang": "en", "text": "Once again, thanks to [Marketable Plush]" }]
+      ]
+    },
+    {
+      "id": "guitar-after-play-3",
+      "lines": [
+        [{ "lang": "en", "text": "..." }],
+        [{ "lang": "en", "text": "You decide to save your stamina..." }]
+      ]
+    },
+    {
+      "id": "window-night",
+      "lines": [[{ "lang": "en", "text": "It's dark outside, given it's midnight over here." }]]
+    },
+    {
+      "id": "window-early",
+      "lines": [
+        [
+          {
+            "lang": "en",
+            "text": "It's getting bright outside, given it's the early morning over here."
+          }
+        ]
+      ]
+    },
+    {
+      "id": "window-morning",
+      "lines": [
+        [{ "lang": "en", "text": "It's bright outside, given it's the morning over here." }]
+      ]
+    },
+    {
+      "id": "window-afternoon",
+      "lines": [
+        [
+          {
+            "lang": "en",
+            "text": "It's pretty bright outside, given it's the afternoon over here."
+          }
+        ]
+      ]
+    },
+    {
+      "id": "window-evening",
+      "lines": [
+        [{ "lang": "en", "text": "It's getting dark outside, given it's night time over here." }]
+      ]
+    },
+    {
+      "id": "painting",
+      "lines": [
+        [
+          {
+            "lang": "en",
+            "text": "Knowing this art, is art of art, within a website that, if you will, is considered a work of art... It fills you with determination."
+          }
+        ]
+      ]
+    },
+    {
+      "id": "tv-off",
+      "lines": [
+        [{ "lang": "en", "text": "The TV is off." }],
+        [{ "lang": "en", "text": "There doesn't seem to be an obvious remote in sight" }],
+        [{ "lang": "en", "text": "hm..." }]
+      ]
+    },
+    {
+      "id": "tv-on",
+      "lines": [
+        [{ "lang": "en", "text": "It's a looping video of Temp dancing" }],
+        [{ "lang": "en", "text": "wait, that's Temp?" }],
+        [{ "lang": "en", "text": "I thought he was a dog..." }]
+      ]
+    },
+    {
+      "id": "shelf-1",
+      "lines": [
+        [
+          {
+            "lang": "en",
+            "text": "You see a small piece of paper, peeking from a comically sized Harry Potter book"
+          }
+        ],
+        [{ "lang": "en", "text": "You carefully snag the paper out and read it." }],
+        [{ "lang": "en", "text": "It says oolsbop = pjomsspd" }],
+        [{ "lang": "en", "text": "..." }],
+        [{ "lang": "en", "text": "wait..." }],
+        [{ "lang": "en", "text": "You flip it upside down and it says password = dogs100" }],
+        [{ "lang": "en", "text": "..." }],
+        [{ "lang": "en", "text": "You feel relieved that you didn't need to solve a puzzle." }]
+      ]
+    },
+    {
+      "id": "shelf-2",
+      "lines": [
+        [
+          { "lang": "en", "text": "So many books here... and yet he hasn't read a day in his life" }
+        ],
+        [{ "lang": "en", "text": "Apart from maybe cereal boxes... and visual novels..." }]
+      ]
+    },
+    {
+      "id": "shelf-3",
+      "lines": [
+        [
+          {
+            "lang": "en",
+            "text": "If you like reading so much, why don't you pick up one of these books?"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "couch",
+      "lines": [[{ "lang": "en", "text": "It's surprisingly comfy, given it has no backrest." }]]
+    },
+    {
+      "id": "rug-1",
+      "lines": [
+        [{ "lang": "en", "text": "You check under the carpet... and find a shiny quarter!" }],
+        [
+          { "lang": "en", "text": "You also find out that the carpet is a lot lighter and softer." }
+        ],
+        [{ "lang": "en", "text": "Interesting..." }]
+      ]
+    },
+    {
+      "id": "rug-2",
+      "lines": [
+        [{ "lang": "en", "text": "You check under the carpet again... and find nothing" }],
+        [
+          {
+            "lang": "en",
+            "text": "Whilst you're down there, you admire the light and soft carpet underneath."
+          }
+        ],
+        [{ "lang": "en", "text": "You feel as if that could make for a cool metaphor..." }]
+      ]
+    },
+    {
+      "id": "rug-3",
+      "lines": [
+        [
+          {
+            "lang": "en",
+            "text": "Beneath the weight of now and the future, a younger version of your world stayed still like a photograph,"
+          }
+        ],
+        [
+          {
+            "lang": "en",
+            "text": "Its fibers cleaner, its colors brighter, and its contrast stronger than any combination of words could withhold,"
+          }
+        ],
+        [
+          {
+            "lang": "en",
+            "text": "Some people don't have a rug to place, nor lift, and thus never remember their roots,"
+          }
+        ],
+        [
+          {
+            "lang": "en",
+            "text": "But unless you see the light soon, it's never too late to place the rug, and snapshot your life for another day,"
+          }
+        ],
+        [
+          {
+            "lang": "en",
+            "text": "So you too can see how far you've come, from then, to now, till the future,"
+          }
+        ],
+        [{ "lang": "en", "text": "It might just inspire you." }],
+        [{ "lang": "en", "text": "..." }],
+        [{ "lang": "en", "text": "Just maybe." }]
+      ]
+    },
+    {
+      "id": "ending-locked",
+      "lines": [
+        [
+          {
+            "lang": "en",
+            "text": "when you actually beat the game, you'll get to see this. otherwise, SCRAM!!"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "ending",
+      "lines": [
+        [{ "lang": "en", "text": "I see the player you mean." }],
+        [
+          {
+            "lang": "en",
+            "text": "It has reached such a level of unemployment that it can read my thoughts."
+          }
+        ],
+        [
+          {
+            "lang": "en",
+            "text": "It reads my thoughts through pixels, transmitted across years of innovation and technology,"
+          }
+        ],
+        [
+          {
+            "lang": "en",
+            "text": "as though humans were created for this very purpose and moment in time."
+          }
+        ],
+        [{ "lang": "en", "text": "But that doesn’t matter." }],
+        [
+          {
+            "lang": "en",
+            "text": "It knows it wasted its time, and yet, it played well. It did not give up."
+          }
+        ],
+        [{ "lang": "en", "text": "For this very reason, I like this player." }],
+        [{ "lang": "en", "text": "I like how this player is so determined." }],
+        [{ "lang": "en", "text": "I like how this player is so dedicated to its craft." }],
+        [
+          {
+            "lang": "en",
+            "text": "I like how this player never stops until it finishes what it started."
+          }
+        ],
+        [
+          {
+            "lang": "en",
+            "text": "And I'll miss how this player is now, later when they grow tall,"
+          }
+        ],
+        [
+          {
+            "lang": "en",
+            "text": "when obscurities such as money, finance, school, jobs, families, and the heat death of the universe consume someone I once knew."
+          }
+        ],
+        [{ "lang": "en", "text": "And soon you too will miss yourself." }],
+        [{ "lang": "en", "text": "The world." }],
+        [{ "lang": "en", "text": "And everything in between." }],
+        [{ "lang": "en", "text": "Yet it will always feel like you are already too late." }],
+        [{ "lang": "en", "text": "..." }],
+        [{ "lang": "en", "text": "Fin." }]
       ]
     }
   ],
@@ -591,6 +1384,29 @@
             { "lang": "zh", "text": "偷走内存条" }
           ]
         }
+      ]
+    },
+    {
+      "id": "plush-interact",
+      "options": [
+        { "id": "go", "text": [{ "lang": "en", "text": "What could go wrong?" }] },
+        { "id": "scared", "text": [{ "lang": "en", "text": "I'm scared." }] }
+      ]
+    },
+    {
+      "id": "plush-topics",
+      "options": [
+        { "id": "password", "text": [{ "lang": "en", "text": "What's the password" }] },
+        { "id": "guitar", "text": [{ "lang": "en", "text": "How to play guitar" }] },
+        { "id": "remote", "text": [{ "lang": "en", "text": "Where's the TV Remote" }] },
+        { "id": "donate", "text": [{ "lang": "en", "text": "Donate" }] }
+      ]
+    },
+    {
+      "id": "guitar-play",
+      "options": [
+        { "id": "yes", "text": [{ "lang": "en", "text": "Why not?" }] },
+        { "id": "no", "text": [{ "lang": "en", "text": "No thanks." }] }
       ]
     }
   ]

@@ -4,6 +4,12 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("../font/JetBrainsMono.woff2") format("woff2");
+  font-display: swap;
+}
+
 :root {
   --coffee-bean: #6f4e37;
   --camel: #c19a6b;
@@ -15,11 +21,11 @@
   --t: 0.35s;
   --t-slow: 0.7s;
   --t-grow: 1s; /* screen scale-in */
-  --t-pop: 1.4s; /* textbox scale-in (slower, graceful) */
+  --t-pop: 0.5s; /* textbox scale-in (slower, graceful) */
   --tracking: 0.1em;
   --tracking-wide: 0.15em;
   --ui-sm: 15px; /* secondary control text */
-  --shadow: -3px 3px 6px rgba(111, 78, 55, 0.1);
+  --shadow: 1px 1px 10px rgba(111, 78, 55, 0.1);
 
   --panel-w: 270px;
   --tb-w: min(760px, 90vw);
@@ -83,7 +89,7 @@ html.cc-active * {
   cursor: none;
 }
 
-/* ----- placeholder screen ----- */
+/* ----- game screen ----- */
 /* rect inset 4vmin, revealed after loader, behind ui */
 /* no fade: grows from scale 0 over 1s when revealed */
 .screen {
@@ -94,11 +100,22 @@ html.cc-active * {
   background: var(--soft-apricot);
   transform: scale(0);
   pointer-events: none;
+  overflow: hidden;
   transition: transform var(--t-grow) var(--ease);
+  box-shadow: var(--shadow);
 }
 
 .screen.show {
   transform: scale(1);
+}
+
+/* the only thing on this layer that takes clicks */
+.game {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  image-rendering: pixelated;
 }
 
 html.is-fullscreen body::before {
@@ -472,7 +489,6 @@ html.is-fullscreen .screen {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
   pointer-events: none;
 }
 
@@ -480,26 +496,38 @@ html.is-fullscreen .screen {
   display: none;
 }
 
+/* hit box: no gap between buttons, so the pointer never leaves a
+   .cursorable while crossing from one choice to the next. the visible
+   gap is padding (still inside the hit box) around .choice-inner */
 .choice {
+  display: block;
   width: calc(var(--tb-w) * 0.5);
-  padding: 10px;
+  padding: 5px 0;
   border: none;
-  border-radius: 14px;
-  background: var(--papaya-whip);
-  color: var(--coffee-bean);
+  background: none;
   font: inherit;
-  font-size: clamp(15px, 1.9vmin, 19px);
-  line-height: 1.3;
-  letter-spacing: var(--tracking);
-  text-align: center;
-  box-shadow: var(--shadow);
+  outline: none;
   opacity: 0;
   transform: scale(0.9);
   pointer-events: auto;
   cursor: inherit;
   transition:
     opacity var(--t) var(--ease),
-    transform var(--t) var(--ease),
+    transform var(--t) var(--ease);
+}
+
+.choice-inner {
+  display: block;
+  padding: 10px;
+  border-radius: 14px;
+  background: var(--papaya-whip);
+  color: var(--coffee-bean);
+  font-size: clamp(15px, 1.9vmin, 19px);
+  line-height: 1.3;
+  letter-spacing: var(--tracking);
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition:
     background var(--t) var(--ease),
     color var(--t) var(--ease);
 }
@@ -509,14 +537,9 @@ html.is-fullscreen .screen {
   transform: scale(1);
 }
 
-.choice:hover {
+.choice.active .choice-inner {
   background: var(--coffee-bean);
   color: var(--papaya-whip);
-}
-
-.choice:focus-visible {
-  outline: 2px solid var(--coffee-bean);
-  outline-offset: 3px;
 }
 
 /* ----- language notice ----- */
@@ -546,6 +569,8 @@ html.is-fullscreen .screen {
   transition: opacity var(--t) var(--ease);
 }
 
+/* full-bleed so the loader centres, so it must let clicks through to the
+   game sitting underneath it */
 .stage {
   position: relative;
   z-index: 10;
@@ -554,6 +579,7 @@ html.is-fullscreen .screen {
   justify-content: center;
   min-height: 100svh;
   padding: 24px;
+  pointer-events: none;
 }
 
 .loader-wrap {
@@ -561,6 +587,7 @@ html.is-fullscreen .screen {
   flex-direction: column;
   align-items: center;
   gap: 16px;
+  pointer-events: auto;
   transition:
     opacity 0.6s var(--ease),
     transform var(--t-slow) var(--ease);
@@ -1005,13 +1032,18 @@ a.opt {
   transition:
     width var(--t) var(--ease),
     height var(--t) var(--ease),
-    border-width var(--t) var(--ease);
+    border-width var(--t) var(--ease),
+    border-color var(--t) var(--ease);
 }
 
 .cursor.ring .cursor-dot {
   width: 24px;
   height: 24px;
   border-width: 4px;
+}
+
+.cursor.dark .cursor-dot {
+  border-color: var(--papaya-whip);
 }
 
 .cursor-tip {

@@ -1,55 +1,122 @@
 <!-- ======================
-	temp loves you <3
-    but stop peeking darling' ヾ(≧▽≦*)o
-    this code dosent write itself.. alright back to work.
+	UI animation playground. every element below is the exact markup from
+	index.html (minus the webgl canvas + game.js) so scripts/style.css,
+	scripts/script.js and scripts/textbox.js drive it identically to the
+	real site — edit those files and this page updates too.
      ====================== -->
 <!doctype html>
 <html lang="en">
   <head>
-    <meta name="title" content="t3mp's website" />
-    <meta
-      name="description"
-      content="Hi, My name is Temp, and this website is a portal for all my socials, hosts my portfolio, and my biography, and me, Temp!!"
-    />
-    <meta
-      name="keywords"
-      content="t3mp, t3mpban, t3mpyt, 3vu, t3vu, temp, tempban, tempyt, temp youtube, t3wp, t3mp twitter, t3mp youtube, t3mp twitch, t3mps website, t3mp's website, temp's website, t3mp's Website"
-    />
-    <meta name="robots" content="index, follow" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta
-      name="language"
-      content="English, Spanish, Portuguese, French, German, Japanese, Korean, Chinese"
-    />
-    <meta name="author" content="t3mp" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta content="https://www.temp.dog/" property="og:url" />
-    <meta content="https://temp.dog/images/pfp.png" property="og:image" />
-    <meta content="#6f4e37" data-react-helmet="true" name="theme-color" />
     <meta charset="utf-8" />
-    <title>t3mp's website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>t3mp's website — /test</title>
     <link rel="icon" type="image/png" href="images/favicon.png" />
     <link rel="stylesheet" type="text/css" href="scripts/style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
-    <script
-      defer
-      src="https://cloud.umami.is/script.js"
-      data-website-id="f8a25eb1-84d1-48ab-b56d-03a37097f3af"
-    ></script>
+    <style>
+      .rig {
+        position: fixed;
+        top: 4vmin;
+        left: 4vmin;
+        z-index: 60;
+        width: var(--panel-w);
+        max-height: 92vh;
+        overflow-y: auto;
+        box-sizing: border-box;
+        padding: 18px;
+        border-radius: 22px;
+        background: var(--papaya-whip);
+        color: var(--coffee-bean);
+        box-shadow: var(--shadow);
+        font-size: var(--ui-sm);
+      }
+      .rig h1 {
+        margin: 0 0 4px;
+        font-size: clamp(15px, 1.9vmin, 19px);
+        letter-spacing: var(--tracking);
+      }
+      .rig p {
+        margin: 0 0 14px;
+        color: var(--camel);
+        font-size: 12px;
+        letter-spacing: var(--tracking);
+      }
+      .rig-divider {
+        height: 1px;
+        margin: 12px 0;
+        border-radius: 999px;
+        background: var(--tan);
+        opacity: 0.6;
+      }
+      .rig-grp {
+        margin-bottom: 14px;
+      }
+      .rig-grp h2 {
+        margin: 0 0 8px;
+        font-size: 12px;
+        letter-spacing: var(--tracking-wide);
+        text-transform: uppercase;
+        color: var(--camel);
+      }
+      .rig-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .rig button {
+        appearance: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: var(--tan);
+        color: var(--coffee-bean);
+        font: inherit;
+        font-family: inherit;
+        letter-spacing: var(--tracking);
+        transition:
+          transform var(--t) var(--ease),
+          background var(--t) var(--ease);
+      }
+      .rig button:hover,
+      .rig button:focus-visible {
+        background: var(--camel);
+        color: var(--papaya-whip);
+      }
+      .rig button:active {
+        transform: scale(0.94);
+      }
+      .rig-note {
+        margin: 6px 0 0;
+        font-size: 11px;
+        color: var(--camel);
+        opacity: 0.85;
+      }
+      .rig-log {
+        margin: 0;
+        min-height: 1.4em;
+        font-size: 12px;
+        color: var(--coffee-bean);
+        word-break: break-word;
+      }
+      .rig-tip-target {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 8px;
+        border: 1px dashed var(--camel);
+      }
+    </style>
   </head>
   <body>
-    <!-- content surface: a background rect revealed once loading finishes.
-		     sits below the foreground UI and isn't one of the parallax-nudged layers.
-		     the webgl game renders into the canvas it clips -->
-    <div class="screen" id="screen" aria-hidden="true">
-      <canvas class="game" id="game"></canvas>
-    </div>
+    <!-- background rect, revealed once the fake loader below finishes.
+			     canvas intentionally omitted: no three.js on this page -->
+    <div class="screen" id="screen" aria-hidden="true"></div>
 
-    <!-- visual-novel textbox: hidden + inert until textbox("ref") is called from js.
-		     mid-ground layer (parallax-nudged), pops in/out by scaling from 0 -->
+    <!-- visual-novel textbox -->
     <div class="textbox" id="textbox" aria-hidden="true" inert>
       <p class="textbox-text" id="textboxText"></p>
       <span class="textbox-next" id="textboxNext" aria-hidden="true">
@@ -57,8 +124,7 @@
       </span>
     </div>
 
-    <!-- achievement toast: slides down from the top (xbox-360 style) when
-		     achievement("id") is called. status region so it's announced -->
+    <!-- achievement toast -->
     <div class="ach" id="ach" role="status" aria-live="polite">
       <span class="ach-icon" id="achIcon"><i class="fa-solid" aria-hidden="true"></i></span>
       <span class="ach-body">
@@ -83,7 +149,7 @@
           aria-valuemax="100"
           aria-valuenow="0"
         >
-          <div class="track"><div class="fill dark" id="fill"></div></div>
+          <div class="track"><div class="fill" id="fill"></div></div>
         </div>
       </div>
     </main>
@@ -173,7 +239,7 @@
                 <i class="fa-solid fa-trash" aria-hidden="true"></i>
               </span>
             </button>
-            <!-- legacy: previous completed version of the site -->
+            <!-- script.js binds this unconditionally, so it must stay in the DOM -->
             <a class="opt opt--action cursorable" data-setting="legacy" href="/v4">
               <span class="opt-label" data-i18n="label-legacy">legacy website</span>
               <span class="opt-glyph"
@@ -218,7 +284,7 @@
     <!-- corner signature -->
     <footer class="sig" data-i18n="small-text">made by t3mp</footer>
 
-    <!-- custom weighted cursor + helpers (decorative, no-op without JS / on touch) -->
+    <!-- custom weighted cursor + helpers -->
     <div class="cursor" id="cursor" aria-hidden="true"><div class="cursor-dot"></div></div>
     <div class="cursor-tip" id="tip" aria-hidden="true"><span class="bubble">0%</span></div>
 
@@ -227,7 +293,80 @@
     <audio id="sfxHover" src="v4/sounds/hover.mp3" preload="auto"></audio>
     <audio id="sfxSelect" src="v4/sounds/select.mp3" preload="auto"></audio>
 
+    <!-- test rig: the only thing on this page that isn't in index.html -->
+    <aside class="rig cursorable" id="rig">
+      <h1>/test</h1>
+      <p>ui animation playground — no three.js here</p>
+
+      <div class="rig-grp">
+        <h2>loader</h2>
+        <div class="rig-row">
+          <button id="rigLoaderReplay" class="cursorable">reload &amp; replay</button>
+        </div>
+        <p class="rig-note">
+          plays once on load (like the real loader), then reveals the .screen rect. it can't
+          replay in place — setLoadProgress() latches once it hits 100%.
+        </p>
+      </div>
+
+      <div class="rig-divider"></div>
+
+      <div class="rig-grp">
+        <h2>textbox &amp; choices</h2>
+        <div class="rig-row">
+          <button id="rigTextbox" class="cursorable">show dialogue</button>
+          <button id="rigChoice" class="cursorable">show choice</button>
+        </div>
+        <p class="rig-log" id="rigVnLog"></p>
+      </div>
+
+      <div class="rig-divider"></div>
+
+      <div class="rig-grp">
+        <h2>achievement toast</h2>
+        <div class="rig-row">
+          <button id="rigAchNormal" class="cursorable">fire normal</button>
+          <button id="rigAchProgress" class="cursorable">fire progress +1</button>
+        </div>
+        <p class="rig-note">
+          each id only re-toasts once its value increases — use "clear cache" in settings to
+          reset and fire again.
+        </p>
+      </div>
+
+      <div class="rig-divider"></div>
+
+      <div class="rig-grp">
+        <h2>achievements dialog</h2>
+        <div class="rig-row">
+          <button id="rigAchvOpen" class="cursorable">open</button>
+        </div>
+      </div>
+
+      <div class="rig-divider"></div>
+
+      <div class="rig-grp">
+        <h2>settings panel</h2>
+        <div class="rig-row">
+          <button id="rigSettingsOpen" class="cursorable">open gear</button>
+        </div>
+        <p class="rig-note">
+          sliders / fullscreen / cache confirm are all live above. pick a non-english language to
+          also trigger the notice toast.
+        </p>
+      </div>
+
+      <div class="rig-divider"></div>
+
+      <div class="rig-grp">
+        <h2>tooltip</h2>
+        <div class="rig-row">
+          <span class="rig-tip-target cursorable" id="rigTipTarget">hover me</span>
+        </div>
+      </div>
+    </aside>
+
     <script type="module" src="scripts/script.js"></script>
-    <script type="module" src="scripts/game.js"></script>
+    <script type="module" src="scripts/test.js"></script>
   </body>
 </html>

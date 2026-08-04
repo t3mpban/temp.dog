@@ -7,9 +7,11 @@ signal object_clicked(id: String)
 const BACK_BAND := 0.15
 const MIN_BOX := 0.15
 const PAD := 0.03
+const HOVER_LOCK_FRAC := 0.05
 
 const ZONE_TAG := "zone:"
 const OBJ_TAG := "obj:"
+const NO_LOOK := "nolookat"
 
 const ZONES := {
 	"main": {"marker": "main", "parent": "", "area": ""},
@@ -23,6 +25,7 @@ const ZONES := {
 var zone := ""
 var hovered := ""
 var hovered_zone := ""
+var blocked := false
 var locked := {"pc-screen": true, "tv-screen": true}
 
 @onready var cam: Camera3D = $camera
@@ -31,29 +34,46 @@ var locked := {"pc-screen": true, "tv-screen": true}
 var _boxes := {}
 var _of_zone := {}
 var _areas := {}
+var _nolook := {}
 var _hot := []
 var _at := Vector3.ZERO
 var _back := false
+var _hover_hot := {}
+var _hover_mouse := Vector2.ZERO
+var _hover_locked := false
 
 
 func _ready() -> void:
 	for node in get_children():
-		if node is not VisualInstance3D:
+		var mesh := node as VisualInstance3D
+		if mesh == null:
 			continue
-		var id := ""
-		var z := ""
-		for g in node.get_groups():
-			var s := String(g)
-			if s.begins_with(OBJ_TAG):
-				id = s.substr(OBJ_TAG.length())
-			elif s.begins_with(ZONE_TAG):
-				z = s.substr(ZONE_TAG.length())
+		var id := _tag(mesh, OBJ_TAG)
 		if id == "":
 			continue
 		if not _boxes.has(id):
 			_boxes[id] = []
-			_of_zone[id] = z
-		_boxes[id].append(_box(node))
+			_of_zone[id] = _tags(mesh, ZONE_TAG)
+		if mesh.is_in_group(NO_LOOK):
+			_nolook[id] = true
+		_boxes[id].append(_box(mesh))
+	var override := {}
+	for node in get_children():
+		var shape := node as CollisionShape3D
+		if shape == null or shape.disabled:
+			continue
+		var id := _tag(shape, OBJ_TAG)
+		if id == "":
+			continue
+		if not override.has(id):
+			override[id] = true
+			_boxes[id] = []
+		_boxes[id].append(_cube(shape))
+		if shape.is_in_group(NO_LOOK):
+			_nolook[id] = true
+		var zs := _tags(shape, ZONE_TAG)
+		if not zs.is_empty() or not _of_zone.has(id):
+			_of_zone[id] = zs
 	for z in ZONES:
 		var area: String = ZONES[z].area
 		var shape := get_node_or_null(NodePath(area)) as CollisionShape3D
@@ -69,14 +89,16 @@ func goto_zone(to: String, instant := false) -> void:
 		return
 	zone = to
 	_hot.clear()
+	_hover_locked = false
 	for z in ZONES:
 		var area: String = ZONES[z].area
 		if ZONES[z].parent != zone or not _boxes.has(area):
 			continue
-		_hot.append({"boxes": _boxes[area], "zone": z, "obj": area if _areas.has(area) else ""})
+		var obj: String = area if _areas.has(area) else ""
+		_hot.append({"boxes": _boxes[area], "zone": z, "obj": obj, "look": _looks(obj)})
 	for id in _of_zone:
-		if _of_zone[id] == zone and not _areas.has(id):
-			_hot.append({"boxes": _boxes[id], "zone": "", "obj": id})
+		if _of_zone[id].has(zone) and not _areas.has(id):
+			_hot.append({"boxes": _boxes[id], "zone": "", "obj": id, "look": _looks(id)})
 	var m: Marker3D = markers.get_node(ZONES[zone].marker)
 	if instant:
 		cam.zone_pos = m.global_position
@@ -95,16 +117,27 @@ func back() -> void:
 
 func _process(_delta: float) -> void:
 	var m := get_viewport().get_mouse_position()
-	_back = ZONES[zone].parent != "" and _in_band(m)
+	_back = not blocked and ZONES[zone].parent != "" and _in_band(m)
 
-	var hot: Dictionary = {} if _back else _pick(m)
+	var hot: Dictionary
+	if _back or blocked:
+		hot = {}
+		_hover_locked = false
+	elif _hover_locked and not _lock_broken(m):
+		hot = _hover_hot
+	else:
+		hot = _pick(m)
+		_hover_locked = not hot.is_empty()
+		_hover_mouse = m
+	_hover_hot = hot
+
 	var obj: String = hot.get("obj", "")
 	var zn: String = hot.get("zone", "")
 	if obj != hovered or zn != hovered_zone:
 		hovered = obj
 		hovered_zone = zn
 		object_hovered.emit(hovered)
-	cam.set_hover(obj != "", _at)
+	cam.set_hover(hot.get("look", false), _at)
 
 	Input.set_default_cursor_shape(
 		Input.CURSOR_POINTING_HAND if (_back or not hot.is_empty()) else Input.CURSOR_ARROW
@@ -113,6 +146,8 @@ func _process(_delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if blocked:
+			return
 		if _back:
 			back()
 		elif hovered_zone != "" and not locked.get(hovered_zone, false):
@@ -121,9 +156,32 @@ func _unhandled_input(event: InputEvent) -> void:
 			object_clicked.emit(hovered)
 
 
+func _looks(id: String) -> bool:
+	return id != "" and not _nolook.has(id)
+
+
+func _tags(node: Node, prefix: String) -> Array:
+	var out := []
+	for g in node.get_groups():
+		var s := String(g)
+		if s.begins_with(prefix):
+			out.append(s.substr(prefix.length()))
+	return out
+
+
+func _tag(node: Node, prefix: String) -> String:
+	var found := _tags(node, prefix)
+	return found[0] if not found.is_empty() else ""
+
+
 func _in_band(m: Vector2) -> bool:
 	var w := get_viewport().get_visible_rect().size.x
 	return m.x < w * BACK_BAND or m.x > w * (1.0 - BACK_BAND)
+
+
+func _lock_broken(m: Vector2) -> bool:
+	var vp := get_viewport().get_visible_rect().size
+	return m.distance_to(_hover_mouse) > minf(vp.x, vp.y) * HOVER_LOCK_FRAC
 
 
 func _pick(m: Vector2) -> Dictionary:

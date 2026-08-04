@@ -1,6 +1,6 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://btxha8yp1rmep"]
 
-[ext_resource type="Texture2D" uid="uid://bx7mp1a3os7tn" path="res://pngs/bgday.png" id="1_csy4y"]
+[ext_resource type="Texture2D" uid="uid://dq8gsf6utdhcf" path="res://pngs/bgnight.png" id="1_csy4y"]
 
 [resource]
 transparency = 3
