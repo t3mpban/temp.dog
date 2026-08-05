@@ -80,7 +80,7 @@ var I18N_FALLBACK = {
   "label-close": "close",
   "label-cache": "clear cache",
   "label-cache-confirm": "click again to confirm",
-  "label-legacy": "legacy website",
+  "label-hireme": "hire me",
   "state-on": "on",
   "state-off": "off",
   "small-text": "made by t3mp",

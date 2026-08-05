@@ -142,39 +142,19 @@
           "Fin.",
         ];
 
-        var END_ID = "free-the-end";
-        var END_GOAL_FALLBACK = 15;
         var SPEED = 40; // px/sec, idle
         var BOOST = 220; // px/sec, held
 
         var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         if (reduce) document.documentElement.classList.add("reduce");
 
-        function readAch() {
+        function readEndReached() {
           try {
-            var st = JSON.parse(localStorage.getItem("t3mp.settings") || "{}");
-            var v = st && st.ach && st.ach[END_ID];
-            return typeof v === "number" ? v : 0;
+            var g = JSON.parse(localStorage.getItem("t3mp.game") || "{}");
+            return !!(g && g.endReached);
           } catch (e) {
-            return 0;
+            return false;
           }
-        }
-
-        function readGoal() {
-          return fetch("/scripts/script.json")
-            .then(function (res) {
-              return res.json();
-            })
-            .then(function (data) {
-              var list = (data && data.achievements) || [];
-              for (var i = 0; i < list.length; i++) {
-                if (list[i].id === END_ID) return list[i].goal || END_GOAL_FALLBACK;
-              }
-              return END_GOAL_FALLBACK;
-            })
-            .catch(function () {
-              return END_GOAL_FALLBACK;
-            });
         }
 
         function showLocked() {
@@ -224,10 +204,8 @@
           requestAnimationFrame(frame);
         }
 
-        readGoal().then(function (goal) {
-          if (readAch() >= goal) showCredits();
-          else showLocked();
-        });
+        if (readEndReached()) showCredits();
+        else showLocked();
       })();
     </script>
   </body>

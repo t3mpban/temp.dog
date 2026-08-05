@@ -881,57 +881,57 @@ const WHOAMI_PAGES = [
     zh: "(4/6)\n结束了如同地狱般的高中生活后，尽管成绩很好，我还是决定追随自己的梦想，于是就有了今天。",
   },
   {
-    en: "(5/6)\nLook, you may not know much about me now, but I promise you, and myself, that you will know me in the future. Then I can die peacefully, knowing I left my mark on the internet.",
-    es: "(5/6)\nQuizá no me conozcas mucho ahora, pero te prometo, y me prometo, que me conocerás en el futuro. Así podré morir en paz, sabiendo que dejé huella en internet.",
-    pt: "(5/6)\nTalvez não me conheça muito agora, mas prometo a você, e a mim, que vai me conhecer no futuro. Assim posso morrer em paz, sabendo que deixei minha marca na internet.",
-    fr: "(5/6)\nTu ne me connais peut-être pas bien maintenant, mais je te promets, et me promets, que tu me connaîtras un jour. Je pourrai alors mourir en paix, ayant marqué internet.",
-    de: "(5/6)\ndu kennst mich jetzt kaum, aber ich verspreche dir und mir: du wirst mich noch kennenlernen. dann kann ich in frieden sterben, mit meiner spur im internet.",
-    jp: "(5/6)\n今はまだ俺のことをよく知らないかもしれないけど、将来は必ず知ってもらえると約束する。そうすればインターネットに足跡を残して安らかに死ねる。",
-    kr: "(5/6)\n지금은 나를 잘 모를 수도 있지만, 언젠가 나를 알게 될 거라고 너와 나 자신에게 약속해. 그러면 인터넷에 흔적을 남기고 편히 눈을 감을 수 있겠지.",
-    zh: "(5/6)\n你现在可能还不太了解我，但我向你、也向自己保证，将来你一定会认识我的。那样我就能安心地离去，因为我在互联网上留下了自己的印记。",
+    en: "(5/6)\nBesides pursuing web design as a career, I plan to make an indie game in the distant-future. Only then, will I be able to die peacefully, knowing I left my mark on the internet.",
+    es: "(5/6)\nAdemás de dedicarme al diseño web como carrera, planeo hacer un juego indie en un futuro lejano. Solo entonces podré morir en paz, sabiendo que dejé mi huella en internet.",
+    pt: "(5/6)\nAlém de seguir o design web como carreira, pretendo fazer um jogo indie num futuro distante. Só aí poderei morrer em paz, sabendo que deixei minha marca na internet.",
+    fr: "(5/6)\nEn plus de poursuivre le web design comme carrière, je prévois de faire un jeu indé dans un futur lointain. Ce n'est qu'alors que je pourrai mourir en paix, sachant que j'ai laissé ma marque sur internet.",
+    de: "(5/6)\nneben meiner karriere im webdesign plane ich, in ferner zukunft ein indie-spiel zu machen. erst dann kann ich in frieden sterben, mit meiner spur im internet.",
+    jp: "(5/6)\nウェブデザインをキャリアとして追求する傍ら、遠い将来インディーゲームを作るつもりだ。その時になって初めて、インターネットに足跡を残したと知り、安らかに死ねるだろう。",
+    kr: "(5/6)\n웹 디자인을 커리어로 삼는 것 외에도, 먼 미래에는 인디 게임을 만들 계획이야. 그때가 되어서야, 인터넷에 흔적을 남겼다는 걸 알고 편히 눈을 감을 수 있겠지.",
+    zh: "(5/6)\n除了以网页设计为职业之外，我打算在遥远的未来做一款独立游戏。只有到那时，我才能安心地离去，因为我知道自己在互联网上留下了印记。",
   },
   {
-    en: "(6/6)\nAnd before I sign off, I just want to thank you for stopping by my silly little website. You are awesome. Never forget where you've come from, and where you're going. - temp 29/07/26",
-    es: "(6/6)\nAntes de irme, quiero darte las gracias por visitar mi pequeña web. Eres genial. Nunca olvides de dónde vienes y a dónde vas. - temp 29/07/26",
-    pt: "(6/6)\nAntes de sair, quero te agradecer por visitar meu site bobinho. Você é demais. Nunca esqueça de onde veio e pra onde vai. - temp 29/07/26",
-    fr: "(6/6)\nAvant de partir, merci d'être passé sur mon petit site débile. Tu es génial. N'oublie jamais d'où tu viens, ni où tu vas. - temp 29/07/26",
-    de: "(6/6)\nbevor ich abschließe, danke ich dir, dass du auf meiner kleinen albernen website warst. du bist toll. vergiss nie, wo du herkommst. - temp 29/07/26",
-    jp: "(6/6)\n最後に、この小さくて馬鹿げたサイトに来てくれてありがとう。お前は最高だ。自分の来た道と行く先を忘れないで。 - temp 29/07/26",
-    kr: "(6/6)\n마지막으로, 이 작고 엉뚱한 사이트에 들러줘서 고마워. 넌 정말 멋져. 네가 온 길과 갈 길을 절대 잊지 마. - temp 29/07/26",
-    zh: "(6/6)\n最后，谢谢你逛了我这个傻乎乎的小网站。你很棒。永远别忘了自己从哪来，要去哪。 - temp 29/07/26",
+    en: "(6/6)\nOh, and thanks for slopping by my website. That's about it, cya. - temp 3/08/26",
+    es: "(6/6)\nAh, y gracias por pasarte por mi web. Eso es todo, cya. - temp 3/08/26",
+    pt: "(6/6)\nAh, e obrigado por dar uma passada no meu site. É isso aí, cya. - temp 3/08/26",
+    fr: "(6/6)\nOh, et merci d'être passé sur mon site. C'est à peu près tout, cya. - temp 3/08/26",
+    de: "(6/6)\noh, und danke, dass du auf meiner website vorbeigeschaut hast. das war's so ziemlich, cya. - temp 3/08/26",
+    jp: "(6/6)\nあ、あと、このサイトに寄ってくれてありがとう。だいたいそんな感じ、じゃあね。 - temp 3/08/26",
+    kr: "(6/6)\n아, 그리고 내 사이트에 들러줘서 고마워. 그게 다야, 안녕. - temp 3/08/26",
+    zh: "(6/6)\n对了，谢谢你顺路逛了我的网站。差不多就这样了，拜拜。 - temp 3/08/26",
   },
 ];
 
 const WHATISTHIS_PAGES = [
   {
-    en: "What is this website for? (1/4)\nThis website was initially made for lurkers who like clicking on random links. I eventually decided to make a really awesome 3D WebGL game as my portfolio, as I think actions speak louder than words. If this can't land me a job then nothing will.",
-    es: "¿Para qué es esta web? (1/4)\nLa hice para curiosos que hacen clic en links random. Al final decidí hacer un juego 3D WebGL como portafolio, ya que las acciones hablan más que las palabras. Si esto no me da trabajo, nada lo hará.",
-    pt: "Pra que serve este site? (1/4)\nFiz para curiosos que clicam em links aleatórios. No fim decidi fazer um jogo 3D WebGL como portfólio, já que ações falam mais que palavras. Se isso não me dá um emprego, nada vai.",
-    fr: "C'est pour quoi ce site ? (1/4)\nFait pour les curieux qui cliquent sur des liens au hasard. J'ai fini par faire un jeu 3D WebGL comme portfolio, car les actes valent mieux que les mots. Si ça ne me trouve pas de travail, rien ne le fera.",
-    de: "wofür ist diese website? (1/4)\ngemacht für neugierige, die auf zufällige links klicken. am ende baute ich ein 3d-webgl-spiel als portfolio, denn taten zählen mehr als worte. wenn das mir keinen job bringt, nichts wird.",
-    jp: "このサイトは何のため？(1/4)\nランダムなリンクをクリックする野次馬のために作った。結局、行動は言葉より物を言うと思い、ポートフォリオとして3D WebGLゲームを作ることにした。これで仕事が取れなければ、もう無理だ。",
-    kr: "이 사이트는 뭐 하러 만든 거야? (1/4)\n아무 링크나 누르는 사람들을 위해 처음 만들었어. 결국 행동이 말보다 중요하다 싶어서 포트폴리오로 3D 웹GL 게임을 만들기로 했지. 이걸로도 취업이 안 되면, 답이 없는 거야.",
-    zh: "这个网站是做什么用的？(1/4)\n最初是为喜欢乱点链接的人做的。后来我决定做一个3D WebGL游戏当作品集，因为行动胜于空谈。要是这样都找不到工作，那就没办法了。",
+    en: "What is this website for? (1/4)\nAs a perfectionist, I've always struggled with releasing projects to the public. I'd spend weeks on a game, that will forever live on my hard drive. So to break out my comfort zone, I made this weird game-portfolio-hybrid, with the intent to actually show others!",
+    es: "¿Para qué es esta web? (1/4)\nComo soy perfeccionista, siempre me ha costado publicar mis proyectos. Pasaba semanas en un juego que se quedaría para siempre en mi disco duro. Así que, para salir de mi zona de confort, hice este raro híbrido de juego y portafolio, con la intención de mostrárselo a otros de verdad.",
+    pt: "Pra que serve este site? (1/4)\nComo sou perfeccionista, sempre tive dificuldade em lançar projetos ao público. Eu passava semanas num jogo que ficaria pra sempre no meu HD. Então, pra sair da minha zona de conforto, fiz esse híbrido esquisito de jogo e portfólio, com a intenção de realmente mostrar pra outras pessoas.",
+    fr: "C'est pour quoi ce site ? (1/4)\nÉtant perfectionniste, j'ai toujours eu du mal à publier mes projets. Je passais des semaines sur un jeu qui finissait par rester à jamais sur mon disque dur. Alors, pour sortir de ma zone de confort, j'ai fait cet étrange hybride jeu-portfolio, avec l'intention de vraiment le montrer aux autres.",
+    de: "wofür ist diese website? (1/4)\nals perfektionist hatte ich schon immer probleme damit, projekte zu veröffentlichen. ich verbrachte wochen an einem spiel, das für immer auf meiner festplatte leben würde. also, um meine komfortzone zu verlassen, machte ich diesen komischen spiel-portfolio-hybriden, mit der absicht, ihn wirklich anderen zu zeigen.",
+    jp: "このサイトは何のため？(1/4)\n完璧主義な性格のせいで、これまでずっと自分のプロジェクトを公開するのに苦労してきた。ゲームに何週間もかけても、それは永遠にハードディスクの中で眠ったままだった。だから、そのコンフォートゾーンから抜け出すために、実際に人に見せることを目的としたこの奇妙なゲーム兼ポートフォリオを作った。",
+    kr: "이 사이트는 뭐 하러 만든 거야? (1/4)\n완벽주의자라서, 나는 늘 프로젝트를 세상에 공개하는 게 힘들었어. 게임 하나에 몇 주를 쏟아부어도, 결국 영원히 내 하드디스크 속에서만 살아있게 됐지. 그래서 내 안전지대를 벗어나려고, 실제로 사람들에게 보여주려는 의도로 이 이상한 게임-포트폴리오 하이브리드를 만들었어.",
+    zh: "这个网站是做什么用的？(1/4)\n作为一个完美主义者，我一直很难把项目公开发布出去。我常常花几周做一个游戏，结果它永远只留在我的硬盘里。所以为了打破自己的舒适圈，我做了这个古怪的游戏+作品集混合体，真心打算把它展示给大家看！",
   },
   {
-    en: 'How did you make it? (2/4)\nThis website is made with ThreeJS, and about a week to make. I\'ve honestly never used ThreeJS before so I designed the website in Godot first, then "converted" it into ThreeJS. It was really fun to make, and I highly encourage others to make their own website!',
-    es: '¿Cómo la hiciste? (2/4)\nEstá hecha con ThreeJS, y tardé como una semana. Nunca antes usé ThreeJS, así que diseñé la web en Godot primero, y luego la "convertí" a ThreeJS. Fue muy divertido, ¡y animo a otros a hacer su propia web!',
-    pt: 'Como você fez isso? (2/4)\nÉ feito com ThreeJS, e levou uma semana. Nunca tinha usado ThreeJS, então desenhei o site no Godot primeiro, e depois "converti" pra ThreeJS. Foi muito divertido, e recomendo que outros façam o próprio site!',
-    fr: "Comment tu l'as fait ? (2/4)\nFait avec ThreeJS, en environ une semaine. Je n'avais jamais utilisé ThreeJS, donc j'ai conçu le site sur Godot d'abord, puis \"converti\" en ThreeJS. Très amusant, et j'encourage tout le monde à faire son propre site !",
-    de: 'wie hast du das gemacht? (2/4)\ngemacht mit threejs, und etwa eine woche gedauert. ich hatte threejs nie benutzt, also entwarf ich die website erst in godot, dann "konvertierte" ich sie zu threejs. hat riesig spaß gemacht!',
-    jp: "どうやって作った？(2/4)\nThreeJSで作られていて、約1週間かかった。ThreeJSは初めてだったので、まずGodotでサイトを設計し、それをThreeJSに「変換」した。とても楽しかったし、みんなも自分のサイトを作ってみてほしい！",
-    kr: '어떻게 만든 거야? (2/4)\nThreeJS로 만들었고, 한 일주일쯜 걸렸어. ThreeJS는 써본 적이 없어서, 먼저 Godot에서 디자인한 다음 ThreeJS로 "변환"했지. 정말 재밌었고, 다들 자기 사이트를 만들어보길 추천해!',
-    zh: "你是怎么做出来的？(2/4)\n是用ThreeJS做的，花了大概一周。我以前从没用过ThreeJS，所以先在Godot里设计好网站，再把它「转换」成ThreeJS。做得很开心，也鼓励大家做一个属于自己的网站！",
+    en: 'How did you make it? (2/4)\nI designed the game in Godot, then "converted" it into ThreeJS. I was able to make this in under a week, and it was really fun; I highly encourage others to make their own website, so people who like clicking on random links on the internet won\'t get bored... :p',
+    es: '¿Cómo la hiciste? (2/4)\nDiseñé el juego en Godot, y luego lo "convertí" a ThreeJS. Pude hacerlo en menos de una semana, y fue muy divertido; animo mucho a otros a hacer su propia web, para que a la gente que le gusta hacer clic en links random no se aburra... :p',
+    pt: 'Como você fez isso? (2/4)\nDesenhei o jogo no Godot, e depois "converti" pra ThreeJS. Consegui fazer isso em menos de uma semana, e foi muito divertido; recomendo muito que outras pessoas façam o próprio site, pra quem gosta de clicar em links aleatórios não fique entediado... :p',
+    fr: "Comment tu l'as fait ? (2/4)\nJ'ai conçu le jeu sur Godot, puis je l'ai \"converti\" en ThreeJS. J'ai réussi à le faire en moins d'une semaine, et c'était vraiment amusant ; j'encourage vivement les autres à faire leur propre site, pour que ceux qui aiment cliquer sur des liens au hasard ne s'ennuient pas... :p",
+    de: 'wie hast du das gemacht? (2/4)\nich entwarf das spiel in godot, und "konvertierte" es dann zu threejs. ich konnte das in unter einer woche schaffen, und es hat riesig spaß gemacht; ich ermutige andere sehr, ihre eigene website zu machen, damit leute, die gerne auf zufällige links klicken, sich nicht langweilen... :p',
+    jp: "どうやって作った？(2/4)\nゲームはまずGodotでデザインし、それをThreeJSに「変換」した。1週間もかからずに作ることができて、本当に楽しかった。ランダムなリンクをクリックするのが好きな人が退屈しないように、みんなにも自分のサイトを作ることを強くおすすめする…:p",
+    kr: '어떻게 만든 거야? (2/4)\n게임은 Godot에서 디자인한 다음 ThreeJS로 "변환"했어. 일주일도 안 걸려서 만들 수 있었고, 정말 재밌었어. 아무 링크나 누르는 걸 좋아하는 사람들이 지루하지 않도록, 다들 자기만의 웹사이트를 만들어보는 걸 적극 추천해... :p',
+    zh: "你是怎么做出来的？(2/4)\n我先在Godot里设计好游戏，然后把它「转换」成了ThreeJS。不到一周就做完了，过程真的很有趣；我强烈推荐大家也做一个属于自己的网站，这样喜欢乱点链接的人就不会无聊了……:p",
   },
   {
-    en: "What else will you add? (3/4)\nI consider this website finished, though my /hireme page might be updated occasionally.",
-    es: "¿Qué más añadirás? (3/4)\nConsidero esta web terminada, aunque mi página /hireme puede actualizarse a veces.",
-    pt: "O que mais vai adicionar? (3/4)\nConsidero este site terminado, embora /hireme possa ser atualizado às vezes.",
-    fr: "Quoi d'autre ? (3/4)\nJe considère ce site fini, même si ma page /hireme sera parfois mise à jour.",
-    de: "was kommt noch? (3/4)\nich halte diese website für fertig, obwohl meine /hireme-seite ab und zu aktualisiert wird.",
-    jp: "他に何を追加する？(3/4)\nこのサイトは完成したと思っているが、/hiremeページはたまに更新するかもしれない。",
-    kr: "또 뭘 추가할 거야? (3/4)\n이 사이트는 완성됐다고 생각하지만, /hireme 페이지는 가끔 업데이트될 수도 있어.",
-    zh: "你还会添加什么？(3/4)\n我认为这个网站已经完成了，不过/hireme页面可能会偶尔更新。",
+    en: "What else will you add? (3/4)\nI consider this website finished, but I may add more stuff in the future. Maybe a shop? idk. My /for-hire page may be updated occasionally.",
+    es: "¿Qué más añadirás? (3/4)\nConsidero esta web terminada, pero puede que añada más cosas en el futuro. ¿Quizás una tienda? no sé. Mi página /for-hire puede actualizarse de vez en cuando.",
+    pt: "O que mais vai adicionar? (3/4)\nConsidero este site terminado, mas talvez eu adicione mais coisas no futuro. Talvez uma loja? sei lá. Minha página /for-hire pode ser atualizada de vez em quando.",
+    fr: "Quoi d'autre ? (3/4)\nJe considère ce site comme terminé, mais j'ajouterai peut-être des trucs à l'avenir. Une boutique, peut-être ? j'en sais rien. Ma page /for-hire pourrait être mise à jour de temps en temps.",
+    de: "was kommt noch? (3/4)\nich halte diese website für fertig, aber vielleicht füge ich in zukunft noch was hinzu. vielleicht ein shop? keine ahnung. meine /for-hire-seite wird eventuell ab und zu aktualisiert.",
+    jp: "他に何を追加する？(3/4)\nこのサイトは完成したと思っているけど、将来もっと追加するかもしれない。ショップとか？わからない。/for-hireページはたまに更新するかも。",
+    kr: "또 뭘 추가할 거야? (3/4)\n이 사이트는 완성됐다고 생각하지만, 나중에 뭔가 더 추가할 수도 있어. 상점 같은 거? 몰라. /for-hire 페이지는 가끔 업데이트될 수도 있어.",
+    zh: "你还会添加什么？(3/4)\n我认为这个网站已经完成了，不过以后可能还会加点东西。也许是个商店？不知道。/for-hire页面可能会偶尔更新。",
   },
   {
     en: "I found a bug/glitch in your website! (4/4)\nPlease email me at hi@temp.dog (or reach out on Discord) and let me know!",
@@ -1209,6 +1209,7 @@ async function read(prompt, hidden, complete) {
   pc.complete = complete;
   pc.buffer = "";
   pc.entered = "";
+  pcInput.value = "";
   pc.mode = ASK;
   paint();
   pc.lineDone = defer();
@@ -1579,7 +1580,10 @@ function pcInputOnInput() {
     pc.anyKey.resolve();
     return;
   }
-  if (pc.mode !== ASK) return;
+  if (pc.mode !== ASK) {
+    pcInput.value = "";
+    return;
+  }
   let next = "";
   for (const ch of pcInput.value) {
     if (!pc.label.fits(pc.prompt + next + ch)) break;
@@ -1597,7 +1601,7 @@ pcInput.addEventListener("keydown", (event) => {
     pc.anyKey.resolve();
     return;
   }
-  if (event.key !== "Enter") return;
+  if (pc.mode !== ASK || event.key !== "Enter") return;
   event.preventDefault();
   submitCurrentLine();
   pcInput.value = "";
@@ -1606,6 +1610,10 @@ pcInput.addEventListener("keydown", (event) => {
 function tryTerminalClick() {
   const uv = terminalHitUV();
   if (!uv) return;
+  if (pc.mode === PAGE) {
+    if (!isMobile) pc.anyKey.resolve();
+    return;
+  }
   if (terminalPromptHit(uv)) {
     submitLine("help");
     return;
@@ -1615,7 +1623,8 @@ function tryTerminalClick() {
 }
 
 canvas.addEventListener("click", () => {
-  if (blocked || !data || !isMobile || !pc.captured || pc.mode !== ASK || pcKeyboardOpen) return;
+  if (blocked || !data || !isMobile || !pc.captured || pcKeyboardOpen) return;
+  if (pc.mode !== ASK && pc.mode !== PAGE) return;
   if (terminalHitUV()) openPcKeyboard();
 });
 
@@ -1666,6 +1675,7 @@ const game = {
   knowledge: {},
   plays: { before: 0, after: 0 },
   visits: 0,
+  endReached: false,
 };
 
 let tvFrame = 0;
@@ -1794,7 +1804,7 @@ async function actBed() {
     await textbox("bed-busy-" + pickOne(4));
     return;
   }
-  award(END, achGoal(ACH[END]));
+  game.endReached = true;
   saveGame();
   location.href = "/the-end";
 }
@@ -1833,7 +1843,6 @@ async function ask(topic) {
   if (topic === "guitar") {
     game.guitarLearned = true;
     saveGame();
-    award("fast-learner");
   } else if (topic === "donate") {
     award("philanthropist");
   }
@@ -1865,6 +1874,7 @@ async function actGuitar() {
   }
   game.plays[stage] = Math.min(game.plays[stage] + 1, game.guitarLearned ? 3 : 2);
   saveGame();
+  if (stage === "after") award("fast-learner");
   holdGuitar(false);
   playSfx("wear");
   await wait(PLAY_HOLD);
@@ -2227,6 +2237,11 @@ async function boot() {
 
   award("hello-world");
   if (game.visits >= 2) award("honey-im-home");
+  if (game.endReached) {
+    award(END, achGoal(ACH[END]));
+    game.endReached = false;
+    saveGame();
+  }
   if (window.requestIdleCallback) requestIdleCallback(prefetchSky);
   else setTimeout(prefetchSky, 3000);
 }

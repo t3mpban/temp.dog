@@ -159,16 +159,16 @@
       ]
     },
     {
-      "id": "label-legacy",
+      "id": "label-hireme",
       "strings": [
-        { "lang": "en", "text": "legacy website" },
-        { "lang": "es", "text": "web anterior" },
-        { "lang": "pt", "text": "site antigo" },
-        { "lang": "fr", "text": "ancien site" },
-        { "lang": "de", "text": "alte website" },
-        { "lang": "jp", "text": "旧サイト" },
-        { "lang": "kr", "text": "이전 웹사이트" },
-        { "lang": "zh", "text": "旧版网站" }
+        { "lang": "en", "text": "hire me" },
+        { "lang": "es", "text": "contrátame" },
+        { "lang": "pt", "text": "contrate-me" },
+        { "lang": "fr", "text": "m'embaucher" },
+        { "lang": "de", "text": "mich einstellen" },
+        { "lang": "jp", "text": "私を雇う" },
+        { "lang": "kr", "text": "나 고용하기" },
+        { "lang": "zh", "text": "雇用我" }
       ]
     },
     {

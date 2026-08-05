@@ -518,7 +518,7 @@ import {
     }
   });
 
-  optFor("legacy").addEventListener("click", function () {
+  optFor("hireme").addEventListener("click", function () {
     playSfx("select");
   });
 
