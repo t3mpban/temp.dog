@@ -9,18 +9,226 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="robots" content="noindex, nofollow" />
-    <meta content="#000000" name="theme-color" />
+    <meta content="#6f4e37" name="theme-color" />
     <title>the end</title>
     <link rel="icon" type="image/png" href="/images/favicon.png" />
-    <link rel="stylesheet" type="text/css" href="/scripts/the-end.css" />
+    <style>
+      @font-face {
+        font-family: "temp-v2";
+        src: url("/font/t3mp.ttf") format("truetype");
+        font-display: swap;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        min-height: 100svh;
+        overflow: hidden;
+        background: #6f4e37;
+        color: #ffefd5;
+        font-family: "temp-v2", "Trebuchet MS", system-ui, sans-serif;
+        font-kerning: none;
+        font-weight: 700;
+        -webkit-font-smoothing: antialiased;
+        -webkit-user-select: none;
+        user-select: none;
+        cursor: default;
+      }
+
+      .locked {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8vmin;
+        text-align: center;
+        opacity: 0;
+        transition: opacity 0.6s cubic-bezier(0.87, 0, 0.13, 1);
+      }
+
+      .locked.show {
+        opacity: 1;
+      }
+
+      .locked p {
+        max-width: min(760px, 90vw);
+        font-size: clamp(18px, 2.4vw, 26px);
+        line-height: 1.9;
+        letter-spacing: 0.1em;
+      }
+
+      .credits {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: opacity 1.2s cubic-bezier(0.87, 0, 0.13, 1);
+      }
+
+      .credits.show {
+        opacity: 1;
+      }
+
+      .scroll {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        width: min(760px, 90vw);
+        transform: translate(-50%, 100vh);
+        text-align: center;
+      }
+
+      .scroll p {
+        font-size: clamp(16px, 2.2vw, 24px);
+        line-height: 1.9;
+        letter-spacing: 0.1em;
+        margin: 2.2em 0;
+        text-wrap: balance;
+      }
+
+      /* reduced motion: no scroll loop, read it like a normal page */
+      .reduce .scroll {
+        position: static;
+        transform: none;
+        margin: 20vh auto;
+      }
+      .reduce body {
+        overflow: auto;
+      }
+    </style>
   </head>
   <body>
-    <!-- same ids as index so the shared textbox drives it unchanged -->
-    <div class="textbox" id="textbox" aria-hidden="true" inert>
-      <p class="textbox-text" id="textboxText"></p>
-      <span class="textbox-next" id="textboxNext" aria-hidden="true"></span>
+    <div class="locked" id="locked">
+      <p id="lockedText"></p>
+    </div>
+    <div class="credits" id="credits">
+      <div class="scroll" id="scroll"></div>
     </div>
 
-    <script type="module" src="/scripts/the-end.js"></script>
+    <script>
+      (function () {
+        "use strict";
+
+        var LOCKED_TEXT =
+          "when you actually beat the game, you'll get to see this. otherwise, SCRAM!!";
+        var LINES = [
+          "I see the player you mean.",
+          "It has reached such a level of unemployment that it can read my thoughts.",
+          "It reads my thoughts through pixels, transmitted across years of innovation and technology,",
+          "as though humans were created for this very purpose and moment in time.",
+          "But that doesn’t matter.",
+          "It knows it wasted its time, and yet, it played well. It did not give up.",
+          "For this very reason, I like this player.",
+          "I like how this player is so determined.",
+          "I like how this player is so dedicated to its craft.",
+          "I like how this player never stops until it finishes what it started.",
+          "And I'll miss how this player is now, later when they grow tall,",
+          "when obscurities such as money, finance, school, jobs, families, and the heat death of the universe consume someone I once knew.",
+          "And soon you too will miss yourself.",
+          "The world.",
+          "And everything in between.",
+          "Yet it will always feel like you are already too late.",
+          "...",
+          "Fin.",
+        ];
+
+        var END_ID = "free-the-end";
+        var END_GOAL_FALLBACK = 15;
+        var SPEED = 40; // px/sec, idle
+        var BOOST = 220; // px/sec, held
+
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduce) document.documentElement.classList.add("reduce");
+
+        function readAch() {
+          try {
+            var st = JSON.parse(localStorage.getItem("t3mp.settings") || "{}");
+            var v = st && st.ach && st.ach[END_ID];
+            return typeof v === "number" ? v : 0;
+          } catch (e) {
+            return 0;
+          }
+        }
+
+        function readGoal() {
+          return fetch("/scripts/script.json")
+            .then(function (res) {
+              return res.json();
+            })
+            .then(function (data) {
+              var list = (data && data.achievements) || [];
+              for (var i = 0; i < list.length; i++) {
+                if (list[i].id === END_ID) return list[i].goal || END_GOAL_FALLBACK;
+              }
+              return END_GOAL_FALLBACK;
+            })
+            .catch(function () {
+              return END_GOAL_FALLBACK;
+            });
+        }
+
+        function showLocked() {
+          document.getElementById("lockedText").textContent = LOCKED_TEXT;
+          document.getElementById("locked").classList.add("show");
+        }
+
+        function showCredits() {
+          var scroll = document.getElementById("scroll");
+          LINES.forEach(function (line) {
+            var p = document.createElement("p");
+            p.textContent = line;
+            scroll.appendChild(p);
+          });
+          document.getElementById("credits").classList.add("show");
+          if (reduce) return;
+
+          var held = false;
+          function setHeld(on) {
+            held = on;
+          }
+          window.addEventListener("keydown", function (e) {
+            if (e.code === "Space" || e.code === "Enter") {
+              e.preventDefault();
+              setHeld(true);
+            }
+          });
+          window.addEventListener("keyup", function (e) {
+            if (e.code === "Space" || e.code === "Enter") setHeld(false);
+          });
+          window.addEventListener("pointerdown", function (e) {
+            if (e.button === 0) setHeld(true);
+          });
+          window.addEventListener("pointerup", function () {
+            setHeld(false);
+          });
+
+          var y = window.innerHeight;
+          var last = performance.now();
+          function frame(now) {
+            var dt = Math.min((now - last) / 1000, 0.1);
+            last = now;
+            y -= (held ? BOOST : SPEED) * dt;
+            scroll.style.transform = "translate(-50%, " + y + "px)";
+            if (y > -scroll.offsetHeight) requestAnimationFrame(frame);
+          }
+          requestAnimationFrame(frame);
+        }
+
+        readGoal().then(function (goal) {
+          if (readAch() >= goal) showCredits();
+          else showLocked();
+        });
+      })();
+    </script>
   </body>
 </html>

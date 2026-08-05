@@ -424,29 +424,88 @@
   "dialogue": [
     {
       "id": "pc-off",
-      "lines": [[{ "lang": "en", "text": "Turn the PC on?" }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "Turn the PC on?" },
+          { "lang": "es", "text": "¿Encender el PC?" },
+          { "lang": "pt", "text": "Ligar o PC?" },
+          { "lang": "fr", "text": "Allumer le PC ?" },
+          { "lang": "de", "text": "pc einschalten?" },
+          { "lang": "jp", "text": "パソコンの電源を入れる？" },
+          { "lang": "kr", "text": "PC를 켤까요?" },
+          { "lang": "zh", "text": "打开电脑？" }
+        ]
+      ]
     },
     {
       "id": "pc-off-yes",
       "lines": [
-        [{ "lang": "en", "text": "You turned the PC on" }],
-        [{ "lang": "en", "text": "It's quieter than you thought." }]
+        [
+          { "lang": "en", "text": "You turned the PC on" },
+          { "lang": "es", "text": "Encendiste el PC" },
+          { "lang": "pt", "text": "Você ligou o PC" },
+          { "lang": "fr", "text": "Tu as allumé le PC" },
+          { "lang": "de", "text": "du hast den pc eingeschaltet" },
+          { "lang": "jp", "text": "パソコンの電源を入れた" },
+          { "lang": "kr", "text": "PC를 켰습니다" },
+          { "lang": "zh", "text": "你打开了电脑" }
+        ]
       ]
     },
     {
       "id": "pc-off-no",
       "lines": [
-        [{ "lang": "en", "text": "You feel weirdly powerful and in control" }],
-        [{ "lang": "en", "text": "But I assure you, you're not." }]
+        [
+          { "lang": "en", "text": "You feel weirdly powerful and in control" },
+          { "lang": "es", "text": "Te sientes extrañamente poderoso y en control" },
+          { "lang": "pt", "text": "Você se sente estranhamente poderoso e no controle" },
+          { "lang": "fr", "text": "Tu te sens étrangement puissant et maître de la situation" },
+          { "lang": "de", "text": "du fühlst dich seltsam mächtig und in kontrolle" },
+          { "lang": "jp", "text": "なぜか自分が強くて全てを支配しているように感じる" },
+          { "lang": "kr", "text": "이상하게 강력하고 모든 걸 통제하는 기분이 든다" },
+          { "lang": "zh", "text": "你莫名地感到强大且掌控一切" }
+        ],
+        [
+          { "lang": "en", "text": "But I assure you, you're not." },
+          { "lang": "es", "text": "Pero te aseguro que no lo estás." },
+          { "lang": "pt", "text": "Mas eu te garanto, você não está." },
+          { "lang": "fr", "text": "Mais je t'assure que non." },
+          { "lang": "de", "text": "aber ich versichere dir, das bist du nicht." },
+          { "lang": "jp", "text": "でも保証するけど、そうじゃないよ。" },
+          { "lang": "kr", "text": "하지만 확실히 말해두는데, 그렇지 않아." },
+          { "lang": "zh", "text": "但我保证，你并没有。" }
+        ]
       ]
     },
     {
       "id": "pc-on",
-      "lines": [[{ "lang": "en", "text": "Turn the PC off?" }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "Turn the PC off?" },
+          { "lang": "es", "text": "¿Apagar el PC?" },
+          { "lang": "pt", "text": "Desligar o PC?" },
+          { "lang": "fr", "text": "Éteindre le PC ?" },
+          { "lang": "de", "text": "pc ausschalten?" },
+          { "lang": "jp", "text": "パソコンの電源を切る？" },
+          { "lang": "kr", "text": "PC를 끌까요?" },
+          { "lang": "zh", "text": "关闭电脑？" }
+        ]
+      ]
     },
     {
       "id": "pc-on-yes",
-      "lines": [[{ "lang": "en", "text": "You turned the PC off" }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "You turned the PC off" },
+          { "lang": "es", "text": "Apagaste el PC" },
+          { "lang": "pt", "text": "Você desligou o PC" },
+          { "lang": "fr", "text": "Tu as éteint le PC" },
+          { "lang": "de", "text": "du hast den pc ausgeschaltet" },
+          { "lang": "jp", "text": "パソコンの電源を切った" },
+          { "lang": "kr", "text": "PC를 껐습니다" },
+          { "lang": "zh", "text": "你关闭了电脑" }
+        ]
+      ]
     },
     {
       "id": "pc-on-no",
@@ -455,66 +514,278 @@
           {
             "lang": "en",
             "text": "You decided you like the ambient noise of the fans spinning and wanted to keep the PC on"
-          }
+          },
+          {
+            "lang": "es",
+            "text": "Decidiste que te gusta el ruido ambiental de los ventiladores girando y quisiste dejar el PC encendido"
+          },
+          {
+            "lang": "pt",
+            "text": "Você decidiu que gosta do ruído ambiente dos coolers girando e quis manter o PC ligado"
+          },
+          {
+            "lang": "fr",
+            "text": "Tu as décidé que tu aimais le bruit ambiant des ventilateurs qui tournent et tu as voulu laisser le PC allumé"
+          },
+          {
+            "lang": "de",
+            "text": "du hast entschieden, dass dir das hintergrundrauschen der drehenden lüfter gefällt, und wolltest den pc angelassen lassen"
+          },
+          {
+            "lang": "jp",
+            "text": "ファンの回る環境音が気に入って、パソコンをつけたままにしておくことにした"
+          },
+          { "lang": "kr", "text": "돌아가는 팬 소리가 마음에 들어서 PC를 계속 켜두기로 했다" },
+          { "lang": "zh", "text": "你觉得风扇转动的环境音很好听，决定让电脑一直开着" }
         ]
       ]
     },
     {
       "id": "pc-ram",
       "lines": [
-        [{ "lang": "en", "text": "..." }],
-        [{ "lang": "en", "text": "No. Stealing is wrong." }],
-        [{ "lang": "en", "text": "Shame on you." }],
-        [{ "lang": "en", "text": "I know ram prices are high but come on..." }]
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
+        [
+          { "lang": "en", "text": "No. Stealing is wrong." },
+          { "lang": "es", "text": "No. Robar está mal." },
+          { "lang": "pt", "text": "Não. Roubar é errado." },
+          { "lang": "fr", "text": "Non. Voler c'est mal." },
+          { "lang": "de", "text": "nein. stehlen ist falsch." },
+          { "lang": "jp", "text": "ダメだ。盗みは悪いことだ。" },
+          { "lang": "kr", "text": "안 돼. 도둑질은 나빠." },
+          { "lang": "zh", "text": "不。偷窃是不对的。" }
+        ],
+        [
+          { "lang": "en", "text": "Shame on you." },
+          { "lang": "es", "text": "Qué vergüenza." },
+          { "lang": "pt", "text": "Que vergonha." },
+          { "lang": "fr", "text": "Honte à toi." },
+          { "lang": "de", "text": "schäm dich." },
+          { "lang": "jp", "text": "恥を知れ。" },
+          { "lang": "kr", "text": "부끄러운 줄 알아." },
+          { "lang": "zh", "text": "真丢人。" }
+        ],
+        [
+          { "lang": "en", "text": "I know ram prices are high but come on..." },
+          { "lang": "es", "text": "Sé que los precios de la RAM están altos pero vamos..." },
+          { "lang": "pt", "text": "Eu sei que os preços da RAM estão altos mas qual é..." },
+          { "lang": "fr", "text": "Je sais que les prix de la RAM sont élevés mais quand même..." },
+          { "lang": "de", "text": "ich weiß, ram-preise sind hoch, aber komm schon..." },
+          { "lang": "jp", "text": "メモリの値段が高いのはわかるけど、さすがに…" },
+          { "lang": "kr", "text": "램 가격이 비싼 건 알지만 그래도…" },
+          { "lang": "zh", "text": "我知道内存条很贵，但也不至于吧…" }
+        ]
       ]
     },
     {
       "id": "mousepad",
       "lines": [
-        [{ "lang": "en", "text": "It's a mouse pad" }],
-        [{ "lang": "en", "text": "made out of glass" }],
-        [{ "lang": "en", "text": "so its a glass pad." }]
+        [
+          { "lang": "en", "text": "It's a mouse pad" },
+          { "lang": "es", "text": "Es una alfombrilla de mouse" },
+          { "lang": "pt", "text": "É um mouse pad" },
+          { "lang": "fr", "text": "C'est un tapis de souris" },
+          { "lang": "de", "text": "es ist ein mauspad" },
+          { "lang": "jp", "text": "マウスパッドだ" },
+          { "lang": "kr", "text": "마우스패드다" },
+          { "lang": "zh", "text": "这是个鼠标垫" }
+        ],
+        [
+          { "lang": "en", "text": "made out of glass" },
+          { "lang": "es", "text": "hecha de vidrio" },
+          { "lang": "pt", "text": "feito de vidro" },
+          { "lang": "fr", "text": "fait en verre" },
+          { "lang": "de", "text": "aus glas gemacht" },
+          { "lang": "jp", "text": "ガラスでできている" },
+          { "lang": "kr", "text": "유리로 만들어졌다" },
+          { "lang": "zh", "text": "由玻璃制成" }
+        ],
+        [
+          { "lang": "en", "text": "so its a glass pad." },
+          { "lang": "es", "text": "así que es una alfombrilla de vidrio." },
+          { "lang": "pt", "text": "então é um pad de vidro." },
+          { "lang": "fr", "text": "donc c'est un tapis en verre." },
+          { "lang": "de", "text": "also ist es ein glaspad." },
+          { "lang": "jp", "text": "つまりガラスパッドだ。" },
+          { "lang": "kr", "text": "그러니까 유리 패드다." },
+          { "lang": "zh", "text": "所以这是块玻璃垫。" }
+        ]
       ]
     },
     {
       "id": "mouse",
       "lines": [
         [
+          { "lang": "en", "text": "You notice the mouse moving to your own mouse," },
+          { "lang": "es", "text": "Notas que el ratón se mueve hacia tu propio ratón," },
           {
-            "lang": "en",
-            "text": "You notice the fact this mouse moves based on where your mouse is"
-          }
+            "lang": "pt",
+            "text": "Você percebe que o mouse se move em direção ao seu próprio mouse,"
+          },
+          { "lang": "fr", "text": "Tu remarques que la souris se déplace vers ta propre souris," },
+          { "lang": "de", "text": "du merkst, wie sich die maus zu deiner eigenen maus bewegt," },
+          { "lang": "jp", "text": "マウスが自分のマウスに向かって動いているのに気づく、" },
+          { "lang": "kr", "text": "마우스가 당신의 마우스를 향해 움직이는 것을 알아챈다," },
+          { "lang": "zh", "text": "你注意到鼠标正朝着你自己的鼠标移动，" }
         ],
         [
           {
             "lang": "en",
-            "text": "but there's a small chance you have a track pad or using touch pad."
-          }
+            "text": "but realize there's a small chance that someone is on a track pad or touchscreen."
+          },
+          {
+            "lang": "es",
+            "text": "pero te das cuenta de que hay una pequeña posibilidad de que alguien esté usando un panel táctil o pantalla táctil."
+          },
+          {
+            "lang": "pt",
+            "text": "mas percebe que há uma pequena chance de alguém estar usando um trackpad ou tela sensível ao toque."
+          },
+          {
+            "lang": "fr",
+            "text": "mais tu réalises qu'il y a une petite chance que quelqu'un utilise un trackpad ou un écran tactile."
+          },
+          {
+            "lang": "de",
+            "text": "aber merkst, dass es eine kleine chance gibt, dass jemand ein trackpad oder touchscreen benutzt."
+          },
+          {
+            "lang": "jp",
+            "text": "でも、誰かがトラックパッドやタッチスクリーンを使っている可能性も少しあることに気づく。"
+          },
+          {
+            "lang": "kr",
+            "text": "하지만 누군가 트랙패드나 터치스크린을 쓰고 있을 가능성도 조금 있다는 걸 깨닫는다."
+          },
+          { "lang": "zh", "text": "但你意识到，也有可能对方用的是触控板或触摸屏。" }
         ],
-        [{ "lang": "en", "text": "..." }],
-        [{ "lang": "en", "text": "This is why we can't have nice things." }]
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
+        [
+          { "lang": "en", "text": "This is why we can't have nice things." },
+          { "lang": "es", "text": "Por esto no podemos tener cosas bonitas." },
+          { "lang": "pt", "text": "É por isso que a gente não pode ter coisas boas." },
+          { "lang": "fr", "text": "C'est pour ça qu'on ne peut pas avoir de belles choses." },
+          { "lang": "de", "text": "deshalb können wir keine schönen dinge haben." },
+          { "lang": "jp", "text": "だからいいものを持てないんだ。" },
+          { "lang": "kr", "text": "그래서 우리가 좋은 걸 못 가지는 거다." },
+          { "lang": "zh", "text": "这就是我们享受不到好东西的原因。" }
+        ]
       ]
     },
     {
       "id": "keyboard",
       "lines": [
-        [{ "lang": "en", "text": "It's a keyboard" }],
-        [{ "lang": "en", "text": "Made out of magnets" }],
-        [{ "lang": "en", "text": "It's a magnetic keyboard" }],
-        [{ "lang": "en", "text": "You wonder why such a thing exists" }],
-        [{ "lang": "en", "text": "Maybe it's something to do with global warming?" }]
+        [
+          { "lang": "en", "text": "It's a keyboard" },
+          { "lang": "es", "text": "Es un teclado" },
+          { "lang": "pt", "text": "É um teclado" },
+          { "lang": "fr", "text": "C'est un clavier" },
+          { "lang": "de", "text": "es ist eine tastatur" },
+          { "lang": "jp", "text": "キーボードだ" },
+          { "lang": "kr", "text": "키보드다" },
+          { "lang": "zh", "text": "这是个键盘" }
+        ],
+        [
+          { "lang": "en", "text": "Made out of magnets" },
+          { "lang": "es", "text": "Hecho de imanes" },
+          { "lang": "pt", "text": "Feito de ímãs" },
+          { "lang": "fr", "text": "Fait d'aimants" },
+          { "lang": "de", "text": "aus magneten gemacht" },
+          { "lang": "jp", "text": "磁石でできている" },
+          { "lang": "kr", "text": "자석으로 만들어졌다" },
+          { "lang": "zh", "text": "由磁铁制成" }
+        ],
+        [
+          { "lang": "en", "text": "It's a magnetic keyboard" },
+          { "lang": "es", "text": "Es un teclado magnético" },
+          { "lang": "pt", "text": "É um teclado magnético" },
+          { "lang": "fr", "text": "C'est un clavier magnétique" },
+          { "lang": "de", "text": "es ist eine magnettastatur" },
+          { "lang": "jp", "text": "磁石式キーボードだ" },
+          { "lang": "kr", "text": "자석 키보드다" },
+          { "lang": "zh", "text": "这是个磁力键盘" }
+        ],
+        [
+          { "lang": "en", "text": "You wonder why such a thing exists" },
+          { "lang": "es", "text": "Te preguntas por qué existe tal cosa" },
+          { "lang": "pt", "text": "Você se pergunta por que tal coisa existe" },
+          { "lang": "fr", "text": "Tu te demandes pourquoi une telle chose existe" },
+          { "lang": "de", "text": "du fragst dich, warum es so etwas überhaupt gibt" },
+          { "lang": "jp", "text": "なぜこんなものが存在するのか不思議に思う" },
+          { "lang": "kr", "text": "이런 게 왜 존재하는지 궁금해진다" },
+          { "lang": "zh", "text": "你很好奇为什么会有这种东西" }
+        ],
+        [
+          { "lang": "en", "text": "...maybe it's something to do with global warming?" },
+          { "lang": "es", "text": "...¿quizás tenga algo que ver con el calentamiento global?" },
+          { "lang": "pt", "text": "...talvez tenha algo a ver com o aquecimento global?" },
+          {
+            "lang": "fr",
+            "text": "...peut-être que ça a un lien avec le réchauffement climatique ?"
+          },
+          { "lang": "de", "text": "...vielleicht hat es etwas mit der globalen erwärmung zu tun?" },
+          { "lang": "jp", "text": "…もしかして地球温暖化と関係があるのかな？" },
+          { "lang": "kr", "text": "…혹시 지구온난화랑 관련 있는 건가?" },
+          { "lang": "zh", "text": "…也许这跟全球变暖有关？" }
+        ]
       ]
     },
     {
       "id": "clock",
       "lines": [
-        [{ "lang": "en", "text": "The time is {time}" }],
-        [{ "lang": "en", "text": "in this timezone..." }]
+        [
+          { "lang": "en", "text": "The time is {time}" },
+          { "lang": "es", "text": "La hora es {time}" },
+          { "lang": "pt", "text": "A hora é {time}" },
+          { "lang": "fr", "text": "L'heure est {time}" },
+          { "lang": "de", "text": "die zeit ist {time}" },
+          { "lang": "jp", "text": "時刻は{time}" },
+          { "lang": "kr", "text": "시간은 {time}" },
+          { "lang": "zh", "text": "现在时间是{time}" }
+        ],
+        [
+          { "lang": "en", "text": "in this timezone..." },
+          { "lang": "es", "text": "en esta zona horaria..." },
+          { "lang": "pt", "text": "neste fuso horário..." },
+          { "lang": "fr", "text": "dans ce fuseau horaire..." },
+          { "lang": "de", "text": "in dieser zeitzone..." },
+          { "lang": "jp", "text": "このタイムゾーンでは…" },
+          { "lang": "kr", "text": "이 시간대에서는…" },
+          { "lang": "zh", "text": "在这个时区…" }
+        ]
       ]
     },
     {
       "id": "monitor-off",
-      "lines": [[{ "lang": "en", "text": "The computer is turned off, and so is the monitor." }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "The computer is turned off, and so is the monitor." },
+          { "lang": "es", "text": "El ordenador está apagado, y también el monitor." },
+          { "lang": "pt", "text": "O computador está desligado, e o monitor também." },
+          { "lang": "fr", "text": "L'ordinateur est éteint, et l'écran aussi." },
+          { "lang": "de", "text": "der computer ist ausgeschaltet, und der monitor auch." },
+          { "lang": "jp", "text": "パソコンの電源が切れていて、モニターも同じだ。" },
+          { "lang": "kr", "text": "컴퓨터가 꺼져 있고, 모니터도 마찬가지다." },
+          { "lang": "zh", "text": "电脑关着，显示器也是。" }
+        ]
+      ]
     },
     {
       "id": "monitor2-off",
@@ -522,191 +793,928 @@
         [
           {
             "lang": "en",
-            "text": "You'd think a second monitor positioned in such a way would be meaningless..."
-          }
+            "text": "You'd think a second monitor positioned like this would be pointless..."
+          },
+          { "lang": "es", "text": "Pensarías que un segundo monitor colocado así sería inútil..." },
+          {
+            "lang": "pt",
+            "text": "Você pensaria que um segundo monitor posicionado assim seria inútil..."
+          },
+          {
+            "lang": "fr",
+            "text": "On pourrait croire qu'un second écran placé ainsi serait inutile..."
+          },
+          {
+            "lang": "de",
+            "text": "man würde denken, ein so platzierter zweiter monitor wäre sinnlos..."
+          },
+          { "lang": "jp", "text": "こんな配置のセカンドモニターなんて意味がないと思うだろう…" },
+          { "lang": "kr", "text": "이렇게 놓인 두 번째 모니터는 의미가 없을 거라 생각하겠지만…" },
+          { "lang": "zh", "text": "你可能会以为这样摆放的第二台显示器毫无意义…" }
         ]
       ]
     },
     {
       "id": "monitor2-on",
       "lines": [
-        [{ "lang": "en", "text": "Even with the PC on, the second monitor is useless." }],
-        [{ "lang": "en", "text": "..." }],
-        [{ "lang": "en", "text": "It makes you feel better about yourself." }]
+        [
+          { "lang": "en", "text": "Even with the PC on, the second monitor is useless." },
+          { "lang": "es", "text": "Incluso con el PC encendido, el segundo monitor es inútil." },
+          { "lang": "pt", "text": "Mesmo com o PC ligado, o segundo monitor é inútil." },
+          { "lang": "fr", "text": "Même avec le PC allumé, le second écran est inutile." },
+          { "lang": "de", "text": "selbst mit eingeschaltetem pc ist der zweite monitor nutzlos." },
+          {
+            "lang": "jp",
+            "text": "パソコンの電源が入っていても、セカンドモニターは使い物にならない。"
+          },
+          { "lang": "kr", "text": "PC가 켜져 있어도 두 번째 모니터는 쓸모가 없다." },
+          { "lang": "zh", "text": "即使电脑开着，第二台显示器也毫无用处。" }
+        ],
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
+        [
+          { "lang": "en", "text": "It makes you feel better about yourself." },
+          { "lang": "es", "text": "Te hace sentir mejor contigo mismo." },
+          { "lang": "pt", "text": "Isso te faz sentir melhor com você mesmo." },
+          { "lang": "fr", "text": "Ça te fait te sentir mieux dans ta peau." },
+          { "lang": "de", "text": "es lässt dich dich einfach besser fühlen." },
+          { "lang": "jp", "text": "でも、それが自分を少し良く思わせてくれる。" },
+          { "lang": "kr", "text": "그래도 스스로가 좀 나은 사람처럼 느껴지게 해준다." },
+          { "lang": "zh", "text": "但它能让你觉得自己更了不起一点。" }
+        ]
       ]
     },
     {
       "id": "chair-1",
-      "lines": [[{ "lang": "en", "text": "It's a chair" }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "It's a chair" },
+          { "lang": "es", "text": "Es una silla" },
+          { "lang": "pt", "text": "É uma cadeira" },
+          { "lang": "fr", "text": "C'est une chaise" },
+          { "lang": "de", "text": "es ist ein stuhl" },
+          { "lang": "jp", "text": "椅子だ" },
+          { "lang": "kr", "text": "의자다" },
+          { "lang": "zh", "text": "这是把椅子" }
+        ]
+      ]
     },
     {
       "id": "chair-2",
-      "lines": [[{ "lang": "en", "text": "Seriously, it's a chair" }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "Seriously, it's a chair" },
+          { "lang": "es", "text": "En serio, es una silla" },
+          { "lang": "pt", "text": "Sério, é uma cadeira" },
+          { "lang": "fr", "text": "Sérieusement, c'est une chaise" },
+          { "lang": "de", "text": "ernsthaft, es ist ein stuhl" },
+          { "lang": "jp", "text": "本当に、椅子だ" },
+          { "lang": "kr", "text": "진짜로, 의자다" },
+          { "lang": "zh", "text": "说真的，这就是把椅子" }
+        ]
+      ]
     },
     {
       "id": "chair-3",
-      "lines": [[{ "lang": "en", "text": "Do you not believe me?" }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "Do you not believe me?" },
+          { "lang": "es", "text": "¿No me crees?" },
+          { "lang": "pt", "text": "Você não acredita em mim?" },
+          { "lang": "fr", "text": "Tu ne me crois pas ?" },
+          { "lang": "de", "text": "glaubst du mir nicht?" },
+          { "lang": "jp", "text": "信じてないの？" },
+          { "lang": "kr", "text": "안 믿는 거야?" },
+          { "lang": "zh", "text": "你不相信我吗？" }
+        ]
+      ]
     },
     {
       "id": "chair-4",
       "lines": [
-        [{ "lang": "en", "text": "You-" }],
-        [{ "lang": "en", "text": "why are you clicking on the chair" }]
+        [
+          { "lang": "en", "text": "You-" },
+          { "lang": "es", "text": "Tú-" },
+          { "lang": "pt", "text": "Você-" },
+          { "lang": "fr", "text": "Toi-" },
+          { "lang": "de", "text": "du-" },
+          { "lang": "jp", "text": "お前-" },
+          { "lang": "kr", "text": "너-" },
+          { "lang": "zh", "text": "你——" }
+        ],
+        [
+          { "lang": "en", "text": "why are you clicking on the chair" },
+          { "lang": "es", "text": "por qué estás haciendo clic en la silla" },
+          { "lang": "pt", "text": "por que você está clicando na cadeira" },
+          { "lang": "fr", "text": "pourquoi tu cliques sur la chaise" },
+          { "lang": "de", "text": "warum klickst du auf den stuhl" },
+          { "lang": "jp", "text": "なんで椅子をクリックしてるんだ" },
+          { "lang": "kr", "text": "왜 의자를 클릭하고 있는 거야" },
+          { "lang": "zh", "text": "你为什么一直点这张椅子" }
+        ]
       ]
     },
     {
       "id": "chair-5",
-      "lines": [[{ "lang": "en", "text": "there's no achievement for this btw" }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "there's no achievement for this btw" },
+          { "lang": "es", "text": "por cierto, no hay logro por esto" },
+          { "lang": "pt", "text": "aliás, não tem conquista por isso" },
+          { "lang": "fr", "text": "au fait, il n'y a pas de succès pour ça" },
+          { "lang": "de", "text": "übrigens, dafür gibt es keinen erfolg" },
+          { "lang": "jp", "text": "ちなみに、これに実績はないよ" },
+          { "lang": "kr", "text": "참고로 이건 도전 과제 없어" },
+          { "lang": "zh", "text": "顺便说，这个没有成就" }
+        ]
+      ]
     },
     {
       "id": "chair-6",
-      "lines": [[{ "lang": "en", "text": "you're wasting your time" }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "you're wasting your time" },
+          { "lang": "es", "text": "estás perdiendo el tiempo" },
+          { "lang": "pt", "text": "você está perdendo seu tempo" },
+          { "lang": "fr", "text": "tu perds ton temps" },
+          { "lang": "de", "text": "du verschwendest deine zeit" },
+          { "lang": "jp", "text": "時間の無駄だよ" },
+          { "lang": "kr", "text": "시간 낭비하고 있어" },
+          { "lang": "zh", "text": "你在浪费时间" }
+        ]
+      ]
     },
     {
       "id": "chair-7",
-      "lines": [[{ "lang": "en", "text": "..." }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ]
+      ]
     },
     {
       "id": "chair-8",
-      "lines": [[{ "lang": "en", "text": "ok fine, leave me alone." }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "ok fine, leave me alone." },
+          { "lang": "es", "text": "está bien, déjame en paz." },
+          { "lang": "pt", "text": "ok tudo bem, me deixa em paz." },
+          { "lang": "fr", "text": "ok c'est bon, laisse-moi tranquille." },
+          { "lang": "de", "text": "ok gut, lass mich in ruhe." },
+          { "lang": "jp", "text": "はいはい、もう放っておいて。" },
+          { "lang": "kr", "text": "알겠어, 그만 좀 놔둬." },
+          { "lang": "zh", "text": "好吧好吧，别管我了。" }
+        ]
+      ]
     },
     {
       "id": "bed-busy-1",
-      "lines": [[{ "lang": "en", "text": "Your job isn't done yet." }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "Your job isn't done yet." },
+          { "lang": "es", "text": "Tu trabajo aún no está terminado." },
+          { "lang": "pt", "text": "Seu trabalho ainda não terminou." },
+          { "lang": "fr", "text": "Ton travail n'est pas encore terminé." },
+          { "lang": "de", "text": "deine aufgabe ist noch nicht fertig." },
+          { "lang": "jp", "text": "まだ仕事は終わっていない。" },
+          { "lang": "kr", "text": "아직 할 일이 끝나지 않았어." },
+          { "lang": "zh", "text": "你的任务还没完成。" }
+        ]
+      ]
     },
     {
       "id": "bed-busy-2",
-      "lines": [[{ "lang": "en", "text": "You can't sleep now, you have a job to do." }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "You can't sleep now, you have a job to do." },
+          { "lang": "es", "text": "No puedes dormir ahora, tienes un trabajo que hacer." },
+          { "lang": "pt", "text": "Você não pode dormir agora, tem um trabalho a fazer." },
+          { "lang": "fr", "text": "Tu ne peux pas dormir maintenant, tu as un travail à faire." },
+          {
+            "lang": "de",
+            "text": "du kannst jetzt nicht schlafen, du hast eine aufgabe zu erledigen."
+          },
+          { "lang": "jp", "text": "今は眠れない、やるべきことがある。" },
+          { "lang": "kr", "text": "지금은 잘 수 없어, 해야 할 일이 있잖아." },
+          { "lang": "zh", "text": "你现在不能睡，还有任务要完成。" }
+        ]
+      ]
     },
     {
       "id": "bed-busy-3",
-      "lines": [[{ "lang": "en", "text": "No, you must finish what you started." }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "No, you must finish what you started." },
+          { "lang": "es", "text": "No, debes terminar lo que empezaste." },
+          { "lang": "pt", "text": "Não, você precisa terminar o que começou." },
+          { "lang": "fr", "text": "Non, tu dois finir ce que tu as commencé." },
+          { "lang": "de", "text": "nein, du musst beenden, was du angefangen hast." },
+          { "lang": "jp", "text": "ダメだ、始めたことは終わらせないと。" },
+          { "lang": "kr", "text": "안 돼, 시작한 건 끝내야 해." },
+          { "lang": "zh", "text": "不行，你必须完成你开始的事。" }
+        ]
+      ]
     },
     {
       "id": "bed-busy-4",
-      "lines": [[{ "lang": "en", "text": "You can sleep when your finished." }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "You can sleep when your finished." },
+          { "lang": "es", "text": "Puedes dormir cuando termines." },
+          { "lang": "pt", "text": "Você pode dormir quando terminar." },
+          { "lang": "fr", "text": "Tu pourras dormir quand tu auras fini." },
+          { "lang": "de", "text": "du kannst schlafen, wenn du fertig bist." },
+          { "lang": "jp", "text": "終わったら眠っていいよ。" },
+          { "lang": "kr", "text": "끝나면 자도 돼." },
+          { "lang": "zh", "text": "等你完成了就可以睡了。" }
+        ]
+      ]
     },
     {
       "id": "plush-open-1",
-      "lines": [[{ "lang": "en", "text": "You feel like it's watching you..." }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "You feel like it's watching you..." },
+          { "lang": "es", "text": "Sientes que te está observando..." },
+          { "lang": "pt", "text": "Você sente que ele está te observando..." },
+          { "lang": "fr", "text": "Tu sens qu'il t'observe..." },
+          { "lang": "de", "text": "du hast das gefühl, dass es dich beobachtet..." },
+          { "lang": "jp", "text": "見られている気がする…" },
+          { "lang": "kr", "text": "너를 지켜보는 듯한 느낌이 든다…" },
+          { "lang": "zh", "text": "你感觉它在盯着你…" }
+        ]
+      ]
     },
     {
       "id": "plush-open-2",
-      "lines": [[{ "lang": "en", "text": "You feel it's holding back..." }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "You feel it's holding back..." },
+          { "lang": "es", "text": "Sientes que se está conteniendo..." },
+          { "lang": "pt", "text": "Você sente que ele está se contendo..." },
+          { "lang": "fr", "text": "Tu sens qu'il se retient..." },
+          { "lang": "de", "text": "du hast das gefühl, dass es sich zurückhält..." },
+          { "lang": "jp", "text": "何か抑えている気がする…" },
+          { "lang": "kr", "text": "무언가 참고 있는 느낌이 든다…" },
+          { "lang": "zh", "text": "你感觉它在克制着什么…" }
+        ]
+      ]
     },
     {
       "id": "plush-open-3",
-      "lines": [[{ "lang": "en", "text": "You feel an ominous presence..." }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "You feel an ominous presence..." },
+          { "lang": "es", "text": "Sientes una presencia ominosa..." },
+          { "lang": "pt", "text": "Você sente uma presença sinistra..." },
+          { "lang": "fr", "text": "Tu sens une présence menaçante..." },
+          { "lang": "de", "text": "du fühlst eine unheilvolle präsenz..." },
+          { "lang": "jp", "text": "不気味な気配を感じる…" },
+          { "lang": "kr", "text": "불길한 기운이 느껴진다…" },
+          { "lang": "zh", "text": "你感觉到一股不祥的气息…" }
+        ]
+      ]
     },
     {
       "id": "plush-open-4",
-      "lines": [[{ "lang": "en", "text": "You feel like it could speak..." }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "You feel like it could speak..." },
+          { "lang": "es", "text": "Sientes que podría hablar..." },
+          { "lang": "pt", "text": "Você sente que ele poderia falar..." },
+          { "lang": "fr", "text": "Tu sens qu'il pourrait parler..." },
+          { "lang": "de", "text": "du hast das gefühl, es könnte sprechen..." },
+          { "lang": "jp", "text": "喋りだしそうな気がする…" },
+          { "lang": "kr", "text": "말을 걸 것 같은 느낌이 든다…" },
+          { "lang": "zh", "text": "你感觉它似乎能说话…" }
+        ]
+      ]
     },
     {
       "id": "plush-open-5",
-      "lines": [[{ "lang": "en", "text": "You feel an overwhelming amount of pressure..." }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "You feel an overwhelming amount of pressure..." },
+          { "lang": "es", "text": "Sientes una cantidad abrumadora de presión..." },
+          { "lang": "pt", "text": "Você sente uma quantidade avassaladora de pressão..." },
+          { "lang": "fr", "text": "Tu sens une pression écrasante..." },
+          { "lang": "de", "text": "du fühlst einen überwältigenden druck..." },
+          { "lang": "jp", "text": "圧倒的な圧を感じる…" },
+          { "lang": "kr", "text": "엄청난 압박감이 느껴진다…" },
+          { "lang": "zh", "text": "你感受到一种压倒性的压力…" }
+        ]
+      ]
     },
     {
       "id": "plush-interact",
-      "lines": [[{ "lang": "en", "text": "Interact with it?" }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "Interact with it?" },
+          { "lang": "es", "text": "¿Interactuar con ello?" },
+          { "lang": "pt", "text": "Interagir com ele?" },
+          { "lang": "fr", "text": "Interagir avec lui ?" },
+          { "lang": "de", "text": "damit interagieren?" },
+          { "lang": "jp", "text": "それに触れてみる？" },
+          { "lang": "kr", "text": "그것과 상호작용할까요?" },
+          { "lang": "zh", "text": "要与它互动吗？" }
+        ]
+      ]
     },
     {
       "id": "plush-topics",
-      "lines": [[{ "lang": "en", "text": "..." }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ]
+      ]
     },
     {
       "id": "plush-password",
       "lines": [
-        [{ "lang": "en", "text": "You ask the [Marketable Plush] what the password is" }],
-        [{ "lang": "en", "text": "..." }],
+        [
+          { "lang": "en", "text": "You ask [Marketable Plush] for the password." },
+          { "lang": "es", "text": "Le preguntas a [Marketable Plush] cuál es la contraseña." },
+          { "lang": "pt", "text": "Você pergunta a [Marketable Plush] qual é a senha." },
+          { "lang": "fr", "text": "Tu demandes à [Marketable Plush] le mot de passe." },
+          { "lang": "de", "text": "du fragst [Marketable Plush] nach dem passwort." },
+          { "lang": "jp", "text": "[Marketable Plush]にパスワードを聞く。" },
+          { "lang": "kr", "text": "[Marketable Plush]에게 비밀번호를 물어본다." },
+          { "lang": "zh", "text": "你向[Marketable Plush]询问密码。" }
+        ],
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
         [
           {
             "lang": "en",
             "text": "As you wait for a response, you hear the shelf under the TV become a bit louder"
-          }
+          },
+          {
+            "lang": "es",
+            "text": "Mientras esperas una respuesta, escuchas que el estante debajo de la TV se vuelve un poco más ruidoso"
+          },
+          {
+            "lang": "pt",
+            "text": "Enquanto espera por uma resposta, você ouve a estante embaixo da TV ficar um pouco mais alta"
+          },
+          {
+            "lang": "fr",
+            "text": "Alors que tu attends une réponse, tu entends l'étagère sous la télé devenir un peu plus bruyante"
+          },
+          {
+            "lang": "de",
+            "text": "während du auf eine antwort wartest, hörst du, wie das regal unter dem fernseher etwas lauter wird"
+          },
+          {
+            "lang": "jp",
+            "text": "返事を待っていると、テレビの下の棚が少し騒がしくなるのが聞こえる"
+          },
+          {
+            "lang": "kr",
+            "text": "대답을 기다리는 동안, TV 아래 선반이 조금 더 시끄러워지는 소리가 들린다"
+          },
+          { "lang": "zh", "text": "在等待回应时，你听到电视下面的架子变得有点吵" }
         ],
-        [{ "lang": "en", "text": "Which is strange because shelves are usually silent" }],
-        [{ "lang": "en", "text": "..." }],
-        [{ "lang": "en", "text": "You have a feeling that [Marketable Plush] is onto something" }],
-        [{ "lang": "en", "text": "Or your on something..." }]
+        [
+          { "lang": "en", "text": "Which is odd, since shelves are usually silent." },
+          {
+            "lang": "es",
+            "text": "Lo cual es extraño, ya que los estantes suelen estar en silencio."
+          },
+          { "lang": "pt", "text": "O que é estranho, já que estantes costumam ficar em silêncio." },
+          {
+            "lang": "fr",
+            "text": "Ce qui est étrange, puisque les étagères sont généralement silencieuses."
+          },
+          { "lang": "de", "text": "was seltsam ist, da regale normalerweise ruhig sind." },
+          { "lang": "jp", "text": "棚は普段静かなはずなのに、おかしい。" },
+          { "lang": "kr", "text": "선반은 보통 조용한데, 이상하다." },
+          { "lang": "zh", "text": "这很奇怪，因为架子通常都很安静。" }
+        ],
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
+        [
+          { "lang": "en", "text": "You have a feeling that [Marketable Plush] is onto something" },
+          { "lang": "es", "text": "Tienes la sensación de que [Marketable Plush] está tras algo" },
+          { "lang": "pt", "text": "Você tem a sensação de que [Marketable Plush] descobriu algo" },
+          {
+            "lang": "fr",
+            "text": "Tu as le sentiment que [Marketable Plush] a découvert quelque chose"
+          },
+          {
+            "lang": "de",
+            "text": "du hast das gefühl, dass [Marketable Plush] etwas herausgefunden hat"
+          },
+          { "lang": "jp", "text": "[Marketable Plush]が何かに気づいている気がする" },
+          { "lang": "kr", "text": "[Marketable Plush]가 뭔가 알아챈 듯한 느낌이 든다" },
+          { "lang": "zh", "text": "你感觉[Marketable Plush]发现了什么" }
+        ],
+        [
+          { "lang": "en", "text": "Or your on something..." },
+          { "lang": "es", "text": "O quizás tú estás metido en algo..." },
+          { "lang": "pt", "text": "Ou talvez seja você que está metido em algo..." },
+          { "lang": "fr", "text": "Ou peut-être que c'est toi qui es sur quelque chose..." },
+          { "lang": "de", "text": "oder vielleicht bist du derjenige, der auf etwas ist..." },
+          { "lang": "jp", "text": "それか、お前が何かの影響下にあるのか…" },
+          { "lang": "kr", "text": "아니면 네가 뭔가에 취해있는 건지도…" },
+          { "lang": "zh", "text": "或者，也许是你嗑了什么…" }
+        ]
       ]
     },
     {
       "id": "plush-guitar",
       "lines": [
-        [{ "lang": "en", "text": "You ask the [Marketable Plush] how to play guitar" }],
-        [{ "lang": "en", "text": "..." }],
+        [
+          { "lang": "en", "text": "You ask [Marketable Plush] how to play guitar." },
+          { "lang": "es", "text": "Le preguntas a [Marketable Plush] cómo tocar la guitarra." },
+          { "lang": "pt", "text": "Você pergunta a [Marketable Plush] como tocar violão." },
+          { "lang": "fr", "text": "Tu demandes à [Marketable Plush] comment jouer de la guitare." },
+          { "lang": "de", "text": "du fragst [Marketable Plush], wie man gitarre spielt." },
+          { "lang": "jp", "text": "[Marketable Plush]にギターの弾き方を聞く。" },
+          { "lang": "kr", "text": "[Marketable Plush]에게 기타 치는 법을 물어본다." },
+          { "lang": "zh", "text": "你向[Marketable Plush]询问怎么弹吉他。" }
+        ],
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
         [
           {
             "lang": "en",
             "text": "As you wait for a response, you feel as if the answer already resides inside you"
-          }
+          },
+          {
+            "lang": "es",
+            "text": "Mientras esperas una respuesta, sientes como si la respuesta ya residiera dentro de ti"
+          },
+          {
+            "lang": "pt",
+            "text": "Enquanto espera por uma resposta, você sente como se a resposta já estivesse dentro de você"
+          },
+          {
+            "lang": "fr",
+            "text": "Alors que tu attends une réponse, tu sens comme si la réponse résidait déjà en toi"
+          },
+          {
+            "lang": "de",
+            "text": "während du auf eine antwort wartest, hast du das gefühl, die antwort wäre schon in dir"
+          },
+          {
+            "lang": "jp",
+            "text": "返事を待っていると、答えはもう自分の中にあるような気がしてくる"
+          },
+          { "lang": "kr", "text": "대답을 기다리는 동안, 답이 이미 네 안에 있는 듯한 기분이 든다" },
+          { "lang": "zh", "text": "在等待回应时，你感觉答案好像早已藏在你心中" }
         ],
-        [{ "lang": "en", "text": "and a melody starts to form inside your head!" }],
-        [{ "lang": "en", "text": "..." }],
+        [
+          { "lang": "en", "text": "and a melody starts to form inside your head!" },
+          { "lang": "es", "text": "¡y una melodía comienza a formarse en tu cabeza!" },
+          { "lang": "pt", "text": "e uma melodia começa a se formar na sua cabeça!" },
+          { "lang": "fr", "text": "et une mélodie commence à se former dans ta tête !" },
+          { "lang": "de", "text": "und eine melodie beginnt sich in deinem kopf zu formen!" },
+          { "lang": "jp", "text": "そして頭の中でメロディーが生まれ始める！" },
+          { "lang": "kr", "text": "그리고 머릿속에서 멜로디가 떠오르기 시작한다!" },
+          { "lang": "zh", "text": "一段旋律开始在你脑海中浮现！" }
+        ],
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
         [
           {
             "lang": "en",
             "text": "You now know how to play guitar, all thanks to [Marketable Plush]"
-          }
+          },
+          {
+            "lang": "es",
+            "text": "Ahora sabes tocar la guitarra, todo gracias a [Marketable Plush]"
+          },
+          {
+            "lang": "pt",
+            "text": "Agora você sabe tocar violão, tudo graças a [Marketable Plush]"
+          },
+          {
+            "lang": "fr",
+            "text": "Tu sais maintenant jouer de la guitare, tout grâce à [Marketable Plush]"
+          },
+          {
+            "lang": "de",
+            "text": "jetzt weißt du, wie man gitarre spielt, alles dank [Marketable Plush]"
+          },
+          {
+            "lang": "jp",
+            "text": "これでギターが弾けるようになった、全部[Marketable Plush]のおかげだ"
+          },
+          { "lang": "kr", "text": "이제 기타를 칠 줄 알게 되었다, 다 [Marketable Plush] 덕분이다" },
+          { "lang": "zh", "text": "现在你学会弹吉他了，全靠[Marketable Plush]" }
         ]
       ]
     },
     {
       "id": "plush-remote",
       "lines": [
-        [{ "lang": "en", "text": "You ask the [Marketable Plush] where the TV remote is" }],
-        [{ "lang": "en", "text": "..." }],
+        [
+          { "lang": "en", "text": "You ask [Marketable Plush] where the TV remote is." },
+          {
+            "lang": "es",
+            "text": "Le preguntas a [Marketable Plush] dónde está el control de la TV."
+          },
+          {
+            "lang": "pt",
+            "text": "Você pergunta a [Marketable Plush] onde está o controle da TV."
+          },
+          {
+            "lang": "fr",
+            "text": "Tu demandes à [Marketable Plush] où est la télécommande de la télé."
+          },
+          { "lang": "de", "text": "du fragst [Marketable Plush], wo die fernbedienung ist." },
+          { "lang": "jp", "text": "[Marketable Plush]にテレビのリモコンの場所を聞く。" },
+          { "lang": "kr", "text": "[Marketable Plush]에게 TV 리모컨이 어디 있는지 물어본다." },
+          { "lang": "zh", "text": "你向[Marketable Plush]询问电视遥控器在哪里。" }
+        ],
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
         [
           {
             "lang": "en",
             "text": "As you wait for a response, you feel as if the answer is staring right at you..."
-          }
+          },
+          {
+            "lang": "es",
+            "text": "Mientras esperas una respuesta, sientes como si la respuesta te estuviera mirando fijamente..."
+          },
+          {
+            "lang": "pt",
+            "text": "Enquanto espera por uma resposta, você sente como se a resposta estivesse te encarando..."
+          },
+          {
+            "lang": "fr",
+            "text": "Alors que tu attends une réponse, tu sens comme si la réponse te fixait droit dans les yeux..."
+          },
+          {
+            "lang": "de",
+            "text": "während du auf eine antwort wartest, hast du das gefühl, die antwort starrt dich direkt an..."
+          },
+          {
+            "lang": "jp",
+            "text": "返事を待っていると、答えがまっすぐ自分を見つめている気がしてくる…"
+          },
+          {
+            "lang": "kr",
+            "text": "대답을 기다리는 동안, 답이 바로 너를 쳐다보고 있는 듯한 느낌이 든다…"
+          },
+          { "lang": "zh", "text": "在等待回应时，你感觉答案正直直地盯着你…" }
         ],
         [
           {
             "lang": "en",
             "text": "So without thinking, you squeeze [Marketable Plush] and the TV turns on!"
-          }
+          },
+          {
+            "lang": "es",
+            "text": "Así que sin pensarlo, aprietas a [Marketable Plush] y ¡la TV se enciende!"
+          },
+          { "lang": "pt", "text": "Então sem pensar, você aperta [Marketable Plush] e a TV liga!" },
+          {
+            "lang": "fr",
+            "text": "Alors sans réfléchir, tu presses [Marketable Plush] et la télé s'allume !"
+          },
+          {
+            "lang": "de",
+            "text": "also drückst du ohne nachzudenken [Marketable Plush] und der fernseher geht an!"
+          },
+          {
+            "lang": "jp",
+            "text": "だから何も考えずに[Marketable Plush]を握ると、テレビの電源が入った！"
+          },
+          { "lang": "kr", "text": "그래서 별생각 없이 [Marketable Plush]를 꽉 쥐자 TV가 켜졌다!" },
+          { "lang": "zh", "text": "于是你不假思索地捏了一下[Marketable Plush]，电视竟然开了！" }
         ],
-        [{ "lang": "en", "text": "How awesome is that!" }],
-        [{ "lang": "en", "text": "Now you can watch TV, all thanks to [Marketable Plush]" }],
-        [{ "lang": "en", "text": "..." }],
-        [{ "lang": "en", "text": "Though you should've asked for permission before squeezing him" }]
+        [
+          { "lang": "en", "text": "How awesome is that?" },
+          { "lang": "es", "text": "¿No es genial eso?" },
+          { "lang": "pt", "text": "Não é incrível isso?" },
+          { "lang": "fr", "text": "C'est pas génial, ça ?" },
+          { "lang": "de", "text": "wie geil ist das denn?" },
+          { "lang": "jp", "text": "すごくない？" },
+          { "lang": "kr", "text": "이거 완전 대단하지 않아?" },
+          { "lang": "zh", "text": "这也太厉害了吧？" }
+        ],
+        [
+          { "lang": "en", "text": "Now you can watch TV, all thanks to [Marketable Plush]" },
+          { "lang": "es", "text": "Ahora puedes ver la TV, todo gracias a [Marketable Plush]" },
+          { "lang": "pt", "text": "Agora você pode ver TV, tudo graças a [Marketable Plush]" },
+          {
+            "lang": "fr",
+            "text": "Maintenant tu peux regarder la télé, tout grâce à [Marketable Plush]"
+          },
+          { "lang": "de", "text": "jetzt kannst du fernsehen, alles dank [Marketable Plush]" },
+          { "lang": "jp", "text": "これでテレビが見られる、全部[Marketable Plush]のおかげだ" },
+          { "lang": "kr", "text": "이제 TV를 볼 수 있다, 다 [Marketable Plush] 덕분이다" },
+          { "lang": "zh", "text": "现在你可以看电视了，全靠[Marketable Plush]" }
+        ],
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
+        [
+          {
+            "lang": "en",
+            "text": "Though you probably should've asked permission before squeezing him."
+          },
+          {
+            "lang": "es",
+            "text": "Aunque probablemente deberías haber pedido permiso antes de apretarlo."
+          },
+          {
+            "lang": "pt",
+            "text": "Embora você provavelmente devesse ter pedido permissão antes de apertá-lo."
+          },
+          {
+            "lang": "fr",
+            "text": "Bien que tu aurais probablement dû demander la permission avant de le presser."
+          },
+          {
+            "lang": "de",
+            "text": "obwohl du wahrscheinlich um erlaubnis hättest bitten sollen, bevor du ihn gedrückt hast."
+          },
+          { "lang": "jp", "text": "でも、握る前にちゃんと許可を取るべきだったかもしれない。" },
+          { "lang": "kr", "text": "그래도 꽉 쥐기 전에 허락을 구했어야 했을지도 몰라." },
+          { "lang": "zh", "text": "不过在捏他之前，你也许该先问问他愿不愿意。" }
+        ]
       ]
     },
     {
       "id": "plush-donate",
       "lines": [
-        [{ "lang": "en", "text": "You try to give the [Marketable Plush] your money" }],
-        [{ "lang": "en", "text": "but then realize you have no money on you..." }],
-        [{ "lang": "en", "text": "..." }],
+        [
+          { "lang": "en", "text": "You try to give the [Marketable Plush] your money" },
+          { "lang": "es", "text": "Intentas darle tu dinero a [Marketable Plush]" },
+          { "lang": "pt", "text": "Você tenta dar seu dinheiro a [Marketable Plush]" },
+          { "lang": "fr", "text": "Tu essaies de donner ton argent à [Marketable Plush]" },
+          { "lang": "de", "text": "du versuchst, [Marketable Plush] dein geld zu geben" },
+          { "lang": "jp", "text": "[Marketable Plush]にお金を渡そうとする" },
+          { "lang": "kr", "text": "[Marketable Plush]에게 돈을 주려고 한다" },
+          { "lang": "zh", "text": "你想把钱给[Marketable Plush]" }
+        ],
+        [
+          { "lang": "en", "text": "but then realize you have no physical money on you..." },
+          {
+            "lang": "es",
+            "text": "pero luego te das cuenta de que no llevas dinero físico contigo..."
+          },
+          { "lang": "pt", "text": "mas então percebe que não tem dinheiro físico com você..." },
+          {
+            "lang": "fr",
+            "text": "mais tu réalises ensuite que tu n'as pas d'argent liquide sur toi..."
+          },
+          { "lang": "de", "text": "aber merkst dann, dass du kein bargeld bei dir hast..." },
+          { "lang": "jp", "text": "でも、現金を持っていないことに気づく…" },
+          { "lang": "kr", "text": "그런데 현금을 갖고 있지 않다는 걸 깨닫는다…" },
+          { "lang": "zh", "text": "但接着你发现自己身上没有现金…" }
+        ],
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
         [
           {
             "lang": "en",
             "text": "So instead, you ask the [Marketable Plush] how it's day has been"
-          }
+          },
+          {
+            "lang": "es",
+            "text": "Así que en su lugar, le preguntas a [Marketable Plush] cómo ha estado su día"
+          },
+          {
+            "lang": "pt",
+            "text": "Então em vez disso, você pergunta a [Marketable Plush] como foi o dia dele"
+          },
+          {
+            "lang": "fr",
+            "text": "Alors à la place, tu demandes à [Marketable Plush] comment s'est passée sa journée"
+          },
+          {
+            "lang": "de",
+            "text": "also fragst du stattdessen [Marketable Plush], wie sein tag war"
+          },
+          {
+            "lang": "jp",
+            "text": "だから代わりに、[Marketable Plush]に今日はどんな一日だったか聞いてみる"
+          },
+          {
+            "lang": "kr",
+            "text": "그래서 대신, [Marketable Plush]에게 오늘 하루가 어땠는지 물어본다"
+          },
+          { "lang": "zh", "text": "于是你转而问[Marketable Plush]今天过得怎么样" }
         ],
-        [{ "lang": "en", "text": "As you wait for a response, you feel a bit stupid..." }],
-        [{ "lang": "en", "text": "Unless... that's how it's day has been" }],
-        [{ "lang": "en", "text": "Stupid." }],
-        [{ "lang": "en", "text": "You learn that [Marketable Plush] has had a stupid day" }]
+        [
+          { "lang": "en", "text": "As you wait for a response, you feel a bit stupid..." },
+          { "lang": "es", "text": "Mientras esperas una respuesta, te sientes un poco tonto..." },
+          {
+            "lang": "pt",
+            "text": "Enquanto espera por uma resposta, você se sente um pouco bobo..."
+          },
+          {
+            "lang": "fr",
+            "text": "Alors que tu attends une réponse, tu te sens un peu stupide..."
+          },
+          {
+            "lang": "de",
+            "text": "während du auf eine antwort wartest, fühlst du dich ein bisschen dumm..."
+          },
+          { "lang": "jp", "text": "返事を待っていると、少し馬鹿らしく感じてくる…" },
+          { "lang": "kr", "text": "대답을 기다리는 동안, 조금 바보 같다는 생각이 든다…" },
+          { "lang": "zh", "text": "在等待回应时，你觉得自己有点傻…" }
+        ],
+        [
+          { "lang": "en", "text": "Unless... that's how it's day has been" },
+          { "lang": "es", "text": "A menos que... así ha sido su día" },
+          { "lang": "pt", "text": "A menos que... foi assim que o dia dele foi" },
+          { "lang": "fr", "text": "Sauf si... c'est exactement comment sa journée s'est passée" },
+          { "lang": "de", "text": "außer... genau so war sein tag" },
+          { "lang": "jp", "text": "もしかして…それが今日の一日だったのかもしれない" },
+          { "lang": "kr", "text": "혹시… 그게 바로 오늘 하루였을지도" },
+          { "lang": "zh", "text": "除非…那正是它今天过的样子" }
+        ],
+        [
+          { "lang": "en", "text": "Stupid." },
+          { "lang": "es", "text": "Tonto." },
+          { "lang": "pt", "text": "Bobo." },
+          { "lang": "fr", "text": "Stupide." },
+          { "lang": "de", "text": "dumm." },
+          { "lang": "jp", "text": "馬鹿らしい。" },
+          { "lang": "kr", "text": "바보 같아." },
+          { "lang": "zh", "text": "真傻。" }
+        ],
+        [
+          { "lang": "en", "text": "You learn that [Marketable Plush] has had a stupid day!" },
+          { "lang": "es", "text": "¡Descubres que [Marketable Plush] ha tenido un día tonto!" },
+          { "lang": "pt", "text": "Você descobre que [Marketable Plush] teve um dia bobo!" },
+          { "lang": "fr", "text": "Tu apprends que [Marketable Plush] a eu une journée stupide !" },
+          { "lang": "de", "text": "du erfährst, dass [Marketable Plush] einen dummen tag hatte!" },
+          { "lang": "jp", "text": "[Marketable Plush]がおバカな一日を過ごしたことがわかった！" },
+          {
+            "lang": "kr",
+            "text": "[Marketable Plush]가 바보 같은 하루를 보냈다는 걸 알게 되었다!"
+          },
+          { "lang": "zh", "text": "你发现[Marketable Plush]度过了一个傻乎乎的一天！" }
+        ]
       ]
     },
     {
       "id": "plush-donate-coin",
       "lines": [
-        [{ "lang": "en", "text": "You try give the [Marketable Plush] your money" }],
-        [{ "lang": "en", "text": "..." }],
-        [{ "lang": "en", "text": "As you wait for a response, you feel a sense of gratitude..." }],
+        [
+          { "lang": "en", "text": "You try to give [Marketable Plush] your money." },
+          { "lang": "es", "text": "Intentas darle tu dinero a [Marketable Plush]." },
+          { "lang": "pt", "text": "Você tenta dar seu dinheiro a [Marketable Plush]." },
+          { "lang": "fr", "text": "Tu essaies de donner ton argent à [Marketable Plush]." },
+          { "lang": "de", "text": "du versuchst, [Marketable Plush] dein geld zu geben." },
+          { "lang": "jp", "text": "[Marketable Plush]にお金を渡そうとする。" },
+          { "lang": "kr", "text": "[Marketable Plush]에게 돈을 주려고 한다." },
+          { "lang": "zh", "text": "你想把钱给[Marketable Plush]。" }
+        ],
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
+        [
+          { "lang": "en", "text": "As you wait for a response, you feel a sense of gratitude..." },
+          {
+            "lang": "es",
+            "text": "Mientras esperas una respuesta, sientes una sensación de gratitud..."
+          },
+          {
+            "lang": "pt",
+            "text": "Enquanto espera por uma resposta, você sente uma sensação de gratidão..."
+          },
+          {
+            "lang": "fr",
+            "text": "Alors que tu attends une réponse, tu ressens un sentiment de gratitude..."
+          },
+          {
+            "lang": "de",
+            "text": "während du auf eine antwort wartest, spürst du ein gefühl der dankbarkeit..."
+          },
+          { "lang": "jp", "text": "返事を待っていると、感謝の気持ちが湧いてくる…" },
+          { "lang": "kr", "text": "대답을 기다리는 동안, 감사한 마음이 든다…" },
+          { "lang": "zh", "text": "在等待回应时，你感受到一种感激之情…" }
+        ],
         [
           {
             "lang": "en",
             "text": "Despite the fact you could just take your money back, very easily"
-          }
+          },
+          { "lang": "es", "text": "A pesar de que podrías recuperar tu dinero muy fácilmente" },
+          {
+            "lang": "pt",
+            "text": "Apesar do fato de que você poderia simplesmente pegar seu dinheiro de volta, muito facilmente"
+          },
+          {
+            "lang": "fr",
+            "text": "Malgré le fait que tu pourrais très facilement récupérer ton argent"
+          },
+          { "lang": "de", "text": "obwohl du dir dein geld ganz einfach zurückholen könntest" },
+          { "lang": "jp", "text": "簡単にお金を取り戻せるという事実にもかかわらず" },
+          { "lang": "kr", "text": "아주 쉽게 돈을 다시 가져갈 수 있다는 사실에도 불구하고" },
+          { "lang": "zh", "text": "尽管你其实可以轻易地把钱拿回来" }
         ],
-        [{ "lang": "en", "text": "You decide not to." }],
-        [{ "lang": "en", "text": "Thank you for donating to [Marketable Plush]" }]
+        [
+          { "lang": "en", "text": "You decide not to." },
+          { "lang": "es", "text": "Decides no hacerlo." },
+          { "lang": "pt", "text": "Você decide não fazer isso." },
+          { "lang": "fr", "text": "Tu décides de ne pas le faire." },
+          { "lang": "de", "text": "du entscheidest dich dagegen." },
+          { "lang": "jp", "text": "そうしないことにする。" },
+          { "lang": "kr", "text": "그러지 않기로 한다." },
+          { "lang": "zh", "text": "你决定不那么做。" }
+        ],
+        [
+          { "lang": "en", "text": "Thank you for donating to [Marketable Plush]" },
+          { "lang": "es", "text": "Gracias por donar a [Marketable Plush]" },
+          { "lang": "pt", "text": "Obrigado por doar para [Marketable Plush]" },
+          { "lang": "fr", "text": "Merci d'avoir fait un don à [Marketable Plush]" },
+          { "lang": "de", "text": "danke, dass du an [Marketable Plush] gespendet hast" },
+          { "lang": "jp", "text": "[Marketable Plush]に寄付してくれてありがとう" },
+          { "lang": "kr", "text": "[Marketable Plush]에게 기부해줘서 고마워" },
+          { "lang": "zh", "text": "感谢你向[Marketable Plush]捐款" }
+        ]
       ]
     },
     {
@@ -716,83 +1724,423 @@
           {
             "lang": "en",
             "text": "You feel stressed out knowing you read all of the dialogue that [Marketable Plush] has to offer..."
+          },
+          {
+            "lang": "es",
+            "text": "Te sientes estresado al saber que ya leíste todo el diálogo que [Marketable Plush] tiene para ofrecer..."
+          },
+          {
+            "lang": "pt",
+            "text": "Você se sente estressado sabendo que já leu todo o diálogo que [Marketable Plush] tem a oferecer..."
+          },
+          {
+            "lang": "fr",
+            "text": "Tu te sens stressé en sachant que tu as lu tout le dialogue que [Marketable Plush] a à offrir..."
+          },
+          {
+            "lang": "de",
+            "text": "du fühlst dich gestresst, weil du weißt, dass du schon alle dialoge gelesen hast, die [Marketable Plush] zu bieten hat..."
+          },
+          {
+            "lang": "jp",
+            "text": "[Marketable Plush]が提供する会話をすべて読んでしまったと知って、少し焦りを感じる…"
+          },
+          {
+            "lang": "kr",
+            "text": "[Marketable Plush]가 제공하는 대화를 모두 읽었다는 걸 알게 되어 스트레스를 받는다…"
+          },
+          {
+            "lang": "zh",
+            "text": "你意识到自己已经看完了[Marketable Plush]所有的对话，感到有点焦虑…"
           }
         ],
-        [{ "lang": "en", "text": "Or have you..?" }]
+        [
+          { "lang": "en", "text": "Or have you..?" },
+          { "lang": "es", "text": "¿O no...?" },
+          { "lang": "pt", "text": "Ou será que não...?" },
+          { "lang": "fr", "text": "Ou pas... ?" },
+          { "lang": "de", "text": "oder doch nicht...?" },
+          { "lang": "jp", "text": "本当にそうかな…？" },
+          { "lang": "kr", "text": "정말 그럴까…?" },
+          { "lang": "zh", "text": "还是……并没有？" }
+        ]
       ]
     },
     {
       "id": "guitar-before",
       "lines": [
-        [{ "lang": "en", "text": "You don't remember how to play" }],
-        [{ "lang": "en", "text": "Try to play anyways?" }]
+        [
+          { "lang": "en", "text": "You don't remember how to play" },
+          { "lang": "es", "text": "No recuerdas cómo tocar" },
+          { "lang": "pt", "text": "Você não lembra como tocar" },
+          { "lang": "fr", "text": "Tu ne te souviens pas comment jouer" },
+          { "lang": "de", "text": "du weißt nicht mehr, wie man spielt" },
+          { "lang": "jp", "text": "弾き方を覚えていない" },
+          { "lang": "kr", "text": "연주하는 법을 기억하지 못한다" },
+          { "lang": "zh", "text": "你不记得怎么弹了" }
+        ],
+        [
+          { "lang": "en", "text": "Try to play anyways?" },
+          { "lang": "es", "text": "¿Intentar tocar de todos modos?" },
+          { "lang": "pt", "text": "Tentar tocar mesmo assim?" },
+          { "lang": "fr", "text": "Essayer de jouer quand même ?" },
+          { "lang": "de", "text": "trotzdem versuchen zu spielen?" },
+          { "lang": "jp", "text": "それでも弾いてみる？" },
+          { "lang": "kr", "text": "그래도 연주해볼까요?" },
+          { "lang": "zh", "text": "要不要还是试着弹弹看？" }
+        ]
       ]
     },
     {
       "id": "guitar-before-play-1",
       "lines": [
-        [{ "lang": "en", "text": "You start to strum the guitar-" }],
-        [{ "lang": "en", "text": "and..." }],
-        [{ "lang": "en", "text": "..." }],
-        [{ "lang": "en", "text": "yikes..." }],
-        [{ "lang": "en", "text": "that was-" }],
-        [{ "lang": "en", "text": "we don't have to tell anyone about it..." }]
+        [
+          { "lang": "en", "text": "You start to strum the guitar-" },
+          { "lang": "es", "text": "Empiezas a rasguear la guitarra-" },
+          { "lang": "pt", "text": "Você começa a dedilhar o violão-" },
+          { "lang": "fr", "text": "Tu commences à gratter la guitare-" },
+          { "lang": "de", "text": "du beginnst, die gitarre zu spielen-" },
+          { "lang": "jp", "text": "ギターをかき鳴らし始める-" },
+          { "lang": "kr", "text": "기타를 튕기기 시작한다-" },
+          { "lang": "zh", "text": "你开始弹起吉他——" }
+        ],
+        [
+          { "lang": "en", "text": "and..." },
+          { "lang": "es", "text": "y..." },
+          { "lang": "pt", "text": "e..." },
+          { "lang": "fr", "text": "et..." },
+          { "lang": "de", "text": "und..." },
+          { "lang": "jp", "text": "そして…" },
+          { "lang": "kr", "text": "그리고…" },
+          { "lang": "zh", "text": "然后…" }
+        ],
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
+        [
+          { "lang": "en", "text": "yikes..." },
+          { "lang": "es", "text": "uy..." },
+          { "lang": "pt", "text": "eita..." },
+          { "lang": "fr", "text": "aïe..." },
+          { "lang": "de", "text": "oje..." },
+          { "lang": "jp", "text": "うわ…" },
+          { "lang": "kr", "text": "이런…" },
+          { "lang": "zh", "text": "呃…" }
+        ],
+        [
+          { "lang": "en", "text": "that was-" },
+          { "lang": "es", "text": "eso fue-" },
+          { "lang": "pt", "text": "aquilo foi-" },
+          { "lang": "fr", "text": "c'était-" },
+          { "lang": "de", "text": "das war-" },
+          { "lang": "jp", "text": "それは-" },
+          { "lang": "kr", "text": "그건-" },
+          { "lang": "zh", "text": "那真是——" }
+        ],
+        [
+          { "lang": "en", "text": "we don't have to tell anyone about it..." },
+          { "lang": "es", "text": "no tenemos que contarle a nadie sobre esto..." },
+          { "lang": "pt", "text": "não precisamos contar isso pra ninguém..." },
+          { "lang": "fr", "text": "on n'est pas obligés d'en parler à qui que ce soit..." },
+          { "lang": "de", "text": "wir müssen niemandem davon erzählen..." },
+          { "lang": "jp", "text": "誰にも言わなくていいよね…" },
+          { "lang": "kr", "text": "이건 아무한테도 말하지 않아도 돼…" },
+          { "lang": "zh", "text": "这件事我们不用告诉任何人…" }
+        ]
       ]
     },
     {
       "id": "guitar-before-play-2",
       "lines": [
-        [{ "lang": "en", "text": "..." }],
-        [{ "lang": "en", "text": "No, I won't let you." }]
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
+        [
+          { "lang": "en", "text": "No, I won't let you." },
+          { "lang": "es", "text": "No, no te lo permitiré." },
+          { "lang": "pt", "text": "Não, eu não vou deixar." },
+          { "lang": "fr", "text": "Non, je ne te laisserai pas." },
+          { "lang": "de", "text": "nein, das lasse ich nicht zu." },
+          { "lang": "jp", "text": "ダメだ、それは許さない。" },
+          { "lang": "kr", "text": "안 돼, 그건 허락 못 해." },
+          { "lang": "zh", "text": "不行，我不会让你这么做的。" }
+        ]
       ]
     },
     {
       "id": "guitar-after",
       "lines": [
-        [{ "lang": "en", "text": "You remember what the marketable plush taught you" }],
-        [{ "lang": "en", "text": "Give it a try?" }]
+        [
+          { "lang": "en", "text": "You remember what [Marketable Plush] taught you." },
+          { "lang": "es", "text": "Recuerdas lo que [Marketable Plush] te enseñó." },
+          { "lang": "pt", "text": "Você lembra do que [Marketable Plush] te ensinou." },
+          { "lang": "fr", "text": "Tu te souviens de ce que [Marketable Plush] t'a appris." },
+          {
+            "lang": "de",
+            "text": "du erinnerst dich an das, was [Marketable Plush] dir beigebracht hat."
+          },
+          { "lang": "jp", "text": "[Marketable Plush]が教えてくれたことを覚えている。" },
+          { "lang": "kr", "text": "[Marketable Plush]가 가르쳐준 걸 기억한다." },
+          { "lang": "zh", "text": "你还记得[Marketable Plush]教你的东西。" }
+        ],
+        [
+          { "lang": "en", "text": "Give it a try?" },
+          { "lang": "es", "text": "¿Intentarlo?" },
+          { "lang": "pt", "text": "Tentar?" },
+          { "lang": "fr", "text": "Essayer ?" },
+          { "lang": "de", "text": "einen versuch wagen?" },
+          { "lang": "jp", "text": "試してみる？" },
+          { "lang": "kr", "text": "한번 해볼까요?" },
+          { "lang": "zh", "text": "要试试看吗？" }
+        ]
       ]
     },
     {
       "id": "guitar-after-play-1",
       "lines": [
-        [{ "lang": "en", "text": "You start to absolutely shred." }],
-        [{ "lang": "en", "text": "Your fingers are just perfectly hitting every riff perfectly" }],
+        [
+          { "lang": "en", "text": "You start to absolutely shred." },
+          { "lang": "es", "text": "Empiezas a tocar increíblemente bien." },
+          { "lang": "pt", "text": "Você começa a arrasar." },
+          { "lang": "fr", "text": "Tu commences à jouer comme un dieu." },
+          { "lang": "de", "text": "du legst richtig los und rockst." },
+          { "lang": "jp", "text": "とんでもなく上手に弾き始める。" },
+          { "lang": "kr", "text": "엄청나게 잘 연주하기 시작한다." },
+          { "lang": "zh", "text": "你开始弹得炉火纯青。" }
+        ],
+        [
+          { "lang": "en", "text": "Your fingers hit every riff flawlessly." },
+          { "lang": "es", "text": "Tus dedos aciertan cada riff a la perfección." },
+          { "lang": "pt", "text": "Seus dedos acertam cada riff com perfeição." },
+          { "lang": "fr", "text": "Tes doigts enchaînent chaque riff à la perfection." },
+          { "lang": "de", "text": "deine finger treffen jedes riff perfekt." },
+          { "lang": "jp", "text": "指は完璧にすべてのリフを弾きこなす。" },
+          { "lang": "kr", "text": "손가락이 모든 리프를 완벽하게 짚어낸다." },
+          { "lang": "zh", "text": "你的手指精准无误地弹出每一个乐句。" }
+        ],
         [
           {
             "lang": "en",
             "text": "You're so good that your playing percussion, bass and piano, all on the guitar"
-          }
+          },
+          {
+            "lang": "es",
+            "text": "Eres tan bueno que estás tocando percusión, bajo y piano, todo con la guitarra"
+          },
+          {
+            "lang": "pt",
+            "text": "Você é tão bom que está tocando percussão, baixo e piano, tudo no violão"
+          },
+          {
+            "lang": "fr",
+            "text": "Tu es si bon que tu joues de la percussion, de la basse et du piano, tout ça sur la guitare"
+          },
+          {
+            "lang": "de",
+            "text": "du bist so gut, dass du schlagzeug, bass und klavier spielst, alles auf der gitarre"
+          },
+          {
+            "lang": "jp",
+            "text": "あまりに上手すぎて、ギター一本で打楽器もベースもピアノも演奏しているようだ"
+          },
+          {
+            "lang": "kr",
+            "text": "너무 잘 쳐서 기타 하나로 퍼커션, 베이스, 피아노까지 다 연주하고 있는 것 같다"
+          },
+          { "lang": "zh", "text": "你弹得太好了，仿佛只用一把吉他就同时演奏了打击乐、贝斯和钢琴" }
         ],
-        [{ "lang": "en", "text": "..." }],
-        [{ "lang": "en", "text": "If only you could hear what I'm hearing right now" }],
-        [{ "lang": "en", "text": "This is the greatest song in the world" }]
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
+        [
+          { "lang": "en", "text": "If only you could hear what I'm hearing right now" },
+          { "lang": "es", "text": "Ojalá pudieras escuchar lo que yo estoy escuchando ahora" },
+          { "lang": "pt", "text": "Se você pudesse ouvir o que eu estou ouvindo agora" },
+          {
+            "lang": "fr",
+            "text": "Si seulement tu pouvais entendre ce que j'entends en ce moment"
+          },
+          { "lang": "de", "text": "wenn du nur hören könntest, was ich jetzt gerade höre" },
+          { "lang": "jp", "text": "今、僕が聞いているものをお前も聞けたらいいのに" },
+          { "lang": "kr", "text": "지금 내가 듣고 있는 걸 너도 들을 수 있다면 좋을 텐데" },
+          { "lang": "zh", "text": "真希望你也能听到我现在听到的一切" }
+        ],
+        [
+          { "lang": "en", "text": "This is the greatest song in the world" },
+          { "lang": "es", "text": "Esta es la mejor canción del mundo" },
+          { "lang": "pt", "text": "Essa é a melhor música do mundo" },
+          { "lang": "fr", "text": "C'est la meilleure chanson du monde" },
+          { "lang": "de", "text": "das ist der beste song der welt" },
+          { "lang": "jp", "text": "これは世界最高の曲だ" },
+          { "lang": "kr", "text": "이건 세상에서 가장 위대한 노래다" },
+          { "lang": "zh", "text": "这是世界上最棒的歌" }
+        ]
       ]
     },
     {
       "id": "guitar-after-play-2",
       "lines": [
-        [{ "lang": "en", "text": "Once again, you start to absolutely shred." }],
-        [{ "lang": "en", "text": "Despite you not remembering the last song you played" }],
-        [{ "lang": "en", "text": "You decide to play a tribute" }],
-        [{ "lang": "en", "text": "..." }],
-        [{ "lang": "en", "text": "And it's almost even better" }],
-        [{ "lang": "en", "text": "..." }],
-        [{ "lang": "en", "text": "If only you could hear what I'm hearing right now" }],
-        [{ "lang": "en", "text": "You are the greatest guitarist in this world" }],
-        [{ "lang": "en", "text": "Once again, thanks to [Marketable Plush]" }]
+        [
+          { "lang": "en", "text": "Once again, you start to absolutely shred." },
+          { "lang": "es", "text": "Una vez más, empiezas a tocar increíblemente bien." },
+          { "lang": "pt", "text": "Mais uma vez, você começa a arrasar." },
+          { "lang": "fr", "text": "Encore une fois, tu commences à jouer comme un dieu." },
+          { "lang": "de", "text": "wieder einmal legst du richtig los und rockst." },
+          { "lang": "jp", "text": "また、とんでもなく上手に弾き始める。" },
+          { "lang": "kr", "text": "또다시, 엄청나게 잘 연주하기 시작한다." },
+          { "lang": "zh", "text": "你又一次弹得炉火纯青。" }
+        ],
+        [
+          { "lang": "en", "text": "Despite you not remembering the last song you played" },
+          { "lang": "es", "text": "A pesar de que no recuerdas la última canción que tocaste" },
+          { "lang": "pt", "text": "Mesmo você não lembrando da última música que tocou" },
+          {
+            "lang": "fr",
+            "text": "Bien que tu ne te souviennes pas de la dernière chanson que tu as jouée"
+          },
+          {
+            "lang": "de",
+            "text": "obwohl du dich nicht an den letzten song erinnerst, den du gespielt hast"
+          },
+          { "lang": "jp", "text": "前に弾いた曲を覚えていないのに" },
+          { "lang": "kr", "text": "지난번에 연주했던 곡이 기억나지 않는데도" },
+          { "lang": "zh", "text": "尽管你已经不记得上次弹的是什么歌" }
+        ],
+        [
+          { "lang": "en", "text": "You decide to play a tribute" },
+          { "lang": "es", "text": "Decides tocar un homenaje" },
+          { "lang": "pt", "text": "Você decide tocar uma homenagem" },
+          { "lang": "fr", "text": "Tu décides de jouer un hommage" },
+          { "lang": "de", "text": "du entscheidest dich, eine hommage zu spielen" },
+          { "lang": "jp", "text": "トリビュートを弾くことにする" },
+          { "lang": "kr", "text": "헌정곡을 연주하기로 한다" },
+          { "lang": "zh", "text": "你决定弹一首致敬曲" }
+        ],
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
+        [
+          { "lang": "en", "text": "And somehow, it's even better." },
+          { "lang": "es", "text": "Y de alguna manera, es aún mejor." },
+          { "lang": "pt", "text": "E de alguma forma, é ainda melhor." },
+          { "lang": "fr", "text": "Et étrangement, c'est encore mieux." },
+          { "lang": "de", "text": "und irgendwie ist es sogar noch besser." },
+          { "lang": "jp", "text": "そしてなぜか、さらに素晴らしい。" },
+          { "lang": "kr", "text": "그런데 어쩐지, 훨씬 더 좋다." },
+          { "lang": "zh", "text": "而且不知为何，效果更好了。" }
+        ],
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
+        [
+          { "lang": "en", "text": "If only you could hear what I'm hearing right now" },
+          { "lang": "es", "text": "Ojalá pudieras escuchar lo que yo estoy escuchando ahora" },
+          { "lang": "pt", "text": "Se você pudesse ouvir o que eu estou ouvindo agora" },
+          {
+            "lang": "fr",
+            "text": "Si seulement tu pouvais entendre ce que j'entends en ce moment"
+          },
+          { "lang": "de", "text": "wenn du nur hören könntest, was ich jetzt gerade höre" },
+          { "lang": "jp", "text": "今、僕が聞いているものをお前も聞けたらいいのに" },
+          { "lang": "kr", "text": "지금 내가 듣고 있는 걸 너도 들을 수 있다면 좋을 텐데" },
+          { "lang": "zh", "text": "真希望你也能听到我现在听到的一切" }
+        ],
+        [
+          { "lang": "en", "text": "You are the greatest guitarist in this world" },
+          { "lang": "es", "text": "Eres el mejor guitarrista del mundo" },
+          { "lang": "pt", "text": "Você é o melhor guitarrista do mundo" },
+          { "lang": "fr", "text": "Tu es le meilleur guitariste du monde" },
+          { "lang": "de", "text": "du bist der beste gitarrist der welt" },
+          { "lang": "jp", "text": "お前は世界最高のギタリストだ" },
+          { "lang": "kr", "text": "너는 이 세상에서 가장 위대한 기타리스트다" },
+          { "lang": "zh", "text": "你是这个世界上最伟大的吉他手" }
+        ],
+        [
+          { "lang": "en", "text": "Once again, thanks to [Marketable Plush]" },
+          { "lang": "es", "text": "Una vez más, gracias a [Marketable Plush]" },
+          { "lang": "pt", "text": "Mais uma vez, graças a [Marketable Plush]" },
+          { "lang": "fr", "text": "Encore une fois, grâce à [Marketable Plush]" },
+          { "lang": "de", "text": "wieder einmal, dank [Marketable Plush]" },
+          { "lang": "jp", "text": "また、[Marketable Plush]のおかげだ" },
+          { "lang": "kr", "text": "또다시, [Marketable Plush] 덕분이다" },
+          { "lang": "zh", "text": "再一次，全靠[Marketable Plush]" }
+        ]
       ]
     },
     {
       "id": "guitar-after-play-3",
       "lines": [
-        [{ "lang": "en", "text": "..." }],
-        [{ "lang": "en", "text": "You decide to save your stamina..." }]
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
+        [
+          { "lang": "en", "text": "You decide to save your stamina..." },
+          { "lang": "es", "text": "Decides ahorrar tu energía..." },
+          { "lang": "pt", "text": "Você decide poupar sua energia..." },
+          { "lang": "fr", "text": "Tu décides d'économiser ton énergie..." },
+          { "lang": "de", "text": "du entscheidest dich, deine kraft zu sparen..." },
+          { "lang": "jp", "text": "体力を節約することにする…" },
+          { "lang": "kr", "text": "체력을 아끼기로 한다…" },
+          { "lang": "zh", "text": "你决定省点力气…" }
+        ]
       ]
     },
     {
       "id": "window-night",
-      "lines": [[{ "lang": "en", "text": "It's dark outside, given it's midnight over here." }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "It's dark outside, given it's midnight over here." },
+          { "lang": "es", "text": "Está oscuro afuera, ya que aquí es medianoche." },
+          { "lang": "pt", "text": "Está escuro lá fora, já que aqui é meia-noite." },
+          { "lang": "fr", "text": "Il fait noir dehors, étant donné qu'il est minuit ici." },
+          { "lang": "de", "text": "es ist draußen dunkel, da es hier mitternacht ist." },
+          { "lang": "jp", "text": "外は暗い、ここは今夜中だから。" },
+          { "lang": "kr", "text": "밖이 어두운데, 여긴 지금 자정이라서 그렇다." },
+          { "lang": "zh", "text": "外面很黑，因为这里现在是午夜。" }
+        ]
+      ]
     },
     {
       "id": "window-early",
@@ -801,14 +2149,33 @@
           {
             "lang": "en",
             "text": "It's getting bright outside, given it's the early morning over here."
-          }
+          },
+          { "lang": "es", "text": "Está aclarando afuera, ya que aquí es temprano por la mañana." },
+          { "lang": "pt", "text": "Está clareando lá fora, já que aqui é de manhã bem cedo." },
+          {
+            "lang": "fr",
+            "text": "Il commence à faire jour dehors, étant donné que c'est le petit matin ici."
+          },
+          { "lang": "de", "text": "es wird draußen hell, da es hier früher morgen ist." },
+          { "lang": "jp", "text": "外が明るくなってきている、ここは今早朝だから。" },
+          { "lang": "kr", "text": "밖이 밝아지고 있는데, 여긴 지금 새벽이라서 그렇다." },
+          { "lang": "zh", "text": "外面渐渐变亮了，因为这里现在是清晨。" }
         ]
       ]
     },
     {
       "id": "window-morning",
       "lines": [
-        [{ "lang": "en", "text": "It's bright outside, given it's the morning over here." }]
+        [
+          { "lang": "en", "text": "It's bright outside, given it's the morning over here." },
+          { "lang": "es", "text": "Está luminoso afuera, ya que aquí es de mañana." },
+          { "lang": "pt", "text": "Está claro lá fora, já que aqui é de manhã." },
+          { "lang": "fr", "text": "Il fait clair dehors, étant donné que c'est le matin ici." },
+          { "lang": "de", "text": "es ist draußen hell, da es hier morgen ist." },
+          { "lang": "jp", "text": "外は明るい、ここは今朝だから。" },
+          { "lang": "kr", "text": "밖이 밝은데, 여긴 지금 아침이라서 그렇다." },
+          { "lang": "zh", "text": "外面很亮，因为这里现在是早上。" }
+        ]
       ]
     },
     {
@@ -818,14 +2185,36 @@
           {
             "lang": "en",
             "text": "It's pretty bright outside, given it's the afternoon over here."
-          }
+          },
+          { "lang": "es", "text": "Está bastante luminoso afuera, ya que aquí es de tarde." },
+          { "lang": "pt", "text": "Está bem claro lá fora, já que aqui é de tarde." },
+          {
+            "lang": "fr",
+            "text": "Il fait assez clair dehors, étant donné que c'est l'après-midi ici."
+          },
+          { "lang": "de", "text": "es ist draußen recht hell, da es hier nachmittag ist." },
+          { "lang": "jp", "text": "外はかなり明るい、ここは今午後だから。" },
+          { "lang": "kr", "text": "밖이 꽤 밝은데, 여긴 지금 오후라서 그렇다." },
+          { "lang": "zh", "text": "外面挺亮的，因为这里现在是下午。" }
         ]
       ]
     },
     {
       "id": "window-evening",
       "lines": [
-        [{ "lang": "en", "text": "It's getting dark outside, given it's night time over here." }]
+        [
+          { "lang": "en", "text": "It's getting dark outside, given it's night time over here." },
+          { "lang": "es", "text": "Está oscureciendo afuera, ya que aquí es de noche." },
+          { "lang": "pt", "text": "Está escurecendo lá fora, já que aqui é de noite." },
+          {
+            "lang": "fr",
+            "text": "Il commence à faire nuit dehors, étant donné que c'est la nuit ici."
+          },
+          { "lang": "de", "text": "es wird draußen dunkel, da es hier nacht ist." },
+          { "lang": "jp", "text": "外が暗くなってきている、ここは今夜だから。" },
+          { "lang": "kr", "text": "밖이 어두워지고 있는데, 여긴 지금 밤이라서 그렇다." },
+          { "lang": "zh", "text": "外面渐渐变暗了，因为这里现在是夜晚。" }
+        ]
       ]
     },
     {
@@ -834,7 +2223,35 @@
         [
           {
             "lang": "en",
-            "text": "Knowing this art, is art of art, within a website that, if you will, is considered a work of art... It fills you with determination."
+            "text": "Knowing this art, is art of art, within a website that, if you will, is considered a work of art... it fills you with determination."
+          },
+          {
+            "lang": "es",
+            "text": "Saber que este arte, es el arte del arte, dentro de un sitio web que, se podría decir, es considerado una obra de arte... te llena de determinación."
+          },
+          {
+            "lang": "pt",
+            "text": "Saber que esta arte, é a arte da arte, dentro de um site que, pode-se dizer, é considerado uma obra de arte... te enche de determinação."
+          },
+          {
+            "lang": "fr",
+            "text": "Savoir que cet art, est l'art de l'art, au sein d'un site qui, si l'on peut dire, est considéré comme une œuvre d'art... te remplit de détermination."
+          },
+          {
+            "lang": "de",
+            "text": "zu wissen, dass diese kunst, die kunst der kunst ist, innerhalb einer website, die man, wenn man so will, als kunstwerk betrachten kann... erfüllt dich mit entschlossenheit."
+          },
+          {
+            "lang": "jp",
+            "text": "この芸術が、芸術の芸術であり、いわば一つの芸術作品とも言えるウェブサイトの中にあることを知ると…決意で満たされる。"
+          },
+          {
+            "lang": "kr",
+            "text": "이 예술이, 예술의 예술이며, 말하자면 하나의 예술 작품이라 할 수 있는 웹사이트 안에 있다는 걸 알게 되면… 결의가 차오른다."
+          },
+          {
+            "lang": "zh",
+            "text": "知道这件艺术品，是艺术之艺术，存在于一个可以说本身就是艺术品的网站之中……这让你充满了决心。"
           }
         ]
       ]
@@ -842,17 +2259,74 @@
     {
       "id": "tv-off",
       "lines": [
-        [{ "lang": "en", "text": "The TV is off." }],
-        [{ "lang": "en", "text": "There doesn't seem to be an obvious remote in sight" }],
-        [{ "lang": "en", "text": "hm..." }]
+        [
+          { "lang": "en", "text": "The TV is off." },
+          { "lang": "es", "text": "La TV está apagada." },
+          { "lang": "pt", "text": "A TV está desligada." },
+          { "lang": "fr", "text": "La télé est éteinte." },
+          { "lang": "de", "text": "der fernseher ist aus." },
+          { "lang": "jp", "text": "テレビの電源が切れている。" },
+          { "lang": "kr", "text": "TV가 꺼져 있다." },
+          { "lang": "zh", "text": "电视是关着的。" }
+        ],
+        [
+          { "lang": "en", "text": "There doesn't seem to be an obvious remote in sight" },
+          { "lang": "es", "text": "No parece haber un control remoto obvio a la vista" },
+          { "lang": "pt", "text": "Não parece haver um controle óbvio à vista" },
+          { "lang": "fr", "text": "Il ne semble pas y avoir de télécommande évidente en vue" },
+          {
+            "lang": "de",
+            "text": "es scheint keine offensichtliche fernbedienung in sicht zu sein"
+          },
+          { "lang": "jp", "text": "はっきりとリモコンらしきものは見当たらない" },
+          { "lang": "kr", "text": "눈에 보이는 리모컨은 없는 것 같다" },
+          { "lang": "zh", "text": "看起来附近没有明显的遥控器" }
+        ],
+        [
+          { "lang": "en", "text": "hm..." },
+          { "lang": "es", "text": "mm..." },
+          { "lang": "pt", "text": "hm..." },
+          { "lang": "fr", "text": "hum..." },
+          { "lang": "de", "text": "hm..." },
+          { "lang": "jp", "text": "うーん…" },
+          { "lang": "kr", "text": "흠…" },
+          { "lang": "zh", "text": "嗯…" }
+        ]
       ]
     },
     {
       "id": "tv-on",
       "lines": [
-        [{ "lang": "en", "text": "It's a looping video of Temp dancing" }],
-        [{ "lang": "en", "text": "wait, that's Temp?" }],
-        [{ "lang": "en", "text": "I thought he was a dog..." }]
+        [
+          { "lang": "en", "text": "It's a looping video of Temp dancing" },
+          { "lang": "es", "text": "Es un video en bucle de Temp bailando" },
+          { "lang": "pt", "text": "É um vídeo em loop do Temp dançando" },
+          { "lang": "fr", "text": "C'est une vidéo en boucle de Temp en train de danser" },
+          { "lang": "de", "text": "es ist ein endlosvideo von temp beim tanzen" },
+          { "lang": "jp", "text": "Tempが踊っているループ動画だ" },
+          { "lang": "kr", "text": "Temp가 춤추는 반복 영상이다" },
+          { "lang": "zh", "text": "这是一段循环播放的Temp跳舞视频" }
+        ],
+        [
+          { "lang": "en", "text": "wait, that's Temp?" },
+          { "lang": "es", "text": "espera, ¿ese es Temp?" },
+          { "lang": "pt", "text": "espera, esse é o Temp?" },
+          { "lang": "fr", "text": "attends, c'est Temp ?" },
+          { "lang": "de", "text": "warte, das ist temp?" },
+          { "lang": "jp", "text": "待って、それってTemp？" },
+          { "lang": "kr", "text": "잠깐, 저게 Temp야?" },
+          { "lang": "zh", "text": "等等，那是Temp？" }
+        ],
+        [
+          { "lang": "en", "text": "I thought he was a dog..." },
+          { "lang": "es", "text": "pensé que era un perro..." },
+          { "lang": "pt", "text": "pensei que ele era um cachorro..." },
+          { "lang": "fr", "text": "je pensais que c'était un chien..." },
+          { "lang": "de", "text": "ich dachte, er wäre ein hund..." },
+          { "lang": "jp", "text": "犬だと思ってたのに…" },
+          { "lang": "kr", "text": "개인 줄 알았는데…" },
+          { "lang": "zh", "text": "我以为他是条狗…" }
+        ]
       ]
     },
     {
@@ -861,63 +2335,301 @@
         [
           {
             "lang": "en",
-            "text": "You see a small piece of paper, peeking from a comically sized Harry Potter book"
-          }
+            "text": "You see a small piece of paper, hiding amongst the white furniture."
+          },
+          { "lang": "es", "text": "Ves un pequeño papel, escondido entre los muebles blancos." },
+          {
+            "lang": "pt",
+            "text": "Você vê um pequeno pedaço de papel, escondido entre os móveis brancos."
+          },
+          {
+            "lang": "fr",
+            "text": "Tu vois un petit bout de papier, caché parmi les meubles blancs."
+          },
+          {
+            "lang": "de",
+            "text": "du siehst ein kleines stück papier, versteckt zwischen den weißen möbeln."
+          },
+          { "lang": "jp", "text": "白い家具の中に隠れている小さな紙切れが見える。" },
+          { "lang": "kr", "text": "하얀 가구들 사이에 숨어 있는 작은 종이 조각을 발견한다." },
+          { "lang": "zh", "text": "你看见一小张纸，藏在白色家具之间。" }
         ],
-        [{ "lang": "en", "text": "You carefully snag the paper out and read it." }],
-        [{ "lang": "en", "text": "It says oolsbop = pjomsspd" }],
-        [{ "lang": "en", "text": "..." }],
-        [{ "lang": "en", "text": "wait..." }],
-        [{ "lang": "en", "text": "You flip it upside down and it says password = dogs100" }],
-        [{ "lang": "en", "text": "..." }],
-        [{ "lang": "en", "text": "You feel relieved that you didn't need to solve a puzzle." }]
+        [
+          { "lang": "en", "text": "You pick up the paper, and turn it around." },
+          { "lang": "es", "text": "Recoges el papel y lo giras." },
+          { "lang": "pt", "text": "Você pega o papel e o gira." },
+          { "lang": "fr", "text": "Tu ramasses le papier et le retournes." },
+          { "lang": "de", "text": "du hebst das papier auf und drehst es um." },
+          { "lang": "jp", "text": "紙を拾い上げて、裏返してみる。" },
+          { "lang": "kr", "text": "종이를 집어 들고 뒤집어 본다." },
+          { "lang": "zh", "text": "你捡起纸，把它翻了个面。" }
+        ],
+        [
+          { "lang": "en", "text": "It says oolsbop = pjomsspd" },
+          { "lang": "es", "text": "Dice oolsbop = pjomsspd" },
+          { "lang": "pt", "text": "Diz oolsbop = pjomsspd" },
+          { "lang": "fr", "text": "Ça dit oolsbop = pjomsspd" },
+          { "lang": "de", "text": "es steht oolsbop = pjomsspd" },
+          { "lang": "jp", "text": "oolsbop = pjomsspdと書かれている" },
+          { "lang": "kr", "text": "oolsbop = pjomsspd라고 적혀 있다" },
+          { "lang": "zh", "text": "上面写着 oolsbop = pjomsspd" }
+        ],
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
+        [
+          { "lang": "en", "text": "wait..." },
+          { "lang": "es", "text": "espera..." },
+          { "lang": "pt", "text": "espera..." },
+          { "lang": "fr", "text": "attends..." },
+          { "lang": "de", "text": "warte..." },
+          { "lang": "jp", "text": "待って…" },
+          { "lang": "kr", "text": "잠깐…" },
+          { "lang": "zh", "text": "等等…" }
+        ],
+        [
+          { "lang": "en", "text": "You flip it upside down and it says password = dogs100" },
+          { "lang": "es", "text": "Lo giras al revés y dice password = dogs100" },
+          { "lang": "pt", "text": "Você o vira de cabeça para baixo e diz password = dogs100" },
+          { "lang": "fr", "text": "Tu le retournes et ça dit password = dogs100" },
+          { "lang": "de", "text": "du drehst es auf den kopf und es steht password = dogs100" },
+          { "lang": "jp", "text": "それを上下逆にすると、password = dogs100と書かれている" },
+          { "lang": "kr", "text": "그것을 뒤집어 보니 password = dogs100라고 적혀 있다" },
+          { "lang": "zh", "text": "你把它倒过来，发现上面写着 password = dogs100" }
+        ],
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
+        [
+          { "lang": "en", "text": "You feel relieved that you didn't need to solve a puzzle." },
+          {
+            "lang": "es",
+            "text": "Te sientes aliviado de no haber tenido que resolver un acertijo."
+          },
+          {
+            "lang": "pt",
+            "text": "Você se sente aliviado por não ter precisado resolver um quebra-cabeça."
+          },
+          { "lang": "fr", "text": "Tu te sens soulagé de n'avoir pas eu à résoudre une énigme." },
+          { "lang": "de", "text": "du bist erleichtert, dass du kein rätsel lösen musstest." },
+          { "lang": "jp", "text": "パズルを解かなくて済んで、少し安心する。" },
+          { "lang": "kr", "text": "퍼즐을 풀지 않아도 되어서 안심이 된다." },
+          { "lang": "zh", "text": "你松了一口气，还好不用解谜。" }
+        ]
       ]
     },
     {
       "id": "shelf-2",
       "lines": [
         [
-          { "lang": "en", "text": "So many books here... and yet he hasn't read a day in his life" }
+          {
+            "lang": "en",
+            "text": "There used to be many books here... and yet he hadn't read a day in his life"
+          },
+          {
+            "lang": "es",
+            "text": "Solía haber muchos libros aquí... y sin embargo él no había leído ni un día en toda su vida"
+          },
+          {
+            "lang": "pt",
+            "text": "Costumava ter muitos livros aqui... e ainda assim ele nunca leu um dia na vida"
+          },
+          {
+            "lang": "fr",
+            "text": "Il y avait autrefois beaucoup de livres ici... et pourtant il n'avait jamais lu un seul jour de sa vie"
+          },
+          {
+            "lang": "de",
+            "text": "früher gab es hier viele bücher... und trotzdem hat er in seinem ganzen leben keinen tag gelesen"
+          },
+          {
+            "lang": "jp",
+            "text": "ここには昔たくさんの本があった…それでも彼は人生で一日も読書をしたことがなかった"
+          },
+          {
+            "lang": "kr",
+            "text": "여기엔 예전에 책이 많았다… 그런데도 그는 평생 하루도 책을 읽은 적이 없었다"
+          },
+          { "lang": "zh", "text": "这里曾经有很多书……可他这一生却一天都没读过书" }
         ],
-        [{ "lang": "en", "text": "Apart from maybe cereal boxes... and visual novels..." }]
+        [
+          { "lang": "en", "text": "Apart from maybe cereal boxes... and visual novels..." },
+          { "lang": "es", "text": "Aparte de tal vez cajas de cereal... y novelas visuales..." },
+          { "lang": "pt", "text": "Além de talvez caixas de cereal... e visual novels..." },
+          {
+            "lang": "fr",
+            "text": "À part peut-être des boîtes de céréales... et des visual novels..."
+          },
+          {
+            "lang": "de",
+            "text": "abgesehen von vielleicht cerealienschachteln... und visual novels..."
+          },
+          { "lang": "jp", "text": "シリアルの箱と…ビジュアルノベルは別として…" },
+          { "lang": "kr", "text": "시리얼 상자랑… 비주얼 노벨은 빼고…" },
+          { "lang": "zh", "text": "除了麦片盒……和视觉小说之外…" }
+        ]
       ]
     },
     {
       "id": "shelf-3",
       "lines": [
         [
-          {
-            "lang": "en",
-            "text": "If you like reading so much, why don't you pick up one of these books?"
-          }
+          { "lang": "en", "text": "If you like reading so much, why don't you pick up a book?" },
+          { "lang": "es", "text": "Si te gusta tanto leer, ¿por qué no agarras un libro?" },
+          { "lang": "pt", "text": "Se você gosta tanto de ler, por que não pega um livro?" },
+          { "lang": "fr", "text": "Si tu aimes tant lire, pourquoi tu ne prends pas un livre ?" },
+          { "lang": "de", "text": "wenn du so gerne liest, warum nimmst du dir nicht ein buch?" },
+          { "lang": "jp", "text": "そんなに読書が好きなら、本を読めばいいんじゃない？" },
+          { "lang": "kr", "text": "그렇게 책 읽는 걸 좋아하면, 책을 한 권 집어 들지 그래?" },
+          { "lang": "zh", "text": "你要是这么喜欢读书，怎么不拿本书来看呢？" }
         ]
       ]
     },
     {
       "id": "couch",
-      "lines": [[{ "lang": "en", "text": "It's surprisingly comfy, given it has no backrest." }]]
+      "lines": [
+        [
+          { "lang": "en", "text": "It's surprisingly comfy, given it has no backrest." },
+          {
+            "lang": "es",
+            "text": "Es sorprendentemente cómodo, considerando que no tiene respaldo."
+          },
+          {
+            "lang": "pt",
+            "text": "É surpreendentemente confortável, considerando que não tem encosto."
+          },
+          {
+            "lang": "fr",
+            "text": "C'est étonnamment confortable, étant donné qu'il n'a pas de dossier."
+          },
+          { "lang": "de", "text": "es ist überraschend bequem, obwohl es keine rückenlehne hat." },
+          { "lang": "jp", "text": "背もたれがないのに、驚くほど快適だ。" },
+          { "lang": "kr", "text": "등받이가 없는데도 놀랄 만큼 편안하다." },
+          { "lang": "zh", "text": "没有靠背，却出乎意料地舒服。" }
+        ]
+      ]
     },
     {
       "id": "rug-1",
       "lines": [
-        [{ "lang": "en", "text": "You check under the carpet... and find a shiny quarter!" }],
         [
-          { "lang": "en", "text": "You also find out that the carpet is a lot lighter and softer." }
+          { "lang": "en", "text": "You check under the carpet... and find a shiny quarter!" },
+          {
+            "lang": "es",
+            "text": "Miras debajo de la alfombra... ¡y encuentras una moneda brillante!"
+          },
+          {
+            "lang": "pt",
+            "text": "Você olha debaixo do tapete... e encontra uma moeda brilhante!"
+          },
+          { "lang": "fr", "text": "Tu regardes sous le tapis... et trouves une pièce brillante !" },
+          {
+            "lang": "de",
+            "text": "du schaust unter den teppich... und findest eine glänzende münze!"
+          },
+          { "lang": "jp", "text": "カーペットの下を見てみる…すると光る25セント硬貨を見つけた！" },
+          { "lang": "kr", "text": "카펫 아래를 살펴본다… 그리고 반짝이는 동전을 발견한다!" },
+          { "lang": "zh", "text": "你查看地毯下面……发现了一枚闪亮的硬币！" }
         ],
-        [{ "lang": "en", "text": "Interesting..." }]
+        [
+          {
+            "lang": "en",
+            "text": "You also find out that the carpet is a lot lighter and softer."
+          },
+          {
+            "lang": "es",
+            "text": "También descubres que la alfombra es mucho más ligera y suave."
+          },
+          { "lang": "pt", "text": "Você também descobre que o tapete é bem mais leve e suave." },
+          {
+            "lang": "fr",
+            "text": "Tu découvres aussi que le tapis est beaucoup plus léger et doux."
+          },
+          {
+            "lang": "de",
+            "text": "du merkst außerdem, dass der teppich viel leichter und weicher ist."
+          },
+          { "lang": "jp", "text": "そのカーペットが思ったより軽くて柔らかいことにも気づく。" },
+          { "lang": "kr", "text": "카펫이 훨씬 더 가볍고 부드럽다는 것도 알게 된다." },
+          { "lang": "zh", "text": "你还发现这块地毯比想象中更轻更软。" }
+        ],
+        [
+          { "lang": "en", "text": "Interesting..." },
+          { "lang": "es", "text": "Interesante..." },
+          { "lang": "pt", "text": "Interessante..." },
+          { "lang": "fr", "text": "Intéressant..." },
+          { "lang": "de", "text": "interessant..." },
+          { "lang": "jp", "text": "興味深い…" },
+          { "lang": "kr", "text": "흥미롭네…" },
+          { "lang": "zh", "text": "有意思…" }
+        ]
       ]
     },
     {
       "id": "rug-2",
       "lines": [
-        [{ "lang": "en", "text": "You check under the carpet again... and find nothing" }],
+        [
+          { "lang": "en", "text": "You check under the carpet again... and find nothing" },
+          { "lang": "es", "text": "Miras de nuevo debajo de la alfombra... y no encuentras nada" },
+          { "lang": "pt", "text": "Você olha novamente debaixo do tapete... e não encontra nada" },
+          { "lang": "fr", "text": "Tu regardes de nouveau sous le tapis... et ne trouves rien" },
+          { "lang": "de", "text": "du schaust wieder unter den teppich... und findest nichts" },
+          { "lang": "jp", "text": "もう一度カーペットの下を見てみる…何もない" },
+          { "lang": "kr", "text": "다시 카펫 아래를 살펴본다… 그리고 아무것도 없다" },
+          { "lang": "zh", "text": "你再次查看地毯下面……什么都没有" }
+        ],
         [
           {
             "lang": "en",
             "text": "Whilst you're down there, you admire the light and soft carpet underneath."
-          }
+          },
+          {
+            "lang": "es",
+            "text": "Mientras estás ahí abajo, admiras la alfombra ligera y suave debajo."
+          },
+          {
+            "lang": "pt",
+            "text": "Enquanto está lá embaixo, você admira o tapete leve e suave por baixo."
+          },
+          {
+            "lang": "fr",
+            "text": "Alors que tu es là-dessous, tu admires le tapis léger et doux en dessous."
+          },
+          {
+            "lang": "de",
+            "text": "während du dort unten bist, bewunderst du den leichten und weichen teppich darunter."
+          },
+          { "lang": "jp", "text": "そこにいる間、下にある軽くて柔らかいカーペットに感心する。" },
+          { "lang": "kr", "text": "그 아래에 있는 동안, 가볍고 부드러운 카펫에 감탄한다." },
+          { "lang": "zh", "text": "趴在那儿的时候，你不禁欣赏起这块又轻又软的地毯。" }
         ],
-        [{ "lang": "en", "text": "You feel as if that could make for a cool metaphor..." }]
+        [
+          { "lang": "en", "text": "You feel as if that could make for a cool metaphor..." },
+          { "lang": "es", "text": "Sientes que eso podría ser una buena metáfora..." },
+          { "lang": "pt", "text": "Você sente que isso poderia ser uma metáfora interessante..." },
+          {
+            "lang": "fr",
+            "text": "Tu as l'impression que ça pourrait faire une belle métaphore..."
+          },
+          { "lang": "de", "text": "du hast das gefühl, das könnte eine coole metapher abgeben..." },
+          { "lang": "jp", "text": "それが何かいい比喩になりそうな気がする…" },
+          { "lang": "kr", "text": "그게 뭔가 멋진 비유가 될 수 있을 것 같다는 느낌이 든다…" },
+          { "lang": "zh", "text": "你觉得这似乎能引出一个很酷的比喻…" }
+        ]
       ]
     },
     {
@@ -927,35 +2639,196 @@
           {
             "lang": "en",
             "text": "Beneath the weight of now and the future, a younger version of your world stayed still like a photograph,"
+          },
+          {
+            "lang": "es",
+            "text": "Bajo el peso del presente y el futuro, una versión más joven de tu mundo permaneció quieta como una fotografía,"
+          },
+          {
+            "lang": "pt",
+            "text": "Sob o peso do agora e do futuro, uma versão mais jovem do seu mundo permaneceu imóvel como uma fotografia,"
+          },
+          {
+            "lang": "fr",
+            "text": "Sous le poids du présent et de l'avenir, une version plus jeune de ton monde est restée figée comme une photographie,"
+          },
+          {
+            "lang": "de",
+            "text": "unter dem gewicht von jetzt und der zukunft blieb eine jüngere version deiner welt still wie eine fotografie,"
+          },
+          {
+            "lang": "jp",
+            "text": "今と未来の重みの下で、あなたの世界の若き姿は、一枚の写真のように静止していた、"
+          },
+          {
+            "lang": "kr",
+            "text": "지금과 미래의 무게 아래, 당신의 세계의 더 어린 모습은 한 장의 사진처럼 멈춰 있었다,"
+          },
+          {
+            "lang": "zh",
+            "text": "在当下与未来的重压之下，你世界的年轻版本，如一张照片般静止不动，"
           }
         ],
         [
           {
             "lang": "en",
             "text": "Its fibers cleaner, its colors brighter, and its contrast stronger than any combination of words could withhold,"
+          },
+          {
+            "lang": "es",
+            "text": "Sus fibras más limpias, sus colores más brillantes, y su contraste más fuerte de lo que cualquier combinación de palabras podría contener,"
+          },
+          {
+            "lang": "pt",
+            "text": "Suas fibras mais limpas, suas cores mais vivas, e seu contraste mais forte do que qualquer combinação de palavras poderia conter,"
+          },
+          {
+            "lang": "fr",
+            "text": "Ses fibres plus propres, ses couleurs plus vives, et son contraste plus fort que ne pourrait contenir toute combinaison de mots,"
+          },
+          {
+            "lang": "de",
+            "text": "seine fasern reiner, seine farben leuchtender, und sein kontrast stärker, als es jede kombination von worten fassen könnte,"
+          },
+          {
+            "lang": "jp",
+            "text": "その繊維はより清らかで、その色彩はより鮮やかで、その対比はどんな言葉の組み合わせよりも強く、"
+          },
+          {
+            "lang": "kr",
+            "text": "그 섬유는 더 깨끗하고, 그 색은 더 밝고, 그 대비는 어떤 말의 조합보다도 강했으니,"
+          },
+          {
+            "lang": "zh",
+            "text": "它的纤维更纯净，色彩更鲜亮，其对比之强烈，是任何词语组合都难以承载的，"
           }
         ],
         [
           {
             "lang": "en",
             "text": "Some people don't have a rug to place, nor lift, and thus never remember their roots,"
-          }
+          },
+          {
+            "lang": "es",
+            "text": "Algunas personas no tienen una alfombra que colocar, ni que levantar, y por eso nunca recuerdan sus raíces,"
+          },
+          {
+            "lang": "pt",
+            "text": "Algumas pessoas não têm um tapete para colocar, nem para levantar, e por isso nunca lembram de suas raízes,"
+          },
+          {
+            "lang": "fr",
+            "text": "Certaines personnes n'ont pas de tapis à poser, ni à soulever, et n'ont donc jamais souvenir de leurs racines,"
+          },
+          {
+            "lang": "de",
+            "text": "manche menschen haben keinen teppich, den sie legen oder heben können, und erinnern sich deshalb nie an ihre wurzeln,"
+          },
+          {
+            "lang": "jp",
+            "text": "敷くことも持ち上げることもできる敷物を持たない人もいて、だからこそ自らの根を思い出すことがない、"
+          },
+          {
+            "lang": "kr",
+            "text": "누군가는 깔거나 들어 올릴 러그조차 없어서, 그렇기에 자신의 뿌리를 결코 기억하지 못한다,"
+          },
+          { "lang": "zh", "text": "有些人从没有一块地毯可以铺开或掀起，因此也从未记起自己的根，" }
         ],
         [
           {
             "lang": "en",
             "text": "But unless you see the light soon, it's never too late to place the rug, and snapshot your life for another day,"
+          },
+          {
+            "lang": "es",
+            "text": "Pero a menos que veas la luz pronto, nunca es demasiado tarde para colocar la alfombra, y capturar tu vida para otro día,"
+          },
+          {
+            "lang": "pt",
+            "text": "Mas a menos que você veja a luz em breve, nunca é tarde demais para colocar o tapete, e registrar sua vida para outro dia,"
+          },
+          {
+            "lang": "fr",
+            "text": "Mais à moins que tu ne voies bientôt la lumière, il n'est jamais trop tard pour poser le tapis, et capturer ta vie pour un autre jour,"
+          },
+          {
+            "lang": "de",
+            "text": "aber wenn du nicht bald das licht siehst, ist es nie zu spät, den teppich zu legen, und dein leben für einen weiteren tag festzuhalten,"
+          },
+          {
+            "lang": "jp",
+            "text": "だがもしすぐに光を見出せなくても、敷物を敷き、自分の人生を新たな一日として記録するのに、遅すぎるということはない、"
+          },
+          {
+            "lang": "kr",
+            "text": "하지만 곧 빛을 보지 못한다 해도, 러그를 깔고 당신의 삶을 또 하루로 남기기에 결코 늦은 때는 없다,"
+          },
+          {
+            "lang": "zh",
+            "text": "但只要你终将看见那道光，铺开地毯、为你的人生留下新的一天的印记，永远都不算太迟，"
           }
         ],
         [
           {
             "lang": "en",
             "text": "So you too can see how far you've come, from then, to now, till the future,"
-          }
+          },
+          {
+            "lang": "es",
+            "text": "Para que tú también puedas ver cuánto has avanzado, desde entonces, hasta ahora, hasta el futuro,"
+          },
+          {
+            "lang": "pt",
+            "text": "Assim você também pode ver o quanto avançou, desde então, até agora, até o futuro,"
+          },
+          {
+            "lang": "fr",
+            "text": "Pour que toi aussi tu puisses voir à quel point tu as progressé, depuis lors, jusqu'à maintenant, jusqu'à l'avenir,"
+          },
+          {
+            "lang": "de",
+            "text": "damit auch du sehen kannst, wie weit du gekommen bist, von damals, bis jetzt, bis in die zukunft,"
+          },
+          {
+            "lang": "jp",
+            "text": "そうすればあなたも、あの頃から今、そして未来へと、どれほど歩んできたかを見ることができる、"
+          },
+          {
+            "lang": "kr",
+            "text": "그렇게 당신도 그때부터 지금까지, 그리고 미래까지, 얼마나 멀리 왔는지 볼 수 있으니,"
+          },
+          { "lang": "zh", "text": "这样你也能看清，从那时起到现在，直至未来，你已走了多远，" }
         ],
-        [{ "lang": "en", "text": "It might just inspire you." }],
-        [{ "lang": "en", "text": "..." }],
-        [{ "lang": "en", "text": "Just maybe." }]
+        [
+          { "lang": "en", "text": "It might just inspire you." },
+          { "lang": "es", "text": "Podría simplemente inspirarte." },
+          { "lang": "pt", "text": "Isso pode simplesmente te inspirar." },
+          { "lang": "fr", "text": "Ça pourrait bien t'inspirer." },
+          { "lang": "de", "text": "es könnte dich einfach inspirieren." },
+          { "lang": "jp", "text": "それはあなたを鼓舞するかもしれない。" },
+          { "lang": "kr", "text": "그것이 당신에게 영감을 줄지도 모른다." },
+          { "lang": "zh", "text": "这或许恰恰能激励你。" }
+        ],
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
+        [
+          { "lang": "en", "text": "Just maybe." },
+          { "lang": "es", "text": "Solo quizás." },
+          { "lang": "pt", "text": "Só talvez." },
+          { "lang": "fr", "text": "Peut-être bien." },
+          { "lang": "de", "text": "vielleicht nur." },
+          { "lang": "jp", "text": "たぶん、それだけ。" },
+          { "lang": "kr", "text": "그저, 어쩌면." },
+          { "lang": "zh", "text": "或许，仅此而已。" }
+        ]
       ]
     },
     {
@@ -965,66 +2838,365 @@
           {
             "lang": "en",
             "text": "when you actually beat the game, you'll get to see this. otherwise, SCRAM!!"
-          }
+          },
+          {
+            "lang": "es",
+            "text": "cuando realmente termines el juego, podrás ver esto. si no, ¡¡LÁRGATE!!"
+          },
+          {
+            "lang": "pt",
+            "text": "quando você realmente terminar o jogo, vai poder ver isso. senão, VAZA!!"
+          },
+          {
+            "lang": "fr",
+            "text": "quand tu auras vraiment fini le jeu, tu pourras voir ça. sinon, DÉGAGE !!"
+          },
+          {
+            "lang": "de",
+            "text": "wenn du das spiel wirklich schaffst, darfst du das hier sehen. andernfalls, VERSCHWINDE!!"
+          },
+          {
+            "lang": "jp",
+            "text": "本当にゲームをクリアしたら、これが見られるよ。じゃなきゃ、さっさと帰れ！！"
+          },
+          { "lang": "kr", "text": "정말로 게임을 깨면, 이걸 볼 수 있어. 아니면, 당장 꺼져!!" },
+          { "lang": "zh", "text": "如果你真的通关了游戏，才能看到这个。否则，快滚吧！！" }
         ]
       ]
     },
     {
       "id": "ending",
       "lines": [
-        [{ "lang": "en", "text": "I see the player you mean." }],
+        [
+          { "lang": "en", "text": "I see the player you mean." },
+          { "lang": "es", "text": "Veo al jugador que quieres decir." },
+          { "lang": "pt", "text": "Vejo o jogador que você quer dizer." },
+          { "lang": "fr", "text": "Je vois le joueur dont tu parles." },
+          { "lang": "de", "text": "ich sehe den spieler, den du meinst." },
+          { "lang": "jp", "text": "お前の言うプレイヤーが見える。" },
+          { "lang": "kr", "text": "네가 말하는 그 플레이어가 보인다." },
+          { "lang": "zh", "text": "我看到你说的那个玩家了。" }
+        ],
         [
           {
             "lang": "en",
             "text": "It has reached such a level of unemployment that it can read my thoughts."
-          }
+          },
+          {
+            "lang": "es",
+            "text": "Ha alcanzado tal nivel de desempleo que puede leer mis pensamientos."
+          },
+          {
+            "lang": "pt",
+            "text": "Chegou a um nível de desemprego tal que consegue ler meus pensamentos."
+          },
+          {
+            "lang": "fr",
+            "text": "Il a atteint un tel niveau de chômage qu'il peut lire mes pensées."
+          },
+          {
+            "lang": "de",
+            "text": "er hat ein solches maß an arbeitslosigkeit erreicht, dass er meine gedanken lesen kann."
+          },
+          {
+            "lang": "jp",
+            "text": "そいつは無職の域に達していて、俺の思考すら読めるようになった。"
+          },
+          { "lang": "kr", "text": "그것은 실업의 경지에 이르러 내 생각까지 읽을 수 있게 되었다." },
+          { "lang": "zh", "text": "它的失业程度已经达到了能读懂我思想的地步。" }
         ],
         [
           {
             "lang": "en",
             "text": "It reads my thoughts through pixels, transmitted across years of innovation and technology,"
-          }
+          },
+          {
+            "lang": "es",
+            "text": "Lee mis pensamientos a través de píxeles, transmitidos a lo largo de años de innovación y tecnología,"
+          },
+          {
+            "lang": "pt",
+            "text": "Lê meus pensamentos através de pixels, transmitidos através de anos de inovação e tecnologia,"
+          },
+          {
+            "lang": "fr",
+            "text": "Il lit mes pensées à travers des pixels, transmis à travers des années d'innovation et de technologie,"
+          },
+          {
+            "lang": "de",
+            "text": "er liest meine gedanken durch pixel, übertragen über jahre der innovation und technologie,"
+          },
+          {
+            "lang": "jp",
+            "text": "そいつは俺の思考を、幾年もの技術革新を経て伝わったピクセルを通して読み取る、"
+          },
+          {
+            "lang": "kr",
+            "text": "그것은 수년간의 혁신과 기술을 거쳐 전달된 픽셀을 통해 내 생각을 읽는다,"
+          },
+          { "lang": "zh", "text": "它透过像素读取我的思想，那是历经多年创新与科技传送而来的，" }
         ],
         [
           {
             "lang": "en",
             "text": "as though humans were created for this very purpose and moment in time."
-          }
+          },
+          {
+            "lang": "es",
+            "text": "como si los humanos hubieran sido creados justo para este propósito y este momento en el tiempo."
+          },
+          {
+            "lang": "pt",
+            "text": "como se os humanos tivessem sido criados exatamente para este propósito e momento no tempo."
+          },
+          {
+            "lang": "fr",
+            "text": "comme si les humains avaient été créés précisément pour ce but et ce moment précis."
+          },
+          {
+            "lang": "de",
+            "text": "als wären menschen genau für diesen zweck und diesen moment in der zeit geschaffen worden."
+          },
+          {
+            "lang": "jp",
+            "text": "まるで人類がこの目的とこの瞬間のためだけに創られたかのように。"
+          },
+          { "lang": "kr", "text": "마치 인류가 바로 이 목적과 이 순간을 위해 창조된 것처럼." },
+          { "lang": "zh", "text": "仿佛人类正是为了这个目的、这个时刻而被创造出来的。" }
         ],
-        [{ "lang": "en", "text": "But that doesn’t matter." }],
+        [
+          { "lang": "en", "text": "But that doesn’t matter." },
+          { "lang": "es", "text": "Pero eso no importa." },
+          { "lang": "pt", "text": "Mas isso não importa." },
+          { "lang": "fr", "text": "Mais ça n'a pas d'importance." },
+          { "lang": "de", "text": "aber das spielt keine rolle." },
+          { "lang": "jp", "text": "だが、それはどうでもいい。" },
+          { "lang": "kr", "text": "하지만 그건 중요하지 않다." },
+          { "lang": "zh", "text": "但那并不重要。" }
+        ],
         [
           {
             "lang": "en",
             "text": "It knows it wasted its time, and yet, it played well. It did not give up."
-          }
+          },
+          {
+            "lang": "es",
+            "text": "Sabe que desperdició su tiempo, y aun así, jugó bien. No se rindió."
+          },
+          {
+            "lang": "pt",
+            "text": "Ele sabe que desperdiçou seu tempo, e ainda assim, jogou bem. Não desistiu."
+          },
+          {
+            "lang": "fr",
+            "text": "Il sait qu'il a gaspillé son temps, et pourtant, il a bien joué. Il n'a pas abandonné."
+          },
+          {
+            "lang": "de",
+            "text": "er weiß, dass er seine zeit verschwendet hat, und trotzdem hat er gut gespielt. er hat nicht aufgegeben."
+          },
+          {
+            "lang": "jp",
+            "text": "そいつは自分が時間を無駄にしたことを知っている、それでも、よく遊んだ。諦めなかった。"
+          },
+          {
+            "lang": "kr",
+            "text": "그것은 자신이 시간을 낭비했다는 걸 알지만, 그래도 잘 해냈다. 포기하지 않았다."
+          },
+          { "lang": "zh", "text": "它知道自己浪费了时间，但它玩得很好。它没有放弃。" }
         ],
-        [{ "lang": "en", "text": "For this very reason, I like this player." }],
-        [{ "lang": "en", "text": "I like how this player is so determined." }],
-        [{ "lang": "en", "text": "I like how this player is so dedicated to its craft." }],
+        [
+          { "lang": "en", "text": "For this very reason, I like this player." },
+          { "lang": "es", "text": "Por esta misma razón, me gusta este jugador." },
+          { "lang": "pt", "text": "Por essa mesma razão, eu gosto desse jogador." },
+          { "lang": "fr", "text": "C'est justement pour cette raison que j'aime ce joueur." },
+          { "lang": "de", "text": "genau aus diesem grund mag ich diesen spieler." },
+          { "lang": "jp", "text": "まさにその理由で、俺はこのプレイヤーが好きだ。" },
+          { "lang": "kr", "text": "바로 그 이유 때문에, 나는 이 플레이어가 좋다." },
+          { "lang": "zh", "text": "正因为如此，我喜欢这个玩家。" }
+        ],
+        [
+          { "lang": "en", "text": "I like how this player is so determined." },
+          { "lang": "es", "text": "Me gusta lo determinado que es este jugador." },
+          { "lang": "pt", "text": "Eu gosto de como esse jogador é tão determinado." },
+          { "lang": "fr", "text": "J'aime à quel point ce joueur est déterminé." },
+          { "lang": "de", "text": "ich mag, wie entschlossen dieser spieler ist." },
+          { "lang": "jp", "text": "このプレイヤーの意志の強さが好きだ。" },
+          { "lang": "kr", "text": "이 플레이어가 이렇게 결단력이 있다는 게 좋다." },
+          { "lang": "zh", "text": "我喜欢这个玩家如此坚定的样子。" }
+        ],
+        [
+          { "lang": "en", "text": "I like how this player is so dedicated to its craft." },
+          { "lang": "es", "text": "Me gusta lo dedicado que es este jugador a su oficio." },
+          { "lang": "pt", "text": "Eu gosto de como esse jogador é tão dedicado ao seu ofício." },
+          { "lang": "fr", "text": "J'aime à quel point ce joueur est dévoué à son art." },
+          {
+            "lang": "de",
+            "text": "ich mag, wie hingebungsvoll dieser spieler seiner sache nachgeht."
+          },
+          { "lang": "jp", "text": "このプレイヤーが自分の技にこれほど打ち込んでいるのが好きだ。" },
+          { "lang": "kr", "text": "이 플레이어가 자신의 일에 이렇게 헌신적이라는 게 좋다." },
+          { "lang": "zh", "text": "我喜欢这个玩家对自己的技艺如此投入。" }
+        ],
         [
           {
             "lang": "en",
             "text": "I like how this player never stops until it finishes what it started."
-          }
+          },
+          {
+            "lang": "es",
+            "text": "Me gusta que este jugador no se detiene hasta terminar lo que empezó."
+          },
+          {
+            "lang": "pt",
+            "text": "Eu gosto de como esse jogador não para até terminar o que começou."
+          },
+          {
+            "lang": "fr",
+            "text": "J'aime que ce joueur ne s'arrête jamais avant d'avoir terminé ce qu'il a commencé."
+          },
+          {
+            "lang": "de",
+            "text": "ich mag, dass dieser spieler nicht aufhört, bis er beendet hat, was er begonnen hat."
+          },
+          {
+            "lang": "jp",
+            "text": "このプレイヤーが始めたことを終わらせるまで止まらないのが好きだ。"
+          },
+          { "lang": "kr", "text": "이 플레이어가 시작한 걸 끝낼 때까지 멈추지 않는다는 게 좋다." },
+          { "lang": "zh", "text": "我喜欢这个玩家永不停歇，直到完成自己开始的事。" }
         ],
         [
           {
             "lang": "en",
             "text": "And I'll miss how this player is now, later when they grow tall,"
-          }
+          },
+          {
+            "lang": "es",
+            "text": "Y voy a echar de menos cómo es este jugador ahora, más adelante cuando crezca,"
+          },
+          {
+            "lang": "pt",
+            "text": "E vou sentir falta de como esse jogador é agora, mais tarde quando crescer,"
+          },
+          {
+            "lang": "fr",
+            "text": "Et je regretterai qui est ce joueur maintenant, plus tard quand il aura grandi,"
+          },
+          {
+            "lang": "de",
+            "text": "und ich werde vermissen, wie dieser spieler jetzt ist, später, wenn er groß geworden ist,"
+          },
+          {
+            "lang": "jp",
+            "text": "そしていつか大きくなった時、俺は今のこのプレイヤーを懐かしむだろう、"
+          },
+          {
+            "lang": "kr",
+            "text": "그리고 언젠가 이 플레이어가 자라나면, 나는 지금의 모습을 그리워하게 될 것이다,"
+          },
+          { "lang": "zh", "text": "而当这个玩家将来长大之后，我会怀念他现在的样子，" }
         ],
         [
           {
             "lang": "en",
             "text": "when obscurities such as money, finance, school, jobs, families, and the heat death of the universe consume someone I once knew."
+          },
+          {
+            "lang": "es",
+            "text": "cuando trivialidades como el dinero, las finanzas, la escuela, el trabajo, la familia, y la muerte térmica del universo consuman a alguien que una vez conocí."
+          },
+          {
+            "lang": "pt",
+            "text": "quando futilidades como dinheiro, finanças, escola, trabalho, família, e a morte térmica do universo consumirem alguém que eu já conheci."
+          },
+          {
+            "lang": "fr",
+            "text": "quand des futilités comme l'argent, les finances, l'école, le travail, la famille, et la mort thermique de l'univers consumeront quelqu'un que j'ai connu."
+          },
+          {
+            "lang": "de",
+            "text": "wenn belanglosigkeiten wie geld, finanzen, schule, jobs, familien und der wärmetod des universums jemanden verschlingen, den ich einst kannte."
+          },
+          {
+            "lang": "jp",
+            "text": "お金、財政、学校、仕事、家族、そして宇宙の熱的死といった些事が、俺が昔知っていた誰かを飲み込んでしまう時に。"
+          },
+          {
+            "lang": "kr",
+            "text": "돈, 재정, 학교, 직장, 가족, 그리고 우주의 열사망 같은 사소한 것들이 내가 한때 알던 누군가를 삼켜버릴 때에."
+          },
+          {
+            "lang": "zh",
+            "text": "当金钱、财务、学校、工作、家庭，以及宇宙的热寂这些琐事，吞噬掉我曾认识的那个人时。"
           }
         ],
-        [{ "lang": "en", "text": "And soon you too will miss yourself." }],
-        [{ "lang": "en", "text": "The world." }],
-        [{ "lang": "en", "text": "And everything in between." }],
-        [{ "lang": "en", "text": "Yet it will always feel like you are already too late." }],
-        [{ "lang": "en", "text": "..." }],
-        [{ "lang": "en", "text": "Fin." }]
+        [
+          { "lang": "en", "text": "And soon you too will miss yourself." },
+          { "lang": "es", "text": "Y pronto tú también te echarás de menos a ti mismo." },
+          { "lang": "pt", "text": "E em breve você também vai sentir sua própria falta." },
+          { "lang": "fr", "text": "Et bientôt toi aussi tu te manqueras à toi-même." },
+          { "lang": "de", "text": "und schon bald wirst auch du dich selbst vermissen." },
+          { "lang": "jp", "text": "そしてすぐに、お前もまた自分自身を懐かしむようになる。" },
+          { "lang": "kr", "text": "그리고 곧 너도 너 자신을 그리워하게 될 것이다." },
+          { "lang": "zh", "text": "很快，你也会开始怀念自己。" }
+        ],
+        [
+          { "lang": "en", "text": "The world." },
+          { "lang": "es", "text": "El mundo." },
+          { "lang": "pt", "text": "O mundo." },
+          { "lang": "fr", "text": "Le monde." },
+          { "lang": "de", "text": "die welt." },
+          { "lang": "jp", "text": "世界を。" },
+          { "lang": "kr", "text": "세상을." },
+          { "lang": "zh", "text": "这个世界。" }
+        ],
+        [
+          { "lang": "en", "text": "And everything in between." },
+          { "lang": "es", "text": "Y todo lo que hay en medio." },
+          { "lang": "pt", "text": "E tudo que há entre um e outro." },
+          { "lang": "fr", "text": "Et tout ce qu'il y a entre les deux." },
+          { "lang": "de", "text": "und alles, was dazwischen liegt." },
+          { "lang": "jp", "text": "そしてその間にある全てを。" },
+          { "lang": "kr", "text": "그리고 그 사이의 모든 것을." },
+          { "lang": "zh", "text": "以及介于其间的一切。" }
+        ],
+        [
+          { "lang": "en", "text": "Yet it will always feel like you are already too late." },
+          { "lang": "es", "text": "Aun así, siempre sentirás que ya es demasiado tarde." },
+          { "lang": "pt", "text": "Ainda assim, sempre vai parecer que já é tarde demais." },
+          {
+            "lang": "fr",
+            "text": "Et pourtant, tu auras toujours l'impression qu'il est déjà trop tard."
+          },
+          {
+            "lang": "de",
+            "text": "und doch wird es sich immer so anfühlen, als wärst du bereits zu spät."
+          },
+          { "lang": "jp", "text": "それでも、いつだって、もう遅すぎるように感じるだろう。" },
+          { "lang": "kr", "text": "그럼에도, 언제나 이미 너무 늦어버린 것처럼 느껴질 것이다." },
+          { "lang": "zh", "text": "然而，你总会觉得，一切都已经太晚了。" }
+        ],
+        [
+          { "lang": "en", "text": "..." },
+          { "lang": "es", "text": "..." },
+          { "lang": "pt", "text": "..." },
+          { "lang": "fr", "text": "..." },
+          { "lang": "de", "text": "..." },
+          { "lang": "jp", "text": "…" },
+          { "lang": "kr", "text": "…" },
+          { "lang": "zh", "text": "…" }
+        ],
+        [
+          { "lang": "en", "text": "Fin." },
+          { "lang": "es", "text": "Fin." },
+          { "lang": "pt", "text": "Fim." },
+          { "lang": "fr", "text": "Fin." },
+          { "lang": "de", "text": "ende." },
+          { "lang": "jp", "text": "終わり。" },
+          { "lang": "kr", "text": "끝." },
+          { "lang": "zh", "text": "完。" }
+        ]
       ]
     }
   ],
@@ -1033,7 +3205,16 @@
       "id": "hello-world",
       "type": "normal",
       "icon": "fa-globe",
-      "title": [{ "lang": "en", "text": "Hello, world!" }],
+      "title": [
+        { "lang": "en", "text": "Hello, world!" },
+        { "lang": "es", "text": "¡Hola, mundo!" },
+        { "lang": "pt", "text": "Olá, mundo!" },
+        { "lang": "fr", "text": "Bonjour, monde !" },
+        { "lang": "de", "text": "hallo, welt!" },
+        { "lang": "jp", "text": "こんにちは、世界！" },
+        { "lang": "kr", "text": "안녕, 세상아!" },
+        { "lang": "zh", "text": "你好，世界！" }
+      ],
       "desc": [
         { "lang": "en", "text": "thanks for visiting my website, enjoy!" },
         { "lang": "es", "text": "gracias por visitar mi web, ¡disfruta!" },
@@ -1046,21 +3227,29 @@
       ]
     },
     {
-      "id": "gambling",
-      "type": "progress",
-      "icon": "fa-dice",
-      "goal": 5,
+      "id": "stonks",
+      "type": "normal",
+      "icon": "fa-arrow-trend-up",
       "title": [
-        { "lang": "en", "text": "gambling" },
-        { "lang": "es", "text": "apuestas" },
-        { "lang": "pt", "text": "apostas" },
-        { "lang": "fr", "text": "jeux d'argent" },
-        { "lang": "de", "text": "glücksspiel" },
-        { "lang": "jp", "text": "ギャンブル" },
-        { "lang": "kr", "text": "도박" },
-        { "lang": "zh", "text": "赌博" }
+        { "lang": "en", "text": "stonks" },
+        { "lang": "es", "text": "stonks" },
+        { "lang": "pt", "text": "stonks" },
+        { "lang": "fr", "text": "stonks" },
+        { "lang": "de", "text": "stonks" },
+        { "lang": "jp", "text": "ストンクス" },
+        { "lang": "kr", "text": "스톤크스" },
+        { "lang": "zh", "text": "股票暴涨" }
       ],
-      "desc": [{ "lang": "en", "text": "i'm not addicted, your addicted..." }]
+      "desc": [
+        { "lang": "en", "text": "cash out a profit in the casino" },
+        { "lang": "es", "text": "retírate con ganancias del casino" },
+        { "lang": "pt", "text": "saia do cassino com lucro" },
+        { "lang": "fr", "text": "encaisse un profit au casino" },
+        { "lang": "de", "text": "kassiere einen gewinn im casino" },
+        { "lang": "jp", "text": "カジノで利益を出して換金しよう" },
+        { "lang": "kr", "text": "카지노에서 수익을 내고 현금화하세요" },
+        { "lang": "zh", "text": "在赌场兑现利润" }
+      ]
     },
     {
       "id": "interstellar",
@@ -1101,7 +3290,16 @@
         { "lang": "kr", "text": "카펫" },
         { "lang": "zh", "text": "地毯" }
       ],
-      "desc": [{ "lang": "en", "text": "<3" }]
+      "desc": [
+        { "lang": "en", "text": "<3" },
+        { "lang": "es", "text": "<3" },
+        { "lang": "pt", "text": "<3" },
+        { "lang": "fr", "text": "<3" },
+        { "lang": "de", "text": "<3" },
+        { "lang": "jp", "text": "<3" },
+        { "lang": "kr", "text": "<3" },
+        { "lang": "zh", "text": "<3" }
+      ]
     },
     {
       "id": "money",
@@ -1117,7 +3315,16 @@
         { "lang": "kr", "text": "돈" },
         { "lang": "zh", "text": "钱" }
       ],
-      "desc": [{ "lang": "en", "text": "get that bag cuh" }]
+      "desc": [
+        { "lang": "en", "text": "get that bag cuh" },
+        { "lang": "es", "text": "consigue esa bolsa, hermano" },
+        { "lang": "pt", "text": "pega essa grana, mano" },
+        { "lang": "fr", "text": "va chercher ce sac, mec" },
+        { "lang": "de", "text": "hol dir die kohle, kumpel" },
+        { "lang": "jp", "text": "金を稼げよ、相棒" },
+        { "lang": "kr", "text": "그 돈 챙겨라, 친구" },
+        { "lang": "zh", "text": "去把那笔钱赚到手，兄弟" }
+      ]
     },
     {
       "id": "log-on",
@@ -1134,21 +3341,30 @@
         { "lang": "zh", "text": "登录" }
       ],
       "desc": [
-        { "lang": "en", "text": "log into temps computer" },
-        { "lang": "es", "text": "inicia sesión en el ordenador de temp" },
-        { "lang": "pt", "text": "faça login no computador do temp" },
-        { "lang": "fr", "text": "connecte-toi à l'ordinateur de temp" },
-        { "lang": "de", "text": "melde dich an temps computer an" },
-        { "lang": "jp", "text": "temp のパソコンにログインしよう" },
-        { "lang": "kr", "text": "temp의 컴퓨터에 로그인하세요" },
-        { "lang": "zh", "text": "登录 temp 的电脑" }
+        { "lang": "en", "text": "turn on temp's computer" },
+        { "lang": "es", "text": "enciende el ordenador de temp" },
+        { "lang": "pt", "text": "ligue o computador do temp" },
+        { "lang": "fr", "text": "allume l'ordinateur de temp" },
+        { "lang": "de", "text": "schalte temps computer ein" },
+        { "lang": "jp", "text": "temp のパソコンの電源を入れよう" },
+        { "lang": "kr", "text": "temp의 컴퓨터를 켜세요" },
+        { "lang": "zh", "text": "打开 temp 的电脑" }
       ]
     },
     {
       "id": "mouse-ception",
       "type": "normal",
       "icon": "fa-computer-mouse",
-      "title": [{ "lang": "en", "text": "mouse-ception" }],
+      "title": [
+        { "lang": "en", "text": "mouse-ception" },
+        { "lang": "es", "text": "ratón-cepción" },
+        { "lang": "pt", "text": "mouse-cepção" },
+        { "lang": "fr", "text": "souris-ception" },
+        { "lang": "de", "text": "maus-ception" },
+        { "lang": "jp", "text": "マウス・セプション" },
+        { "lang": "kr", "text": "마우스셉션" },
+        { "lang": "zh", "text": "鼠标里的鼠标" }
+      ],
       "desc": [
         { "lang": "en", "text": "click on the mouse, with your mouse." },
         { "lang": "es", "text": "haz clic en el ratón, con tu ratón." },
@@ -1164,7 +3380,16 @@
       "id": "honey-im-home",
       "type": "normal",
       "icon": "fa-house",
-      "title": [{ "lang": "en", "text": "honey, i'm home!" }],
+      "title": [
+        { "lang": "en", "text": "honey, i'm home!" },
+        { "lang": "es", "text": "¡cariño, ya llegué!" },
+        { "lang": "pt", "text": "querida, cheguei!" },
+        { "lang": "fr", "text": "chéri, je suis rentré !" },
+        { "lang": "de", "text": "schatz, ich bin zuhause!" },
+        { "lang": "jp", "text": "ハニー、ただいま！" },
+        { "lang": "kr", "text": "허니, 나 왔어!" },
+        { "lang": "zh", "text": "亲爱的，我回来了！" }
+      ],
       "desc": [
         { "lang": "en", "text": "visit the website twice" },
         { "lang": "es", "text": "visita la web dos veces" },
@@ -1218,8 +3443,17 @@
       "id": "marketable-plush",
       "type": "progress",
       "icon": "fa-paw",
-      "goal": 5,
-      "title": [{ "lang": "en", "text": "Marketable Plush" }],
+      "goal": 6,
+      "title": [
+        { "lang": "en", "text": "Marketable Plush" },
+        { "lang": "es", "text": "Marketable Plush" },
+        { "lang": "pt", "text": "Marketable Plush" },
+        { "lang": "fr", "text": "Marketable Plush" },
+        { "lang": "de", "text": "Marketable Plush" },
+        { "lang": "jp", "text": "Marketable Plush" },
+        { "lang": "kr", "text": "Marketable Plush" },
+        { "lang": "zh", "text": "Marketable Plush" }
+      ],
       "desc": [
         { "lang": "en", "text": "obtain all knowledge from marketable plush" },
         { "lang": "es", "text": "obtén todo el conocimiento del marketable plush" },
@@ -1245,7 +3479,16 @@
         { "lang": "kr", "text": "TV 켜짐" },
         { "lang": "zh", "text": "电视开机" }
       ],
-      "desc": [{ "lang": "en", "text": "kendrick lamar would be not be happy" }]
+      "desc": [
+        { "lang": "en", "text": "kendrick lamar would be not be happy" },
+        { "lang": "es", "text": "a kendrick lamar no le gustaría esto" },
+        { "lang": "pt", "text": "kendrick lamar não ficaria feliz com isso" },
+        { "lang": "fr", "text": "kendrick lamar ne serait pas content de ça" },
+        { "lang": "de", "text": "kendrick lamar wäre darüber nicht glücklich" },
+        { "lang": "jp", "text": "ケンドリック・ラマーはこれを喜ばないだろう" },
+        { "lang": "kr", "text": "켄드릭 라마가 이걸 좋아하지 않을 거야" },
+        { "lang": "zh", "text": "肯德里克·拉马尔看到这个肯定不高兴" }
+      ]
     },
     {
       "id": "fast-learner",
@@ -1286,7 +3529,16 @@
         { "lang": "kr", "text": "자선가" },
         { "lang": "zh", "text": "慈善家" }
       ],
-      "desc": [{ "lang": "en", "text": "unleash your inner mr beast and donate" }]
+      "desc": [
+        { "lang": "en", "text": "unleash your inner mr beast and donate" },
+        { "lang": "es", "text": "libera a tu mr beast interior y dona" },
+        { "lang": "pt", "text": "libere seu mr beast interior e doe" },
+        { "lang": "fr", "text": "libère ton mr beast intérieur et fais un don" },
+        { "lang": "de", "text": "lass deinen inneren mr beast raus und spende" },
+        { "lang": "jp", "text": "内なるMrBeastを解放して寄付しよう" },
+        { "lang": "kr", "text": "내면의 미스터 비스트를 깨워 기부해보세요" },
+        { "lang": "zh", "text": "释放你内心的Mr Beast，去捐款吧" }
+      ]
     },
     {
       "id": "multilingual",
@@ -1302,7 +3554,19 @@
         { "lang": "kr", "text": "다중 언어" },
         { "lang": "zh", "text": "多语言" }
       ],
-      "desc": [{ "lang": "en", "text": "no way he just put in the NARUTO reference in there" }]
+      "desc": [
+        { "lang": "en", "text": "no way he just put in the NARUTO reference in there" },
+        { "lang": "es", "text": "no puede ser que haya metido una referencia a NARUTO ahí" },
+        {
+          "lang": "pt",
+          "text": "não é possível que ele tenha colocado uma referência a NARUTO aí"
+        },
+        { "lang": "fr", "text": "pas possible qu'il ait mis une référence à NARUTO là-dedans" },
+        { "lang": "de", "text": "das gibt's nicht, er hat da echt eine NARUTO-referenz eingebaut" },
+        { "lang": "jp", "text": "まさかここにNARUTOの元ネタを入れてくるとは" },
+        { "lang": "kr", "text": "여기에 진짜 NARUTO 레퍼런스를 넣었다니 말도 안 돼" },
+        { "lang": "zh", "text": "不是吧，他居然在这里塞了个火影忍者的彩蛋" }
+      ]
     },
     {
       "id": "thief",
@@ -1318,14 +3582,32 @@
         { "lang": "kr", "text": "도둑" },
         { "lang": "zh", "text": "小偷" }
       ],
-      "desc": [{ "lang": "en", "text": "five-finger discount" }]
+      "desc": [
+        { "lang": "en", "text": "five-finger discount" },
+        { "lang": "es", "text": "descuento de los cinco dedos" },
+        { "lang": "pt", "text": "desconto dos cinco dedos" },
+        { "lang": "fr", "text": "réduction à cinq doigts" },
+        { "lang": "de", "text": "der fünf-finger-rabatt" },
+        { "lang": "jp", "text": "万引きという名の割引" },
+        { "lang": "kr", "text": "손버릇으로 챙긴 할인" },
+        { "lang": "zh", "text": "顺手牵羊式的折扣" }
+      ]
     },
     {
       "id": "free-the-end",
       "type": "progress",
       "icon": "fa-bed",
       "goal": 15,
-      "title": [{ "lang": "en", "text": "free the end" }],
+      "title": [
+        { "lang": "en", "text": "free the end" },
+        { "lang": "es", "text": "libera el final" },
+        { "lang": "pt", "text": "liberte o final" },
+        { "lang": "fr", "text": "libère la fin" },
+        { "lang": "de", "text": "befreie das ende" },
+        { "lang": "jp", "text": "エンディングを解放せよ" },
+        { "lang": "kr", "text": "엔딩을 해방하라" },
+        { "lang": "zh", "text": "解放结局" }
+      ],
       "desc": [
         { "lang": "en", "text": "finish the game and go to bed, your quest here is done." },
         { "lang": "es", "text": "termina el juego y vete a la cama, tu misión aquí ha acabado." },
@@ -1389,24 +3671,120 @@
     {
       "id": "plush-interact",
       "options": [
-        { "id": "go", "text": [{ "lang": "en", "text": "What could go wrong?" }] },
-        { "id": "scared", "text": [{ "lang": "en", "text": "I'm scared." }] }
+        {
+          "id": "go",
+          "text": [
+            { "lang": "en", "text": "What could go wrong?" },
+            { "lang": "es", "text": "¿Qué podría salir mal?" },
+            { "lang": "pt", "text": "O que poderia dar errado?" },
+            { "lang": "fr", "text": "Qu'est-ce qui pourrait mal se passer ?" },
+            { "lang": "de", "text": "was könnte schon schiefgehen?" },
+            { "lang": "jp", "text": "何が悪いことになるっていうんだ？" },
+            { "lang": "kr", "text": "뭐가 잘못될 수 있겠어?" },
+            { "lang": "zh", "text": "能出什么问题呢？" }
+          ]
+        },
+        {
+          "id": "scared",
+          "text": [
+            { "lang": "en", "text": "I'm scared." },
+            { "lang": "es", "text": "Tengo miedo." },
+            { "lang": "pt", "text": "Estou com medo." },
+            { "lang": "fr", "text": "J'ai peur." },
+            { "lang": "de", "text": "ich habe angst." },
+            { "lang": "jp", "text": "怖いよ。" },
+            { "lang": "kr", "text": "무서워." },
+            { "lang": "zh", "text": "我好怕。" }
+          ]
+        }
       ]
     },
     {
       "id": "plush-topics",
       "options": [
-        { "id": "password", "text": [{ "lang": "en", "text": "What's the password" }] },
-        { "id": "guitar", "text": [{ "lang": "en", "text": "How to play guitar" }] },
-        { "id": "remote", "text": [{ "lang": "en", "text": "Where's the TV Remote" }] },
-        { "id": "donate", "text": [{ "lang": "en", "text": "Donate" }] }
+        {
+          "id": "password",
+          "text": [
+            { "lang": "en", "text": "What's the password" },
+            { "lang": "es", "text": "¿Cuál es la contraseña" },
+            { "lang": "pt", "text": "Qual é a senha" },
+            { "lang": "fr", "text": "Quel est le mot de passe" },
+            { "lang": "de", "text": "was ist das passwort" },
+            { "lang": "jp", "text": "パスワードは何" },
+            { "lang": "kr", "text": "비밀번호가 뭐야" },
+            { "lang": "zh", "text": "密码是什么" }
+          ]
+        },
+        {
+          "id": "guitar",
+          "text": [
+            { "lang": "en", "text": "How to play guitar" },
+            { "lang": "es", "text": "Cómo tocar la guitarra" },
+            { "lang": "pt", "text": "Como tocar violão" },
+            { "lang": "fr", "text": "Comment jouer de la guitare" },
+            { "lang": "de", "text": "wie man gitarre spielt" },
+            { "lang": "jp", "text": "ギターの弾き方" },
+            { "lang": "kr", "text": "기타 치는 법" },
+            { "lang": "zh", "text": "怎么弹吉他" }
+          ]
+        },
+        {
+          "id": "remote",
+          "text": [
+            { "lang": "en", "text": "Where's the TV Remote" },
+            { "lang": "es", "text": "Dónde está el control de la TV" },
+            { "lang": "pt", "text": "Onde está o controle da TV" },
+            { "lang": "fr", "text": "Où est la télécommande de la télé" },
+            { "lang": "de", "text": "wo ist die fernbedienung" },
+            { "lang": "jp", "text": "テレビのリモコンはどこ" },
+            { "lang": "kr", "text": "TV 리모컨은 어디 있어" },
+            { "lang": "zh", "text": "电视遥控器在哪" }
+          ]
+        },
+        {
+          "id": "donate",
+          "text": [
+            { "lang": "en", "text": "Donate" },
+            { "lang": "es", "text": "Donar" },
+            { "lang": "pt", "text": "Doar" },
+            { "lang": "fr", "text": "Faire un don" },
+            { "lang": "de", "text": "spenden" },
+            { "lang": "jp", "text": "寄付する" },
+            { "lang": "kr", "text": "기부하기" },
+            { "lang": "zh", "text": "捐款" }
+          ]
+        }
       ]
     },
     {
       "id": "guitar-play",
       "options": [
-        { "id": "yes", "text": [{ "lang": "en", "text": "Why not?" }] },
-        { "id": "no", "text": [{ "lang": "en", "text": "No thanks." }] }
+        {
+          "id": "yes",
+          "text": [
+            { "lang": "en", "text": "Why not?" },
+            { "lang": "es", "text": "¿Por qué no?" },
+            { "lang": "pt", "text": "Por que não?" },
+            { "lang": "fr", "text": "Pourquoi pas ?" },
+            { "lang": "de", "text": "warum nicht?" },
+            { "lang": "jp", "text": "いいじゃん？" },
+            { "lang": "kr", "text": "왜 안 되겠어?" },
+            { "lang": "zh", "text": "为什么不呢？" }
+          ]
+        },
+        {
+          "id": "no",
+          "text": [
+            { "lang": "en", "text": "No thanks." },
+            { "lang": "es", "text": "No, gracias." },
+            { "lang": "pt", "text": "Não, obrigado." },
+            { "lang": "fr", "text": "Non merci." },
+            { "lang": "de", "text": "nein danke." },
+            { "lang": "jp", "text": "やめとく。" },
+            { "lang": "kr", "text": "괜찮아." },
+            { "lang": "zh", "text": "不用了，谢谢。" }
+          ]
+        }
       ]
     }
   ]

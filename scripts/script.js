@@ -21,9 +21,9 @@ import {
   reduce,
   save,
   setCookie,
+  setPanelOpen,
   sfxHover,
   sfxSelect,
-  showCursor,
   st,
   t,
 } from "./textbox.js";
@@ -210,25 +210,20 @@ import {
   function within(node) {
     return node && node.closest && node.closest(".cursorable");
   }
-  function hides(node) {
-    return node && node.closest && node.closest(".choice");
-  }
   function onDark(node) {
-    return node && node.closest && node.closest(".dark, .opt-state.on");
+    return node && node.closest && node.closest(".opt-state.on, .choice, .achv-icon");
   }
   document.addEventListener("pointerover", function (e) {
     if (within(e.target)) {
       cursor.classList.add("ring");
       blip(sfxHover);
     }
-    if (hides(e.target)) cursor.classList.add("hide");
     if (onDark(e.target)) cursor.classList.add("dark");
   });
   document.addEventListener("pointerout", function (e) {
     if (within(e.target) && !within(e.relatedTarget)) {
       cursor.classList.remove("ring");
     }
-    if (hides(e.target) && !hides(e.relatedTarget)) showCursor();
     if (onDark(e.target) && !onDark(e.relatedTarget)) cursor.classList.remove("dark");
   });
 
@@ -252,6 +247,7 @@ import {
     if (open) {
       settings.style.width = panel.offsetWidth + "px";
       settings.style.height = panel.offsetHeight + "px";
+      cursor.classList.remove("dark");
     } else {
       settings.style.width = "";
       settings.style.height = "";
@@ -259,6 +255,7 @@ import {
     }
     panel.inert = !open;
     gear.setAttribute("aria-expanded", open ? "true" : "false");
+    setPanelOpen(open || achvOpen);
   }
 
   gear.addEventListener("click", function (e) {
@@ -564,7 +561,7 @@ import {
     row.className = complete ? "achv-row" : "achv-row locked";
 
     var icon = document.createElement("span");
-    icon.className = complete ? "achv-icon dark" : "achv-icon";
+    icon.className = "achv-icon";
     var glyph = document.createElement("i");
     glyph.className = "fa-solid " + a.icon;
     glyph.setAttribute("aria-hidden", "true");
@@ -625,7 +622,9 @@ import {
   function setAchvOpen(next) {
     if (next === achvOpen) return;
     achvOpen = next;
+    setPanelOpen(open || achvOpen);
     if (next) {
+      cursor.classList.remove("dark");
       clearTimeout(achvHideTimer);
       renderAchList();
       dim.hidden = false;

@@ -7,6 +7,9 @@ import {
   choice,
   closeTextbox,
   cubicBezier,
+  isChoiceOpen,
+  isPanelOpen,
+  langText,
   ready,
   setCursorDark,
   setCursorRing,
@@ -284,7 +287,7 @@ const MARK_DIM = "\x01";
 const MARK_OK = "\x02";
 const MARK_RESET = "\x03";
 const MARK_RE = /[\x01-\x03]/g;
-const MARK_COLORS = { [MARK_DIM]: "#9c8b78", [MARK_OK]: "#8fbf7f" };
+const MARK_COLORS = { [MARK_DIM]: "#e0b98e", [MARK_OK]: "#fed8b1" };
 
 function stripMarks(text) {
   return text.replace(MARK_RE, "");
@@ -307,11 +310,36 @@ function colorRuns(text, base) {
   return runs;
 }
 
+// "[token]" runs are clickable, but rendered without the brackets: stripLinks()
+// drops them from what's drawn, and findLinks() reports columns in that same
+// (marks + brackets stripped) space so they line up with the drawn text
+const LINK_RE = /(?<![\x01-\x03])\[[^\]\n]+\]/g;
+// findLinks' exec loop below calls stripLinks while it's mid-iteration; sharing
+// one regex object between the two would clobber lastIndex and spin forever
+const LINK_SCAN_RE = /(?<![\x01-\x03])\[[^\]\n]+\]/g;
+function stripLinks(text) {
+  return text.replace(LINK_RE, (m) => m.slice(1, -1));
+}
+function findLinks(row) {
+  const out = [];
+  LINK_SCAN_RE.lastIndex = 0;
+  let m;
+  while ((m = LINK_SCAN_RE.exec(row))) {
+    out.push({
+      col: stripMarks(stripLinks(row.slice(0, m.index))).length,
+      len: m[0].length - 2,
+      text: m[0].slice(1, -1),
+    });
+  }
+  return out;
+}
+
 function makeLabel(def, lines, family) {
   const canvasEl = document.createElement("canvas");
   const ctx = canvasEl.getContext("2d");
   const font = def.font + "px " + (family || '"temp-v2", monospace');
   ctx.font = font;
+  ctx.fontKerning = "none"; // temp-v2's kerning pairs shift some glyphs (e.g. "_" next to "**") off baseline
   const metrics = ctx.measureText("M");
   const ascent = metrics.fontBoundingBoxAscent || def.font * 0.8;
   const height = Math.round(ascent + (metrics.fontBoundingBoxDescent || def.font * 0.25));
@@ -331,14 +359,23 @@ function makeLabel(def, lines, family) {
     height,
     ascent,
     width: canvasEl.width,
+    canvasHeight: canvasEl.height,
     dirty: false,
     text: "",
+    links: [],
     fits(line) {
-      return ctx.measureText(stripMarks(line)).width <= def.w;
+      return ctx.measureText(stripLinks(stripMarks(line))).width <= def.w;
     },
     set(text) {
       label.text = text;
       label.dirty = true;
+    },
+    // px,py in canvas pixels (top-left origin); null if nothing clickable there
+    hitLink(px, py) {
+      for (const link of label.links) {
+        if (px >= link.x0 && px < link.x1 && py >= link.y0 && py < link.y1) return link.text;
+      }
+      return null;
     },
     paint() {
       if (!label.dirty) return;
@@ -352,17 +389,28 @@ function makeLabel(def, lines, family) {
       ctx.textAlign = centred ? "center" : "left";
       const x = centred ? canvasEl.width / 2 : 0;
       const top = def.align[1] === 1 ? (canvasEl.height - rows.length * height) / 2 : 0;
+      const charWidth = ctx.measureText("0").width;
+      label.links = [];
       for (let i = 0; i < rows.length; i++) {
         const y = top + i * height + ascent;
         if (centred) {
-          ctx.fillText(stripMarks(rows[i]), x, y);
+          ctx.fillText(stripLinks(stripMarks(rows[i])), x, y);
           continue;
         }
         let rx = x;
-        for (const run of colorRuns(rows[i], def.color)) {
+        for (const run of colorRuns(stripLinks(rows[i]), def.color)) {
           ctx.fillStyle = run.color;
           ctx.fillText(run.text, rx, y);
           rx += ctx.measureText(run.text).width;
+        }
+        for (const link of findLinks(rows[i])) {
+          label.links.push({
+            x0: link.col * charWidth,
+            x1: (link.col + link.len) * charWidth,
+            y0: top + i * height,
+            y1: top + (i + 1) * height,
+            text: link.text,
+          });
         }
       }
       texture.needsUpdate = true;
@@ -467,14 +515,16 @@ function stepCamera(dt, pointer) {
   rig.cursorY +=
     (THREE.MathUtils.clamp(pointer.y, -CURSOR_CLAMP, CURSOR_CLAMP) - rig.cursorY) * ease;
 
-  const blend = Math.min(dt * HOVER_EASE, 1);
-  rig.hoverWeight += ((rig.hover ? HOVER_BLEND : 0) - rig.hoverWeight) * blend;
-  if (rig.hoverWeight < 0.005) rig.hoverAt.copy(rig.hoverTo);
-  else rig.hoverAt.lerp(rig.hoverTo, blend);
+  if (!isPanelOpen()) {
+    const blend = Math.min(dt * HOVER_EASE, 1);
+    rig.hoverWeight += ((rig.hover ? HOVER_BLEND : 0) - rig.hoverWeight) * blend;
+    if (rig.hoverWeight < 0.005) rig.hoverAt.copy(rig.hoverTo);
+    else rig.hoverAt.lerp(rig.hoverTo, blend);
+  }
 
   rigBase(BEZ(rig.t));
 
-  if (rig.hoverWeight > 0.001) {
+  if (rig.hoverWeight > 0.001 && !isPanelOpen()) {
     look.subVectors(rig.hoverAt, basePos);
     if (look.lengthSq() > 1e-6 && Math.abs(look.normalize().dot(UP)) < 0.999) {
       lookMatrix.lookAt(basePos, rig.hoverAt, UP);
@@ -646,6 +696,20 @@ function hoverLockBroken() {
 }
 
 function stepZones() {
+  if (isPanelOpen()) {
+    // settings/achievements own hover + cursor while open; ignore the game world,
+    // but leave the ring alone so their own .cursorable hover state still shows
+    inBand = false;
+    hoverLocked = false;
+    hoverHot = null;
+    if (hovered !== "" || hoveredZone !== "") {
+      hovered = "";
+      hoveredZone = "";
+      onHovered("");
+    }
+    setHover(false, lookTarget);
+    return;
+  }
   inBand =
     !blocked && ZONES[zone].parent !== "" && (pointerX < BACK_BAND || pointerX > 1 - BACK_BAND);
 
@@ -679,76 +743,247 @@ function stepZones() {
 
 const MAX_LINES = 9;
 const CHAR_DELAY = 0.01;
-const PROMPT = "[temp@temp ~]$ ";
+const PROMPT = "temp@temp ~$ ";
 const PASSWORD = "dogs100";
 
 const BOOT_LOG = `[    0.000000] Command line: BOOT SEQ START
-[    0.001842] CPU: AMD Ryzen 9 5950X 16-Core Processor detected
-[    0.002104] CPU: 16 cores / 32 threads @ 3.4GHz base
-[    0.014557] Memory: 64GB DDR4 available
-[    0.021309] pci 0000:0a:00.0: NVIDIA GeForce RTX 4060 Ti detected
-[    0.032881] nvidia: loading module...                          [  OK  ]
-[    0.089213] Initializing cgroup subsys cpuset                  [  OK  ]
-[    0.102456] Mounting /boot...                                  [  OK  ]
-[    0.118732] Mounting /home...                                  [  OK  ]
-[    0.203119] Starting Wayland compositor: Hyprland              [  OK  ]
-[    0.240881] Starting PipeWire audio server                     [  OK  ]
-[    0.251203] Starting WirePlumber session manager               [  OK  ]
-[    0.302447] Loading Waybar                                     [  OK  ]
-[    0.318992] Network Manager: eth0 up                           [  OK  ]
-[    0.401337] Reached target Graphical Interface.                [  OK  ]
-[    0.512004] Starting temp.dog message...                       [  OK  ]`;
+[0.001842] CPU: AMD Ryzen 9 5950X 16-Core Processor detected
+[0.002104] CPU: 16 cores / 32 threads @ 3.4GHz base
+[0.014557] Memory: 64GB DDR4 available
+[0.021309] pci 0000:0a:00.0: NVIDIA GeForce RTX 4060 Ti detected
+[0.032881] nvidia: loading module...        [  OK  ]
+[0.089213] Initializing cgroup subsys cpuset[  OK  ]
+[0.102456] Mounting /boot...                [  OK  ]
+[0.118732] Mounting /home...                [  OK  ]
+[0.203119] Starting compositor: Hyprland    [  OK  ]
+[0.240881] Starting PipeWire audio server   [  OK  ]
+[0.251203] Starting WirePlumber session     [  OK  ]
+[0.302447] Loading Waybar                   [  OK  ]
+[0.318992] Network Manager: eth0 up         [  OK  ]
+[0.401337] Reached target GUI               [  OK  ]
+[0.512004] Starting temp.dog message...     [  OK  ]`;
 
-const WELCOME = `Temp Linux [Version 26w31a]
+const WELCOME = `Temp Linux (Version 26w31a)
 Copyright (c) t3mp 2026. All rights reserved.
 
 Welcome back, Temp!
 
-Available commands: help, ls, <filename>, clr, ping
+Available commands: [help], [ls], <filename>, [clr], [ping]
 `;
 
-const HELP = `ls lists all files
-<filename> opens a file, e.g. dog
-clr clears the screen
-ping pongs
-help prints this again!
+const HELP = `[ls] lists all files
+<filename> opens a file, e.g. [dog]
+[clr] clears the screen
+[ping] pongs
+[help] prints this again!
 `;
 
 const LS_FILES = [
   "dog.png",
-  "faq.txt",
   "idklol.mp4",
   "secret.txt",
-  "secretgame.py",
+  "casino.py",
   "theanswertolifetheuniverseandeverything.txt",
   "whatisthis.txt",
   "whoami.txt",
 ];
 
 const WHOAMI_PAGES = [
-  "(1/6)\nHi, my name is Temp! An awfully creative individual that, when paired with unlimited free time, can pretty much do anything I set my mind to (nerfed by ADHD tho, lol).",
-  "(2/6)\nRecently, I quit video editing to pursue my dreams of game development and web design, and despite it being really scary at times, I've never felt better.",
-  "(3/6)\nAs a kid who grew up on the internet, I found myself making games, music, art, videos, websites, and so much more, simply because I found it so enjoyable and fun to me.",
-  "(4/6)\nSo, after finishing the hell that was high school, despite getting really good grades, I decided to follow my dreams, and that leads us to today.",
-  "(5/6)\nLook, you may not know much about me now, but I promise you, and myself, that you will know me in the future. Then I can die peacefully, knowing I left my mark on the internet.",
-  "(6/6)\nAnd before I sign off, I just want to thank you for stopping by my silly little website. You are awesome. Never forget where you've come from, and where you're going.\n\n- temp 29/07/26",
+  {
+    en: "(1/6)\nHi, my name is Temp! An awfully creative individual that, when paired with unlimited free time, can pretty much do anything I set my mind to (nerfed by ADHD tho, lol).",
+    es: "(1/6)\n¡Hola, soy Temp! Un individuo muy creativo que, con tiempo libre ilimitado, puede casi todo lo que se propone (nerfeado por el TDAH, lol).",
+    pt: "(1/6)\nOi, meu nome é Temp! Um cara muito criativo que, com tempo livre ilimitado, faz quase tudo que quiser (nerfado pelo TDAH, lol).",
+    fr: "(1/6)\nSalut, je suis Temp ! Un type très créatif qui, avec du temps libre illimité, peut faire presque tout (nerfé par le TDAH, lol).",
+    de: "(1/6)\nhi, ich bin temp! ein sehr kreativer typ, der mit unbegrenzter freizeit fast alles schaffen kann (durch adhs generft, lol).",
+    jp: "(1/6)\nどうも、Tempです！時間が無限にあれば大抵何でもできる、めちゃ創造的な人間です（ADHDのせいで少し弱体化してるけどw）。",
+    kr: "(1/6)\n안녕, 나는 Temp야! 시간이 무한하면 거의 뭐든 할 수 있는, 엄청 창의적인 사람이지 (ADHD 때문에 좀 너프됐지만 ㅋㅋ).",
+    zh: "(1/6)\n嗨，我是Temp！一个超有创意的人，只要时间无限，几乎什么都能做到（不过被多动症削弱了些，哈哈）。",
+  },
+  {
+    en: "(2/6)\nRecently, I quit video editing to pursue my dreams of game development and web design, and despite it being really scary at times, I've never felt better.",
+    es: "(2/6)\nHace poco dejé la edición de video para perseguir mis sueños en videojuegos y diseño web, y aunque da miedo, nunca me sentí mejor.",
+    pt: "(2/6)\nRecentemente deixei a edição de vídeo para seguir meus sonhos em jogos e design web, e mesmo dando medo, nunca me senti melhor.",
+    fr: "(2/6)\nJ'ai récemment quitté le montage vidéo pour poursuivre mes rêves en jeux vidéo et web design, et malgré la peur, je me sens mieux que jamais.",
+    de: "(2/6)\nvor kurzem habe ich videobearbeitung aufgegeben, um meine träume von gamedev und webdesign zu verfolgen, und trotz der angst fühle ich mich besser.",
+    jp: "(2/6)\n最近、動画編集をやめてゲーム開発とウェブデザインの夢を追うことにした。怖いこともあるけど、今までで一番いい気分だ。",
+    kr: "(2/6)\n최근 영상 편집을 그만두고 게임 개발과 웹 디자인이라는 꿈을 좇기로 했어. 무섭기도 하지만, 그 어느 때보다 기분이 좋아.",
+    zh: "(2/6)\n最近我放弃了视频剪辑，去追求游戏开发和网页设计的梦想，虽然有点吓人，但我从未感觉这么好过。",
+  },
+  {
+    en: "(3/6)\nAs a kid who grew up on the internet, I found myself making games, music, art, videos, websites, and so much more, simply because I found it so enjoyable and fun to me.",
+    es: "(3/6)\nDe niño crecí en internet, y me encontré haciendo juegos, música, arte, videos, webs, y mucho más, solo porque me resultaba muy divertido.",
+    pt: "(3/6)\nCresci na internet, e me encontrei fazendo jogos, música, arte, vídeos, sites, e muito mais, só porque eu achava tudo isso muito divertido.",
+    fr: "(3/6)\nEnfant élevé sur internet, je me suis retrouvé à faire des jeux, musique, art, vidéos, sites, et bien plus, juste parce que ça m'amusait.",
+    de: "(3/6)\nals kind, der im internet aufwuchs, machte ich spiele, musik, kunst, videos, websites und vieles mehr, einfach weil es mir spaß machte.",
+    jp: "(3/6)\nインターネットで育った子供として、気づけばゲームや音楽、アート、動画、ウェブサイトなどを作っていた。単純に楽しかったからだ。",
+    kr: "(3/6)\n인터넷 속에서 자란 아이로서, 어느새 게임, 음악, 예술, 영상, 웹사이트 등을 만들고 있었어. 그냥 그게 너무 즐거웠거든.",
+    zh: "(3/6)\n作为在互联网上长大的孩子，我不知不觉就开始做游戏、音乐、艺术、视频、网站等等，只因为这一切让我觉得非常快乐有趣。",
+  },
+  {
+    en: "(4/6)\nSo, after finishing the hell that was high school, despite getting really good grades, I decided to follow my dreams, and that leads us to today.",
+    es: "(4/6)\nAsí que, tras terminar el infierno del instituto, con muy buenas notas, decidí seguir mis sueños, y así llegamos hasta aquí.",
+    pt: "(4/6)\nEntão, após terminar o inferno do colégio, com notas muito boas, decidi seguir meus sonhos, e assim chegamos até aqui.",
+    fr: "(4/6)\nDonc, après avoir fini l'enfer du lycée, avec de très bonnes notes, j'ai décidé de suivre mes rêves, et ça nous mène jusqu'ici.",
+    de: "(4/6)\nnach der hölle namens schule, mit richtig guten noten, entschied ich mich, meinen träumen zu folgen, und so kamen wir hierher.",
+    jp: "(4/6)\n地獄のような高校生活を、いい成績で終えた後、俺は夢を追うことに決めた。それが今日につながっている。",
+    kr: "(4/6)\n지옥 같던 고등학교를 아주 좋은 성적으로 마친 뒤, 나는 꿈을 좇기로 결심했어. 그렇게 지금에 이르게 됐지.",
+    zh: "(4/6)\n结束了如同地狱般的高中生活后，尽管成绩很好，我还是决定追随自己的梦想，于是就有了今天。",
+  },
+  {
+    en: "(5/6)\nLook, you may not know much about me now, but I promise you, and myself, that you will know me in the future. Then I can die peacefully, knowing I left my mark on the internet.",
+    es: "(5/6)\nQuizá no me conozcas mucho ahora, pero te prometo, y me prometo, que me conocerás en el futuro. Así podré morir en paz, sabiendo que dejé huella en internet.",
+    pt: "(5/6)\nTalvez não me conheça muito agora, mas prometo a você, e a mim, que vai me conhecer no futuro. Assim posso morrer em paz, sabendo que deixei minha marca na internet.",
+    fr: "(5/6)\nTu ne me connais peut-être pas bien maintenant, mais je te promets, et me promets, que tu me connaîtras un jour. Je pourrai alors mourir en paix, ayant marqué internet.",
+    de: "(5/6)\ndu kennst mich jetzt kaum, aber ich verspreche dir und mir: du wirst mich noch kennenlernen. dann kann ich in frieden sterben, mit meiner spur im internet.",
+    jp: "(5/6)\n今はまだ俺のことをよく知らないかもしれないけど、将来は必ず知ってもらえると約束する。そうすればインターネットに足跡を残して安らかに死ねる。",
+    kr: "(5/6)\n지금은 나를 잘 모를 수도 있지만, 언젠가 나를 알게 될 거라고 너와 나 자신에게 약속해. 그러면 인터넷에 흔적을 남기고 편히 눈을 감을 수 있겠지.",
+    zh: "(5/6)\n你现在可能还不太了解我，但我向你、也向自己保证，将来你一定会认识我的。那样我就能安心地离去，因为我在互联网上留下了自己的印记。",
+  },
+  {
+    en: "(6/6)\nAnd before I sign off, I just want to thank you for stopping by my silly little website. You are awesome. Never forget where you've come from, and where you're going. - temp 29/07/26",
+    es: "(6/6)\nAntes de irme, quiero darte las gracias por visitar mi pequeña web. Eres genial. Nunca olvides de dónde vienes y a dónde vas. - temp 29/07/26",
+    pt: "(6/6)\nAntes de sair, quero te agradecer por visitar meu site bobinho. Você é demais. Nunca esqueça de onde veio e pra onde vai. - temp 29/07/26",
+    fr: "(6/6)\nAvant de partir, merci d'être passé sur mon petit site débile. Tu es génial. N'oublie jamais d'où tu viens, ni où tu vas. - temp 29/07/26",
+    de: "(6/6)\nbevor ich abschließe, danke ich dir, dass du auf meiner kleinen albernen website warst. du bist toll. vergiss nie, wo du herkommst. - temp 29/07/26",
+    jp: "(6/6)\n最後に、この小さくて馬鹿げたサイトに来てくれてありがとう。お前は最高だ。自分の来た道と行く先を忘れないで。 - temp 29/07/26",
+    kr: "(6/6)\n마지막으로, 이 작고 엉뚱한 사이트에 들러줘서 고마워. 넌 정말 멋져. 네가 온 길과 갈 길을 절대 잊지 마. - temp 29/07/26",
+    zh: "(6/6)\n最后，谢谢你逛了我这个傻乎乎的小网站。你很棒。永远别忘了自己从哪来，要去哪。 - temp 29/07/26",
+  },
 ];
 
 const WHATISTHIS_PAGES = [
-  "What is this website for? (1/4)\n\nThis website was initially made for lurkers who like clicking on random links. I eventually decided to make a really awesome 3D WebGL game as my portfolio, as I think actions speak louder than words. Immean, what sane being creates an entire website with lore for their personal website. If this can't land me a job then nothing will.",
-  'How did you make it? (2/4)\n\nThis website is purely made of HTML, CSS, and ThreeJS, and took about a month to complete. I\'ve honestly never used ThreeJS before so I designed the website in Godot first, then "converted" it into ThreeJS, for better performance/compatibility. It was really fun to make, and I highly encourage others to make their own website!',
-  "What else will you add? (3/4)\n\nI consider this website finished, though my /hireme page might be updated occasionally.",
-  "I found a bug/glitch in your website! (4/4)\n\nPlease email me at hi@temp.dog (or reach out on Discord) and let me know!",
+  {
+    en: "What is this website for? (1/4)\nThis website was initially made for lurkers who like clicking on random links. I eventually decided to make a really awesome 3D WebGL game as my portfolio, as I think actions speak louder than words. If this can't land me a job then nothing will.",
+    es: "¿Para qué es esta web? (1/4)\nLa hice para curiosos que hacen clic en links random. Al final decidí hacer un juego 3D WebGL como portafolio, ya que las acciones hablan más que las palabras. Si esto no me da trabajo, nada lo hará.",
+    pt: "Pra que serve este site? (1/4)\nFiz para curiosos que clicam em links aleatórios. No fim decidi fazer um jogo 3D WebGL como portfólio, já que ações falam mais que palavras. Se isso não me dá um emprego, nada vai.",
+    fr: "C'est pour quoi ce site ? (1/4)\nFait pour les curieux qui cliquent sur des liens au hasard. J'ai fini par faire un jeu 3D WebGL comme portfolio, car les actes valent mieux que les mots. Si ça ne me trouve pas de travail, rien ne le fera.",
+    de: "wofür ist diese website? (1/4)\ngemacht für neugierige, die auf zufällige links klicken. am ende baute ich ein 3d-webgl-spiel als portfolio, denn taten zählen mehr als worte. wenn das mir keinen job bringt, nichts wird.",
+    jp: "このサイトは何のため？(1/4)\nランダムなリンクをクリックする野次馬のために作った。結局、行動は言葉より物を言うと思い、ポートフォリオとして3D WebGLゲームを作ることにした。これで仕事が取れなければ、もう無理だ。",
+    kr: "이 사이트는 뭐 하러 만든 거야? (1/4)\n아무 링크나 누르는 사람들을 위해 처음 만들었어. 결국 행동이 말보다 중요하다 싶어서 포트폴리오로 3D 웹GL 게임을 만들기로 했지. 이걸로도 취업이 안 되면, 답이 없는 거야.",
+    zh: "这个网站是做什么用的？(1/4)\n最初是为喜欢乱点链接的人做的。后来我决定做一个3D WebGL游戏当作品集，因为行动胜于空谈。要是这样都找不到工作，那就没办法了。",
+  },
+  {
+    en: 'How did you make it? (2/4)\nThis website is made with ThreeJS, and about a week to make. I\'ve honestly never used ThreeJS before so I designed the website in Godot first, then "converted" it into ThreeJS. It was really fun to make, and I highly encourage others to make their own website!',
+    es: '¿Cómo la hiciste? (2/4)\nEstá hecha con ThreeJS, y tardé como una semana. Nunca antes usé ThreeJS, así que diseñé la web en Godot primero, y luego la "convertí" a ThreeJS. Fue muy divertido, ¡y animo a otros a hacer su propia web!',
+    pt: 'Como você fez isso? (2/4)\nÉ feito com ThreeJS, e levou uma semana. Nunca tinha usado ThreeJS, então desenhei o site no Godot primeiro, e depois "converti" pra ThreeJS. Foi muito divertido, e recomendo que outros façam o próprio site!',
+    fr: "Comment tu l'as fait ? (2/4)\nFait avec ThreeJS, en environ une semaine. Je n'avais jamais utilisé ThreeJS, donc j'ai conçu le site sur Godot d'abord, puis \"converti\" en ThreeJS. Très amusant, et j'encourage tout le monde à faire son propre site !",
+    de: 'wie hast du das gemacht? (2/4)\ngemacht mit threejs, und etwa eine woche gedauert. ich hatte threejs nie benutzt, also entwarf ich die website erst in godot, dann "konvertierte" ich sie zu threejs. hat riesig spaß gemacht!',
+    jp: "どうやって作った？(2/4)\nThreeJSで作られていて、約1週間かかった。ThreeJSは初めてだったので、まずGodotでサイトを設計し、それをThreeJSに「変換」した。とても楽しかったし、みんなも自分のサイトを作ってみてほしい！",
+    kr: '어떻게 만든 거야? (2/4)\nThreeJS로 만들었고, 한 일주일쯜 걸렸어. ThreeJS는 써본 적이 없어서, 먼저 Godot에서 디자인한 다음 ThreeJS로 "변환"했지. 정말 재밌었고, 다들 자기 사이트를 만들어보길 추천해!',
+    zh: "你是怎么做出来的？(2/4)\n是用ThreeJS做的，花了大概一周。我以前从没用过ThreeJS，所以先在Godot里设计好网站，再把它「转换」成ThreeJS。做得很开心，也鼓励大家做一个属于自己的网站！",
+  },
+  {
+    en: "What else will you add? (3/4)\nI consider this website finished, though my /hireme page might be updated occasionally.",
+    es: "¿Qué más añadirás? (3/4)\nConsidero esta web terminada, aunque mi página /hireme puede actualizarse a veces.",
+    pt: "O que mais vai adicionar? (3/4)\nConsidero este site terminado, embora /hireme possa ser atualizado às vezes.",
+    fr: "Quoi d'autre ? (3/4)\nJe considère ce site fini, même si ma page /hireme sera parfois mise à jour.",
+    de: "was kommt noch? (3/4)\nich halte diese website für fertig, obwohl meine /hireme-seite ab und zu aktualisiert wird.",
+    jp: "他に何を追加する？(3/4)\nこのサイトは完成したと思っているが、/hiremeページはたまに更新するかもしれない。",
+    kr: "또 뭘 추가할 거야? (3/4)\n이 사이트는 완성됐다고 생각하지만, /hireme 페이지는 가끔 업데이트될 수도 있어.",
+    zh: "你还会添加什么？(3/4)\n我认为这个网站已经完成了，不过/hireme页面可能会偶尔更新。",
+  },
+  {
+    en: "I found a bug/glitch in your website! (4/4)\nPlease email me at hi@temp.dog (or reach out on Discord) and let me know!",
+    es: "¡Encontré un bug en tu web! (4/4)\nEscríbeme a hi@temp.dog (o en Discord) y avísame!",
+    pt: "Encontrei um bug no seu site! (4/4)\nMe escreva em hi@temp.dog (ou no Discord) e me avise!",
+    fr: "J'ai trouvé un bug sur ton site ! (4/4)\nÉcris-moi à hi@temp.dog (ou sur Discord) pour me le dire !",
+    de: "ich habe einen bug gefunden! (4/4)\nschreib mir an hi@temp.dog (oder auf discord) und sag mir bescheid!",
+    jp: "サイトにバグを見つけた！(4/4)\nhi@temp.dogまで（またはDiscordで）教えてください！",
+    kr: "사이트에서 버그를 발견했어! (4/4)\nhi@temp.dog로 (또는 디스코드로) 알려줘!",
+    zh: "我发现你网站有个bug！(4/4)\n请发邮件到hi@temp.dog（或私信Discord）告诉我！",
+  },
 ];
 
-const SECRET_TEXT = `hey, it's me, temp. i've been coding this for like... hours and like im so tired rn but like hah im glad u enjoy my game, thank you so much for your time!
+const SECRET_PAGES = [
+  {
+    en: "(1/4)\nhey, it's me, temp. i've been coding this for like... hours and like im so tired rn but like hah im glad u enjoy my game, thank you so much for your time!",
+    es: "(1/4)\nhola, soy temp. lleva ya horas programando esto y estoy muy cansado pero me alegra que disfrutes mi juego, gracias por tu tiempo!",
+    pt: "(1/4)\noi, sou o temp. já são horas programando isso e tô muito cansado mas fico feliz que curte meu jogo, obrigado pelo seu tempo!",
+    fr: "(1/4)\nsalut, c'est temp. ça fait des heures que je code ça et je suis épuisé mais content que tu aimes mon jeu, merci pour ton temps !",
+    de: "(1/4)\nhey, ich bin's, temp. das hier zu coden dauert schon stunden und ich bin so müde, aber freut mich, dass es dir gefällt, danke dir!",
+    jp: "(1/4)\nどうも、tempです。もう何時間もこれをコーディングしてて超眠いけど、楽しんでもらえて嬉しいよ、時間をくれてありがとう！",
+    kr: "(1/4)\n안녕, 나 temp야. 이거 코딩하는 데 벌써 몇 시간이나 걸렸고 너무 졸린데, 즐겨줘서 기쁘다, 시간 내줘서 고마워!",
+    zh: "(1/4)\n嗨，是我，temp。这玩意儿都写了好几个小时了，累死了，但很高兴你喜欢我的游戏，谢谢你的时间！",
+  },
+  {
+    en: "(2/4)\nfeel free to reach out to me to say hi, im really curious to meet someone like you...",
+    es: "(2/4)\nescríbeme para saludar, tengo curiosidad por conocer a alguien como tú...",
+    pt: "(2/4)\nme escreva pra dizer oi, tenho curiosidade de conhecer alguém como você...",
+    fr: "(2/4)\nn'hésite pas à m'écrire, je suis curieux de rencontrer quelqu'un comme toi...",
+    de: "(2/4)\nschreib mir gern, ich bin gespannt jemanden wie dich kennenzulernen...",
+    jp: "(2/4)\n気軽に声をかけてね、お前みたいな人に会えるの、すごく楽しみにしてるんだ…",
+    kr: "(2/4)\n편하게 인사하러 와도 돼, 너 같은 사람을 만나는 게 진짜 궁금하거든…",
+    zh: "(2/4)\n欢迎随时来打个招呼，我真的很想认识像你这样的人…",
+  },
+  {
+    en: "(3/4)\nalso, yes this is a reference to nso, yes the credits was a reference to minecraft, and yes there are a lot more references scattered around this place heh",
+    es: "(3/4)\ntambién, sí esto es referencia a nso, sí los créditos son referencia a minecraft, y sí hay más referencias por aquí jeje",
+    pt: "(3/4)\ntambém, sim isso é referência ao nso, sim os créditos são referência ao minecraft, e sim tem mais referências por aqui hehe",
+    fr: "(3/4)\naussi, oui c'est une référence à nso, oui le générique est une référence à minecraft, et oui il y a plus de références ici mdr",
+    de: "(3/4)\nübrigens, ja das ist eine nso-referenz, ja der abspann ist eine minecraft-referenz, und ja es gibt noch mehr referenzen hier hehe",
+    jp: "(3/4)\nちなみに、これはnsoの元ネタで、クレジットはマイクラの元ネタ、そしてここには他にもネタが隠れてるよへへ",
+    kr: "(3/4)\n참고로, 이건 nso 레퍼런스고, 크레딧은 마인크래프트 레퍼런스야, 여기 저기 더 많은 레퍼런스가 숨어있어 헤헤",
+    zh: "(3/4)\n还有，这里是nso的彩蛋，credits是我的世界的彩蛋，这地方还藏着更多彩蛋呢嘿嘿",
+  },
+  {
+    en: "(4/4)\nbut fr tho ur awesome tysm for playing !! <3",
+    es: "(4/4)\nen serio, eres genial, gracias por jugar! <3",
+    pt: "(4/4)\nmas sério, você é ótimo, valeu por jogar! <3",
+    fr: "(4/4)\nsérieux, t'es génial, merci d'avoir joué! <3",
+    de: "(4/4)\necht, du bist toll, danke fürs spielen! <3",
+    jp: "(4/4)\nでもマジで、お前最高だよ、遊んでくれてありがとう！！<3",
+    kr: "(4/4)\n근데 진심으로, 너 정말 멋져, 플레이해줘서 고마워 !! <3",
+    zh: "(4/4)\n不过说真的，你超棒，谢谢你玩这个游戏！！<3",
+  },
+];
 
-feel free to reach out to me to say hi, im really curious to meet someone like you...
+const SECRET_LOCKED = {
+  en: "permission denied",
+  es: "acceso denegado",
+  pt: "acesso negado",
+  fr: "accès refusé",
+  de: "zugriff verwehrt",
+  jp: "アクセス拒否",
+  kr: "접근 거부",
+  zh: "拒绝访问",
+};
 
-also, yes this is a reference to nso, yes the credits was a reference to minecraft, and yes there are a lot more references scattered around this place heh
-
-but fr tho ur awesome tysm for playing !! <3
-`;
+const CASINO_START = 100;
+const CASINO_ROLL_COST = 20;
+const CASINO_PROFIT_GOAL = 50;
+const CASINO_GUESSES = ["odd", "even", "1", "2", "3", "4", "5", "6"];
+const CASINO_RULES = [
+  {
+    en: "(1/3)\nWelcome to my casino! Each dice roll costs $20. You must choose between odd, even or the specific number.",
+    es: "(1/3)\n¡Bienvenido a mi casino! Cada tirada cuesta $20. Debes elegir entre par, impar o el número exacto.",
+    pt: "(1/3)\nBem-vindo ao meu casino! Cada jogada custa $20. Você deve escolher entre par, ímpar ou o número exato.",
+    fr: "(1/3)\nBienvenue dans mon casino ! Chaque lancer coûte 20 $. Choisis entre pair, impair, ou le chiffre exact.",
+    de: "(1/3)\nwillkommen in meinem casino! jeder wurf kostet 20$. wähle gerade, ungerade oder die genaue zahl.",
+    jp: "(1/3)\n俺のカジノへようこそ！サイコロ一回20ドル。奇数・偶数か、正確な数字を選んでね。",
+    kr: "(1/3)\n내 카지노에 온 걸 환영해! 주사위 한 번에 20달러야. 홀짝이나 정확한 숫자 중에 골라.",
+    zh: "(1/3)\n欢迎来到我的赌场！每次掷骰子花$20。你要选单双或具体数字。",
+  },
+  {
+    en: "(2/3)\nIf you guess odd/even correctly, you'll double your money. If you guess a number correctly, you'll times your money by that amount.",
+    es: "(2/3)\nSi aciertas par/impar, tu dinero se duplica. Si aciertas el número, se multiplica por esa cantidad.",
+    pt: "(2/3)\nSe acertar par/ímpar, seu dinheiro dobra. Se acertar o número, ele multiplica por essa quantidade.",
+    fr: "(2/3)\nSi tu devines pair/impair juste, ton argent double. Si tu devines le chiffre, il se multiplie par ce nombre.",
+    de: "(2/3)\nrätst du gerade/ungerade richtig, verdoppelt sich dein geld. rätst du die zahl, multipliziert es sich damit.",
+    jp: "(2/3)\n奇数・偶数が当たれば、お金は2倍に。数字が当たれば、その数字倍になるよ。",
+    kr: "(2/3)\n홀짝을 맞히면 돈이 두 배가 돼. 숫자를 맞히면 그 숫자만큼 곱해지지.",
+    zh: "(2/3)\n猜中单双，钱翻倍。猜中数字，钱就乘以那个数字。",
+  },
+  {
+    en: "(3/3)\nIf you guess odd/even incorrectly, you'll half your money. If you guess a number incorrectly, you'll divide your money by that amount.",
+    es: "(3/3)\nSi fallas par/impar, tu dinero se reduce a la mitad. Si fallas el número, se divide por esa cantidad.",
+    pt: "(3/3)\nSe errar par/ímpar, seu dinheiro cai pela metade. Se errar o número, ele divide por essa quantidade.",
+    fr: "(3/3)\nSi tu te trompes de pair/impair, ton argent est réduit de moitié. Faux chiffre, il se divise par ce nombre.",
+    de: "(3/3)\nliegst du bei gerade/ungerade falsch, halbiert sich dein geld. bei falscher zahl, teilt es sich durch sie.",
+    jp: "(3/3)\n奇数・偶数を外すと、お金は半分に。数字を外すと、その数字で割られるよ。",
+    kr: "(3/3)\n홀짝을 틀리면 돈이 반으로 줄어. 숫자를 틀리면 그 숫자로 나눠지지.",
+    zh: "(3/3)\n猜错单双，钱减半。猜错数字，钱就除以那个数字。",
+  },
+];
 
 const EXTENSIONS = [".txt", ".py", ".png", ".mp4"];
 const EXTRA_COMMANDS = ["help", "ls", "ping", "clr", "rm -rf /"];
@@ -798,7 +1033,7 @@ function commands() {
 function formatLs() {
   return LS_FILES.map((name) => {
     const base = baseName(name);
-    return base + MARK_DIM + name.slice(base.length) + MARK_RESET;
+    return "[" + base + "]" + MARK_DIM + name.slice(base.length) + MARK_RESET;
   }).join(" ");
 }
 
@@ -947,77 +1182,167 @@ async function paginate(pages) {
   }
 }
 
-async function play() {
+async function guessRound() {
+  let guess;
+  for (;;) {
+    guess = (await read("Type [odd], [even], [1], [2], [3], [4], [5], or [6]: ", false, false))
+      .trim()
+      .toLowerCase();
+    if (!pc.on) return null;
+    if (CASINO_GUESSES.indexOf(guess) !== -1) break;
+    await type("...");
+    await type("try again.");
+    await type("");
+  }
   await type("");
-  await slow("This is the best game ever.");
+  const dice = pickOne(6);
+  await type("You guessed " + guess + " and the dice was " + dice + ".");
   await type("");
-  await read("Are you ready? (Y/N): ", false, false);
-  await type("");
-  await slow("...");
-  await type("");
-  await slow("I'm too lazy to code y/n logic anyways lol");
-  await type("");
-  await slow(
-    "So in this game, say a number between 1 and 1 googolplex and if you guess right you win"
-  );
-  await type("");
-  await read("enter your number: ", false, false);
-  await type("");
-  await slow("...wow you won u should play the lottery!!");
-  await type("");
-  await slow("haha just kidding uhh you lost");
-  await type("");
-  await slow("Thank u so much for playing my game! yahoo");
-  await type("");
-  game.gambles++;
-  saveGame();
-  award("gambling", game.gambles);
+  const n = parseInt(guess, 10);
+  return { won: n ? dice === n : (guess === "odd") === (dice % 2 === 1), n };
 }
 
-async function secretgame() {
-  await slow("...");
+async function casinoBankrupt() {
+  const short = CASINO_ROLL_COST - game.casinoMoney;
+  await type("You're $" + short + " short...");
   await type("");
-  await slow("game requires elevated privileges");
+  const gamble = await read("Gamble your save data to win $100? ([Y]/[N]): ", false, false);
+  if (!pc.on) return;
   await type("");
-  for (let attempt = 0; attempt < 3; attempt++) {
-    const entry = await read("[sudo] password for temp: ", true, false);
+  if (gamble.trim().toLowerCase().charAt(0) !== "y") return;
+
+  await type("You currently have -$" + short);
+  await type("");
+  const round = await guessRound();
+  if (!round) return;
+
+  if (round.won) {
+    game.casinoMoney = CASINO_START;
+    saveGame();
+    await type("You won! Here's your $100 back.");
+    await type("");
+    return;
+  }
+
+  await type("You lost. Your save data is gone.");
+  try {
+    localStorage.clear();
+    sessionStorage.clear();
+  } catch (e) {}
+  location.reload();
+}
+
+async function play() {
+  await type("");
+  if (game.casinoMoney >= CASINO_ROLL_COST) {
+    if (game.casinoVisited) {
+      await type("Welcome back to my casino!");
+      await type("");
+      const again = await read("Read the rules again? ([Y]/[N]): ", false, false);
+      if (!pc.on) return;
+      await type("");
+      if (again.trim().toLowerCase().charAt(0) === "y") await paginate(CASINO_RULES.map(langText));
+    } else {
+      await paginate(CASINO_RULES.map(langText));
+    }
+  }
+  game.casinoVisited = true;
+  saveGame();
+
+  let first = true;
+  while (pc.on) {
+    if (game.casinoMoney < CASINO_ROLL_COST) {
+      await casinoBankrupt();
+      if (game.casinoMoney < CASINO_ROLL_COST) return;
+      continue;
+    }
+
+    await type("You currently have $" + game.casinoMoney);
+    await type("");
+    const again = await read(
+      (first ? "Roll the dice" : "Play again") + "? ([Y]/[N]): ",
+      false,
+      false
+    );
     if (!pc.on) return;
-    if (entry === PASSWORD) {
-      award("log-on");
-      await play();
+    first = false;
+    await type("");
+    if (again.trim().toLowerCase().charAt(0) !== "y") {
+      await type("You cashed out $" + game.casinoMoney + ".");
+      await type("");
+      await type("See ya next time!");
+      await type("");
+      if (game.casinoMoney - CASINO_START > CASINO_PROFIT_GOAL) award("stonks");
       return;
     }
-    await type("Sorry, try again.");
+
+    game.casinoMoney -= CASINO_ROLL_COST;
+    saveGame();
+    await type("You currently have $" + game.casinoMoney);
+    await type("");
+
+    const round = await guessRound();
+    if (!round) return;
+    // the $20 stake is just a bind: a win refunds it, then doubles/timeses the whole total
+    game.casinoMoney = round.won
+      ? (game.casinoMoney + CASINO_ROLL_COST) * (round.n || 2)
+      : Math.floor(game.casinoMoney / (round.n || 2));
+    saveGame();
+
+    await type(round.won ? "You won!" : "You lost.");
+    await type("");
   }
-  await type("sudo: 3 incorrect password attempts");
-  await type("");
 }
 
 async function open(base, command) {
   switch (base) {
     case "whoami":
-      await paginate(WHOAMI_PAGES);
+      await paginate(WHOAMI_PAGES.map(langText));
       break;
     case "whatisthis":
-      await paginate(WHATISTHIS_PAGES);
+      await paginate(WHATISTHIS_PAGES.map(langText));
       break;
-    case "faq":
-      await type("");
-      break;
-    case "secretgame":
-      await secretgame();
+    case "casino":
+      await play();
       break;
     case "dog":
-      await type("[opens dog.png in browser]");
+      window.open("/dog.png", "_blank");
+      await type("opened [dog]" + MARK_DIM + ".png" + MARK_RESET + " in new tab");
       await type("");
       break;
     case "idklol":
-      await type("[opens idklol.mp4 in browser]");
+      window.open("/idklol.mp4", "_blank");
+      await type("opened [idklol]" + MARK_DIM + ".mp4" + MARK_RESET + " in new tab");
       await type("");
       break;
-    case "secret":
-      await typeOut(SECRET_TEXT);
+    case "secret": {
+      await slow("...");
+      await type("");
+      await slow("elevated privileges required to view secret.txt");
+      await type("");
+      let authorized = false;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        const entry = await read("sudo password for temp: ", true, false);
+        if (!pc.on) return;
+        if (entry === PASSWORD) {
+          authorized = true;
+          break;
+        }
+        await type("Sorry, try again.");
+      }
+      if (!authorized) {
+        await type("sudo: 3 incorrect password attempts");
+        await type("");
+        break;
+      }
+      if (beaten() >= achGoal(ACH[END])) {
+        await paginate(SECRET_PAGES.map(langText));
+      } else {
+        await typeOut(langText(SECRET_LOCKED));
+        await type("");
+      }
       break;
+    }
     case "theanswertolifetheuniverseandeverything":
       await type("42");
       await type("");
@@ -1034,7 +1359,7 @@ async function handle(command) {
       await typeOut(HELP);
       break;
     case "ls":
-      write(formatLs());
+      await type(formatLs());
       await type("");
       break;
     case "ping":
@@ -1045,8 +1370,8 @@ async function handle(command) {
       clear();
       break;
     case "rm -rf /":
-      await type("[the page goes blank]");
       pc.on = false;
+      location.href = "about:blank";
       break;
     default:
       await open(baseName(command), command);
@@ -1093,6 +1418,55 @@ function power(on) {
   }
 }
 
+function submitLine(value) {
+  pc.entered = value;
+  commit(pc.prompt + (pc.hidden ? "" : value));
+  pc.line = "";
+  pc.lineDone.resolve();
+}
+
+// raycasts the pointer against the terminal's own label mesh, in its canvas-pixel space
+function terminalHitUV() {
+  if (!pc.captured || !pc.on || !pc.label || !pc.label.mesh) return null;
+  pointer.set(pointerX * 2 - 1, 1 - pointerY * 2);
+  raycaster.setFromCamera(pointer, camera);
+  const hits = raycaster.intersectObject(pc.label.mesh);
+  return hits.length && hits[0].uv ? hits[0].uv : null;
+}
+
+function terminalLinkAt(uv) {
+  if (!uv || pc.mode !== ASK) return null;
+  const px = uv.x * pc.label.width;
+  const py = (1 - uv.y) * pc.label.canvasHeight;
+  return pc.label.hitLink(px, py);
+}
+
+// the bare "temp@temp ~$ " prompt (top-level, nothing typed yet) has no [link]
+// of its own, but clicking it should still run help — keeps the whole game
+// playable without a keyboard
+function terminalPromptHit(uv) {
+  if (!uv || pc.mode !== ASK || pc.prompt !== PROMPT || pc.buffer) return false;
+  const py = (1 - uv.y) * pc.label.canvasHeight;
+  const rows = Math.min(pc.out.length + 1, MAX_LINES);
+  const rowTop = (rows - 1) * pc.label.height;
+  return py >= rowTop && py < rowTop + pc.label.height;
+}
+
+function tryTerminalClick() {
+  const uv = terminalHitUV();
+  if (!uv) return;
+  if (pc.mode === PAGE) {
+    pc.anyKey.resolve();
+    return;
+  }
+  if (terminalPromptHit(uv)) {
+    submitLine("help");
+    return;
+  }
+  const text = terminalLinkAt(uv);
+  if (text != null) submitLine(text);
+}
+
 window.addEventListener("keydown", (event) => {
   if (!pc.captured || !pc.on) return;
   event.preventDefault();
@@ -1102,14 +1476,12 @@ window.addEventListener("keydown", (event) => {
   }
   if (pc.mode !== ASK) return;
   if (event.key === "Enter") {
+    let value = pc.buffer;
     if (pc.complete) {
       const hint = suggest();
-      if (hint) pc.buffer = clip(pc.prompt, hint);
+      if (hint) value = clip(pc.prompt, hint);
     }
-    pc.entered = pc.buffer;
-    commit(pc.prompt + (pc.hidden ? "" : pc.buffer));
-    pc.line = "";
-    pc.lineDone.resolve();
+    submitLine(value);
     return;
   }
   if (event.key === "Backspace") {
@@ -1140,7 +1512,9 @@ const game = {
   chair: 0,
   shelf: 0,
   rug: 0,
-  gambles: 0,
+  casinoMoney: CASINO_START,
+  casinoVisited: false,
+  donateSeen: false,
   knowledge: {},
   plays: { before: 0, after: 0 },
   visits: 0,
@@ -1226,8 +1600,9 @@ async function actPc() {
   if (pick === "yes") {
     game.pcOn = !game.pcOn;
     saveGame();
-    await textbox(game.pcOn ? "pc-off-yes" : "pc-on-yes");
     power(game.pcOn);
+    if (game.pcOn) award("log-on");
+    await textbox(game.pcOn ? "pc-off-yes" : "pc-on-yes");
   } else if (pick === "no") {
     await textbox(game.pcOn ? "pc-on-no" : "pc-off-no");
   } else if (pick === "ram") {
@@ -1276,7 +1651,11 @@ async function actBed() {
 }
 
 async function ask(topic) {
-  if (topic === "donate" && !game.coin) {
+  if (topic === "donate" && (!game.donateSeen || !game.coin)) {
+    if (!game.donateSeen) {
+      game.donateSeen = true;
+      learn("donate-ask");
+    }
     await textbox("plush-donate");
     return;
   }
@@ -1309,8 +1688,7 @@ async function actPlush() {
     return;
   }
   await textbox("plush-topics", null, true);
-  const pick = left.length > 1 ? await choice("plush-topics", left) : left[0];
-  await ask(pick);
+  await ask(await choice("plush-topics", left));
 }
 
 async function actGuitar() {
@@ -1391,7 +1769,7 @@ async function onClicked(id) {
 }
 
 function onHovered(id) {
-  tooltip(id);
+  tooltip(isPanelOpen() ? null : id);
   if (game.tvOn && (id === "tv") !== tvAudio) {
     tvAudio = id === "tv";
     sound("tv", tvAudio ? "in" : "out");
@@ -1445,6 +1823,7 @@ function resize() {
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
   rect = { left: screenEl.offsetLeft, top: screenEl.offsetTop, width, height };
+  renderer.render(scene, camera);
 }
 
 function trackPointer(event) {
@@ -1459,6 +1838,7 @@ window.addEventListener("pointermove", trackPointer);
 const DARK_LUMA = 0.5;
 const pixel = new Uint8Array(4);
 function sampleCursorColor() {
+  if (isPanelOpen() || isChoiceOpen()) return; // dom overlays own the cursor color while shown
   const px = Math.min(rect.width - 1, Math.floor(pointerX * rect.width));
   const py = Math.min(rect.height - 1, Math.floor((1 - pointerY) * rect.height));
   gl.readPixels(px, py, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
@@ -1473,6 +1853,7 @@ canvas.addEventListener("pointerdown", (event) => {
   stepMouse();
   stepZones();
   if (inBand) zoneBack();
+  else if (pc.captured) tryTerminalClick();
   else if (hoveredZone && !LOCKED[hoveredZone]) gotoZone(hoveredZone);
   else if (hovered) onClicked(hovered);
 });
@@ -1555,6 +1936,11 @@ function frame(now) {
   stepGame(dt);
   stepMouse();
   stepZones();
+  if (pc.captured && !isPanelOpen()) {
+    const uv = terminalHitUV();
+    if (uv && (pc.mode === PAGE || terminalLinkAt(uv) != null || terminalPromptHit(uv)))
+      setCursorRing(true);
+  }
   stepCamera(dt, { x: pointerX * 2 - 1, y: pointerY * 2 - 1 });
   for (const label of [role("cmd"), role("clock")]) if (label) label.paint();
   renderer.render(scene, camera);

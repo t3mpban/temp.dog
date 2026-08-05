@@ -401,9 +401,9 @@ They' re positioned in the middle of the top of the text-box and the top of the 
 
 thanks for visiting my website, enjoy!
 
-## gambling (out of 5)
+## stonks
 
-i'm not addicted, your addicted...
+cash out a profit in the casino
 
 ## interstellar
 
@@ -419,7 +419,7 @@ get that bag cuh
 
 ## log on
 
-log into temps computer
+turn on temp's computer
 
 ## mouse-ception
 
@@ -433,7 +433,7 @@ visit the website twice
 
 don't click on the chair 8 times, otherwise you won't get this achievement.
 
-## Marketable Plush (out of 5)
+## Marketable Plush (out of 6)
 
 obtain all knowledge from marketable plush
 

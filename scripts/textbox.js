@@ -264,6 +264,17 @@ export function setCursorDark(on) {
   if (cursor) cursor.classList.toggle("dark", !!on);
 }
 
+// settings / achievements panel: 3D camera lookAt and tooltips pause while either is open
+var panelOpen = false;
+
+export function setPanelOpen(on) {
+  panelOpen = !!on;
+}
+
+export function isPanelOpen() {
+  return panelOpen;
+}
+
 function showTip(text) {
   clearTimeout(tipTimer);
   if (!tip) return;
@@ -332,29 +343,9 @@ var tb = el("textbox");
 var tbText = el("textboxText");
 var tbNext = el("textboxNext");
 
-// reveal is linear; total time scales with length, clamped so tiny/huge
-// lines still feel right.
-var TB_MS_PER_CHAR = 34;
-var TB_MIN_MS = 500;
-var TB_MAX_MS = 4000;
+// reveal is linear: one character every TB_MS_PER_CHAR, no clamping
+var TB_MS_PER_CHAR = 30;
 var TB_POP_MS = 500; // appear (scale-in); keep in sync with --t-pop
-// --ease plateaus near the end, so the pop-in looks finished well before
-// TB_POP_MS elapses; start typing once it's visually ~90% grown instead of
-// waiting out the whole transition
-var TB_POP_VISUAL_MS =
-  TB_POP_MS *
-  (function () {
-    var ease = cubicBezier(0.87, 0, 0.13, 1); // matches --ease
-    var lo = 0,
-      hi = 1,
-      mid = 0.5;
-    for (var i = 0; i < 30; i++) {
-      mid = (lo + hi) / 2;
-      if (ease(mid) < 0.9) lo = mid;
-      else hi = mid;
-    }
-    return mid;
-  })();
 var TB_OUT_MS = 600; // dismiss (scale-out); keep in sync with .textbox transition
 // extra dwell after punctuation (latin + cjk)
 var TB_PAUSE = {
@@ -374,10 +365,6 @@ var TB_PAUSE = {
   "？": 340,
 };
 
-var tbEase = function (x) {
-  return x;
-};
-
 var tbActive = false; // a dialogue is showing
 var tbTyping = false; // current line still revealing
 var tbLines = null; // array of lang-maps for the current dialogue
@@ -385,7 +372,6 @@ var tbVars = {}; // {name} substitutions for the current dialogue
 var tbIdx = 0; // current line index
 var tbFull = ""; // resolved text of the current line
 var tbShown = 0; // chars revealed so far
-var tbDur = 0; // eased reveal duration for the current line
 var tbClock = 0; // reveal time consumed (excludes punctuation holds)
 var tbHold = 0; // timestamp to resume after a punctuation pause
 var tbLast = 0; // last frame time
@@ -395,6 +381,7 @@ var tbHideTimer = null;
 var tbStartTimer = null; // delays the first line until the box has popped in
 var tbHoldOpen = false;
 var tbOnLastLine = null;
+var tbJustOpened = false; // true for the rest of the click/key that opened this textbox
 
 export function isTextboxOpen() {
   return tbActive;
@@ -454,9 +441,7 @@ function tbType(now) {
   tbLast = now;
   if (dt > 100) dt = 100; // clamp after a stall
   if (now >= tbHold) tbClock += dt;
-  var p = tbDur > 0 ? tbClock / tbDur : 1;
-  if (p > 1) p = 1;
-  var target = Math.round(tbEase(p) * tbFull.length);
+  var target = Math.min(tbFull.length, Math.floor(tbClock / TB_MS_PER_CHAR));
   if (target > tbShown) {
     tbShown = target;
     tbText.textContent = tbFull.slice(0, tbShown);
@@ -490,7 +475,6 @@ function tbStartLine() {
     tbFinishLine();
     return;
   }
-  tbDur = Math.max(TB_MIN_MS, Math.min(TB_MAX_MS, tbFull.length * TB_MS_PER_CHAR));
   tbClock = 0;
   tbHold = 0;
   tbTyping = true;
@@ -540,18 +524,25 @@ export function textbox(ref, vars, hold, onLastLine) {
   tbOnLastLine = onLastLine || null;
   var wasShown = tb.classList.contains("show");
   tbActive = true;
+  // the click/key that opened this textbox bubbles to the document-level
+  // advance listeners below within the same dispatch; ignore it there so it
+  // can't immediately skip the pop-in wait it just started
+  tbJustOpened = true;
+  setTimeout(function () {
+    tbJustOpened = false;
+  }, 0);
   tbShow();
   if (reduce || wasShown) {
     // already on screen (or motion reduced): type the first line right away
     tbStartLine();
   } else {
-    // wait for the pop-in to look done before typing starts
+    // wait for the pop-in to finish before typing starts
     tbText.textContent = "";
     tbNext.classList.remove("show");
     tbStartTimer = setTimeout(function () {
       tbStartTimer = null;
       tbStartLine();
-    }, TB_POP_VISUAL_MS);
+    }, TB_POP_MS);
   }
   return new Promise(function (res) {
     tbResolve = res;
@@ -561,7 +552,7 @@ export function textbox(ref, vars, hold, onLastLine) {
 if (tb) {
   // anywhere on the page advances, except the other interactive chrome
   document.addEventListener("pointerdown", function (e) {
-    if (!tbActive || choiceResolve) return;
+    if (!tbActive || choiceResolve || tbJustOpened) return;
     if (e.target.closest && e.target.closest(".settings, .achv, .dim, .choices")) return;
     e.preventDefault();
     blip(sfxSelect);
@@ -570,7 +561,7 @@ if (tb) {
 
   // enter/space advance too, unless focus is on a settings control
   document.addEventListener("keydown", function (e) {
-    if (!tbActive || choiceResolve) return;
+    if (!tbActive || choiceResolve || tbJustOpened) return;
     if (e.key !== "Enter" && e.key !== " ") return;
     var settings = el("settings");
     if (document.activeElement && settings && settings.contains(document.activeElement)) return;
@@ -664,9 +655,9 @@ export function choice(list, only) {
       return only.indexOf(opt.id) !== -1;
     });
   }
-  if (!choicesEl || !opts || opts.length < 2 || opts.length > 4) {
-    if (window.console) console.warn("choice: needs 2-4 options");
-    return Promise.resolve(opts && opts.length === 1 ? opts[0].id : null);
+  if (!choicesEl || !opts || opts.length < 1 || opts.length > 4) {
+    if (window.console) console.warn("choice: needs 1-4 options");
+    return Promise.resolve(null);
   }
   // interrupt anything in flight and settle its promise first
   if (choiceResolve) choiceSettle(null);

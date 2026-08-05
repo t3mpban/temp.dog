@@ -41,7 +41,7 @@ import { achValue, achievement, choice, ready, setLoadProgress, textbox, tooltip
   });
 
   document.getElementById("rigAchProgress").addEventListener("click", function () {
-    achievement("gambling", achValue("gambling") + 1);
+    achievement("chair", achValue("chair") + 1);
   });
 
   document.getElementById("rigAchvOpen").addEventListener("click", function () {

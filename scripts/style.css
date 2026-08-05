@@ -51,6 +51,7 @@ body {
   background: var(--soft-apricot);
   color: var(--coffee-bean);
   font-family: "temp-v2", "Trebuchet MS", system-ui, sans-serif;
+  font-kerning: none; /* temp-v2's kerning pairs shift some glyphs (e.g. "_" next to "**") off baseline */
   -webkit-font-smoothing: antialiased;
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -173,7 +174,7 @@ html.is-fullscreen .screen {
   right: 20px;
   bottom: 14px;
   display: inline-flex;
-  color: var(--camel);
+  color: var(--coffee-bean);
   font-size: 16px;
   opacity: 0;
   pointer-events: none;
@@ -758,6 +759,7 @@ a.opt {
 
 .opt-state:hover {
   border-color: var(--coffee-bean);
+  color: var(--coffee-bean);
 }
 
 .opt-state.on {
@@ -888,13 +890,21 @@ a.opt {
   font: inherit;
   font-size: var(--ui-sm);
   letter-spacing: var(--tracking);
-  transition: border-color var(--t) var(--ease);
+  transition:
+    border-color var(--t) var(--ease),
+    color var(--t) var(--ease);
 }
 
 .select:hover,
 .select:focus-visible {
   border-color: var(--coffee-bean);
+  color: var(--coffee-bean);
   outline: none;
+}
+
+.select:hover + .caret,
+.select:focus-visible + .caret {
+  color: var(--coffee-bean);
 }
 
 .caret {
@@ -903,6 +913,7 @@ a.opt {
   font-size: 11px;
   color: var(--camel);
   pointer-events: none;
+  transition: color var(--t) var(--ease);
 }
 
 /* ----- language listbox (custom) ----- */
@@ -912,30 +923,9 @@ a.opt {
   list-style: none;
   margin: 0;
   padding: 6px;
-  max-height: 240px;
-  overflow-y: auto;
   border-radius: 10px;
   background: var(--papaya-whip);
   box-shadow: var(--shadow);
-  scrollbar-width: thin;
-  scrollbar-color: var(--camel) transparent;
-}
-
-.lang-list::-webkit-scrollbar {
-  width: 8px;
-}
-
-.lang-list::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.lang-list::-webkit-scrollbar-thumb {
-  background: var(--camel);
-  border-radius: 999px;
-}
-
-.lang-list::-webkit-scrollbar-thumb:hover {
-  background: var(--coffee-bean);
 }
 
 .lang-opt {
@@ -943,20 +933,21 @@ a.opt {
   border-radius: 8px;
   font-size: var(--ui-sm);
   letter-spacing: var(--tracking);
-  color: var(--coffee-bean);
+  color: var(--camel);
   white-space: nowrap;
-  transition: background 0.2s var(--ease);
+  transition:
+    background 0.2s var(--ease),
+    color 0.2s var(--ease);
 }
 
-.lang-opt:hover,
-.lang-opt[aria-selected="true"] {
-  background: var(--soft-apricot);
+.lang-opt:hover {
+  background: var(--camel);
+  color: var(--papaya-whip);
 }
 
 .lang-opt:focus-visible {
-  background: var(--soft-apricot);
-  outline: 2px solid var(--coffee-bean);
-  outline-offset: -2px;
+  background: var(--camel);
+  color: var(--papaya-whip);
 }
 
 /* ----- gear ----- */
