@@ -7,7 +7,9 @@ import {
   choice,
   closeTextbox,
   cubicBezier,
+  fine,
   isChoiceOpen,
+  isMobile,
   isPanelOpen,
   langText,
   loopTime,
@@ -177,6 +179,7 @@ const MIN_BOX = 0.15;
 
 const canvas = document.getElementById("game");
 const screenEl = document.getElementById("screen");
+const backBtn = document.getElementById("zoneBack");
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(60, 1, 0.05, 4000);
@@ -563,7 +566,7 @@ const ZONES = {
   "tv-screen": { marker: "tv-screen", parent: "tv", area: "tv" },
 };
 const LOCKED = { "pc-screen": true, "tv-screen": true };
-const BACK_BAND = 0.15;
+const BACK_BAND = isMobile ? 0.08 : 0.15;
 const HOVER_LOCK_FRAC = 0.02;
 
 const boxes = new Map();
@@ -583,6 +586,7 @@ let wasHot = false; // whether the cursor was over anything hoverable last frame
 let hoverLocked = false;
 let hoverLockX = 0.5;
 let hoverLockY = 0.5;
+let armed = "";
 
 const raycaster = new THREE.Raycaster();
 const hitPoint = new THREE.Vector3();
@@ -652,6 +656,7 @@ function gotoZone(to, instant) {
   zone = to;
   hot = [];
   hoverLocked = false;
+  armed = "";
   for (const name of Object.keys(ZONES)) {
     const area = ZONES[name].area;
     if (ZONES[name].parent !== zone || !boxes.has(area)) continue;
@@ -1803,6 +1808,7 @@ function onHovered(id) {
 
 function onZone(name) {
   pc.captured = name === "pc-screen";
+  backBtn.classList.toggle("show", !!ZONES[name].parent);
 }
 
 function stepSky() {
@@ -1873,6 +1879,7 @@ window.addEventListener("pointermove", trackPointer);
 const DARK_LUMA = 0.5;
 const pixel = new Uint8Array(4);
 function sampleCursorColor() {
+  if (!fine) return;
   if (isPanelOpen() || isChoiceOpen()) return; // dom overlays own the cursor color while shown
   const px = Math.min(rect.width - 1, Math.floor(pointerX * rect.width));
   const py = Math.min(rect.height - 1, Math.floor((1 - pointerY) * rect.height));
@@ -1888,17 +1895,39 @@ canvas.addEventListener("pointerdown", (event) => {
   stepMouse();
   stepZones();
   if (inBand) {
+    armed = "";
     zoneBack();
-  } else if (pc.captured) {
+    return;
+  }
+  if (pc.captured) {
     playSfx("select");
     tryTerminalClick();
-  } else if (hoveredZone && !LOCKED[hoveredZone]) {
-    playSfx("select");
-    gotoZone(hoveredZone);
-  } else if (hovered) {
-    playSfx("select");
-    onClicked(hovered);
+    return;
   }
+  const toZone = hoveredZone && !LOCKED[hoveredZone] ? hoveredZone : "";
+  if (toZone) {
+    armed = "";
+    playSfx("select");
+    gotoZone(toZone);
+    return;
+  }
+  if (!hovered) {
+    armed = "";
+    return;
+  }
+  if (isMobile && hovered !== armed) {
+    armed = hovered;
+    return;
+  }
+  armed = "";
+  playSfx("select");
+  onClicked(hovered);
+});
+
+backBtn.addEventListener("click", () => {
+  if (blocked || !data) return;
+  playSfx("select");
+  zoneBack();
 });
 
 window.addEventListener("keydown", (event) => {

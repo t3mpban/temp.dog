@@ -4,6 +4,7 @@
 
 export var fine = window.matchMedia("(pointer: fine)").matches;
 export var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+export var isMobile = !fine;
 
 function el(id) {
   return document.getElementById(id);
@@ -751,7 +752,8 @@ if (tb) {
   // anywhere on the page advances, except the other interactive chrome
   document.addEventListener("pointerdown", function (e) {
     if (!tbActive || choiceResolve || tbJustOpened) return;
-    if (e.target.closest && e.target.closest(".settings, .achv, .dim, .choices")) return;
+    if (e.target.closest && e.target.closest(".settings, .achv, .dim, .choices, .zone-back"))
+      return;
     e.preventDefault();
     playSfx("select");
     tbAdvance();

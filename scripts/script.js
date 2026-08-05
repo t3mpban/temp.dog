@@ -13,6 +13,7 @@ import {
   deleteCookie,
   fine,
   isChoiceOpen,
+  isMobile,
   isTextboxOpen,
   langText,
   onAchievementChange,
@@ -54,6 +55,7 @@ import {
 
   // elements
   var html = document.documentElement;
+  if (isMobile) html.classList.add("is-mobile");
   var cursor = document.getElementById("cursor");
   var cursorDot = cursor.querySelector(".cursor-dot");
   var tip = document.getElementById("tip");
@@ -301,6 +303,7 @@ import {
   window.addEventListener("pointercancel", endDrag);
 
   // display toggles
+  if (!html.requestFullscreen) optFor("fullscreen").hidden = true;
   optFor("fullscreen").addEventListener("click", function () {
     if (document.fullscreenElement) {
       if (document.exitFullscreen) document.exitFullscreen();
@@ -710,7 +713,7 @@ import {
       tip.style.transform = "translate3d(" + (tx + 18) + "px," + (ty - 30) + "px,0)";
     }
 
-    if (!reduce) {
+    if (!reduce && !isMobile) {
       // velocity px/sec, normalized + clamped
       var ivx = dt > 0 ? (cx - px) / dt : 0;
       var ivy = dt > 0 ? (cy - py) / dt : 0;

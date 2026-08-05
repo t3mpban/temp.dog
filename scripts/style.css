@@ -29,6 +29,20 @@
 
   --panel-w: 270px;
   --tb-w: min(760px, 90vw);
+
+  --game-aspect: 1.45;
+  --edge: 4vmin;
+  --inset-x: max(var(--edge), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
+  --inset-top: max(var(--edge), env(safe-area-inset-top, 0px));
+  --inset-bottom: max(var(--edge), env(safe-area-inset-bottom, 0px));
+  --screen-h: min(
+    calc(100svh - var(--inset-top) - var(--inset-bottom)),
+    calc((100vw - var(--inset-x) * 2) / var(--game-aspect))
+  );
+
+  --ui-top: max(22px, env(safe-area-inset-top, 0px));
+  --ui-right: max(22px, env(safe-area-inset-right, 0px));
+  --ui-left: max(22px, env(safe-area-inset-left, 0px));
 }
 
 *,
@@ -56,6 +70,9 @@ body {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+  overscroll-behavior: none;
 }
 
 body::before {
@@ -95,7 +112,10 @@ html.cc-active * {
 /* no fade: grows from scale 0 over 1s when revealed */
 .screen {
   position: fixed;
-  inset: 4vmin;
+  left: var(--inset-x);
+  right: var(--inset-x);
+  top: var(--inset-top);
+  height: var(--screen-h);
   z-index: 5;
   border-radius: 24px;
   background: var(--soft-apricot);
@@ -117,6 +137,7 @@ html.cc-active * {
   height: 100%;
   pointer-events: auto;
   image-rendering: pixelated;
+  touch-action: none;
 }
 
 html.is-fullscreen body::before {
@@ -124,11 +145,19 @@ html.is-fullscreen body::before {
 }
 
 html.is-fullscreen .screen {
-  inset: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: min(100svh, calc(100vw / var(--game-aspect)));
+  margin-block: auto;
   border-radius: 0;
   transition:
     transform var(--t-grow) var(--ease),
-    inset var(--t) var(--ease),
+    left var(--t) var(--ease),
+    right var(--t) var(--ease),
+    top var(--t) var(--ease),
+    height var(--t) var(--ease),
     border-radius var(--t) var(--ease);
 }
 
@@ -139,7 +168,7 @@ html.is-fullscreen .screen {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 6vmin;
+  bottom: max(6vmin, env(safe-area-inset-bottom, 0px));
   z-index: 45; /* above screen, below settings + cursor */
   width: var(--tb-w);
   margin-inline: auto;
@@ -644,8 +673,8 @@ html.is-fullscreen .screen {
 /* ----- settings shell ----- */
 .settings {
   position: fixed;
-  top: 22px;
-  right: 22px;
+  top: var(--ui-top);
+  right: var(--ui-right);
   z-index: 50;
   width: 56px;
   height: 56px;
@@ -736,6 +765,10 @@ a.opt {
 
 .opt:focus-visible {
   outline: 2px solid var(--coffee-bean);
+}
+
+.opt[hidden] {
+  display: none;
 }
 
 .opt-label {
@@ -981,6 +1014,33 @@ a.opt {
   line-height: 1;
 }
 
+/* ----- zone back ----- */
+.zone-back {
+  position: fixed;
+  top: var(--ui-top);
+  left: var(--ui-left);
+  z-index: 50;
+  display: none;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: none;
+  border-radius: 18px;
+  background: var(--papaya-whip);
+  color: var(--coffee-bean);
+  font: inherit;
+  box-shadow: var(--shadow);
+}
+
+.zone-back i {
+  font-size: 22px;
+  line-height: 1;
+}
+
+html.is-mobile .zone-back.show {
+  display: grid;
+}
+
 /* ----- cursor ----- */
 /* outer translates, dot rotates/scales */
 .cursor {
@@ -1078,10 +1138,37 @@ a.opt {
 }
 
 @media (hover: none), (pointer: coarse) {
-  .cursor,
-  .cursor-tip {
+  .cursor {
     display: none;
   }
+}
+
+/* ----- touch ----- */
+html.is-mobile .cursor-tip {
+  top: min(
+    calc(var(--inset-top) + var(--screen-h) + 12px),
+    calc(100svh - var(--inset-bottom) - 44px)
+  );
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+html.is-mobile .cursor-tip .bubble {
+  transform-origin: center;
+}
+
+html.is-mobile .choice {
+  width: calc(var(--tb-w) * 0.7);
+}
+
+html.is-mobile .opt {
+  min-height: 46px;
+}
+
+html.is-mobile .achv-close {
+  width: 40px;
+  height: 40px;
 }
 
 @media (prefers-reduced-motion: reduce) {
