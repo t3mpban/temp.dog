@@ -10,11 +10,14 @@ import {
   isChoiceOpen,
   isPanelOpen,
   langText,
+  loopTime,
+  MUSIC_BPM,
+  playSfx,
   ready,
   setCursorDark,
   setCursorRing,
   setLoadProgress,
-  sound,
+  setLoop,
   textbox,
   tooltip,
 } from "./textbox.js";
@@ -576,6 +579,7 @@ let blocked = false;
 let inBand = false;
 let hot = [];
 let hoverHot = null;
+let wasHot = false; // whether the cursor was over anything hoverable last frame
 let hoverLocked = false;
 let hoverLockX = 0.5;
 let hoverLockY = 0.5;
@@ -644,6 +648,7 @@ function looks(id) {
 
 function gotoZone(to, instant) {
   if (!ZONES[to] || to === zone) return;
+  if (!instant) playSfx(ZONES[to].parent === zone ? "zoomin" : "zoomout");
   zone = to;
   hot = [];
   hoverLocked = false;
@@ -707,6 +712,7 @@ function stepZones() {
       hoveredZone = "";
       onHovered("");
     }
+    wasHot = false; // a dom overlay is showing, not a real unhover of the game world
     setHover(false, lookTarget);
     return;
   }
@@ -733,6 +739,10 @@ function stepZones() {
     hovered = obj;
     hoveredZone = zn;
     onHovered(hovered);
+  }
+  if (!!found !== wasHot) {
+    wasHot = !!found;
+    playSfx(wasHot ? "hover" : "unhover");
   }
   setHover(found ? found.look : false, lookTarget);
   setCursorRing(inBand || !!found);
@@ -1409,6 +1419,7 @@ async function bootTerminal() {
 function power(on) {
   pc.on = on;
   clear();
+  setLoop("pc", on);
   if (on) {
     runTerminal();
   } else {
@@ -1499,7 +1510,8 @@ window.addEventListener("keydown", (event) => {
 
 const END = "free-the-end";
 const TOPICS = ["password", "guitar", "remote"];
-const TV_FPS = 4;
+const TV_FALLBACK_FPS = 4; // flip rate used only before the music has started playing
+const TV_POSES_PER_BEAT = 2; // dance poses per beat
 const PLAY_HOLD = 2;
 const GAME_KEY = "t3mp.game";
 
@@ -1520,7 +1532,6 @@ const game = {
   visits: 0,
 };
 
-let tvAudio = false;
 let tvFrame = 0;
 let tick = 1;
 let skyKey = "";
@@ -1565,6 +1576,8 @@ function setTv(on) {
   game.tvOn = on;
   const frames = role("tvframes");
   if (frames) frames.visible = on;
+  if (on) tvFrame = 0; // restart the loop in phase with the music
+  setLoop("music", on);
 }
 
 function tvSheet() {
@@ -1659,16 +1672,32 @@ async function ask(topic) {
     await textbox("plush-donate");
     return;
   }
-  await textbox("plush-" + (topic === "donate" ? "donate-coin" : topic));
+  // "So without thinking, you squeeze [Marketable Plush] and the TV turns
+  // on!" - line 3 of plush-remote; the tv should react right as that's read,
+  // not after the whole exchange closes
+  const onSqueeze =
+    topic === "remote"
+      ? {
+          at: 3,
+          fn: () => {
+            setTv(true);
+            saveGame();
+            award("tv-on");
+          },
+        }
+      : null;
+  await textbox(
+    "plush-" + (topic === "donate" ? "donate-coin" : topic),
+    null,
+    false,
+    null,
+    onSqueeze
+  );
   learn(topic);
   if (topic === "guitar") {
     game.guitarLearned = true;
     saveGame();
     award("fast-learner");
-  } else if (topic === "remote") {
-    setTv(true);
-    saveGame();
-    award("tv-on");
   } else if (topic === "donate") {
     award("philanthropist");
   }
@@ -1701,7 +1730,7 @@ async function actGuitar() {
   game.plays[stage] = Math.min(game.plays[stage] + 1, game.guitarLearned ? 3 : 2);
   saveGame();
   holdGuitar(false);
-  sound("wear.ogg");
+  playSfx("wear");
   await wait(PLAY_HOLD);
   await textbox("guitar-" + stage + "-play-" + game.plays[stage], null, false, () =>
     holdGuitar(true)
@@ -1770,10 +1799,6 @@ async function onClicked(id) {
 
 function onHovered(id) {
   tooltip(isPanelOpen() ? null : id);
-  if (game.tvOn && (id === "tv") !== tvAudio) {
-    tvAudio = id === "tv";
-    sound("tv", tvAudio ? "in" : "out");
-  }
 }
 
 function onZone(name) {
@@ -1806,7 +1831,17 @@ function stepGame(dt) {
   const sheet = tvSheet();
   if (!sheet) return;
   const count = data.mats[role("tvframes").userData.mat].frames;
-  tvFrame = (tvFrame + dt * TV_FPS) % count;
+  // tv-frames.webp is an 8-pose dance loop - the frame index is elapsed
+  // beats (x TV_POSES_PER_BEAT), not elapsed seconds. driven off the music's
+  // own audio-clock position so it can't drift apart from what's actually
+  // playing the way two independently-ticking clocks (rAF dt vs audio
+  // hardware) would; only falls back to dt-stepping while the track itself
+  // isn't playing yet (still loading, or blocked pending a user gesture)
+  const musicT = loopTime("music");
+  tvFrame =
+    musicT == null
+      ? (tvFrame + dt * TV_FALLBACK_FPS) % count
+      : (musicT * (MUSIC_BPM / 60) * TV_POSES_PER_BEAT) % count;
   sheet.offset.y = 1 - (Math.floor(tvFrame) + 1) / count;
 }
 
@@ -1852,10 +1887,18 @@ canvas.addEventListener("pointerdown", (event) => {
   trackPointer(event);
   stepMouse();
   stepZones();
-  if (inBand) zoneBack();
-  else if (pc.captured) tryTerminalClick();
-  else if (hoveredZone && !LOCKED[hoveredZone]) gotoZone(hoveredZone);
-  else if (hovered) onClicked(hovered);
+  if (inBand) {
+    zoneBack();
+  } else if (pc.captured) {
+    playSfx("select");
+    tryTerminalClick();
+  } else if (hoveredZone && !LOCKED[hoveredZone]) {
+    playSfx("select");
+    gotoZone(hoveredZone);
+  } else if (hovered) {
+    playSfx("select");
+    onClicked(hovered);
+  }
 });
 
 window.addEventListener("keydown", (event) => {

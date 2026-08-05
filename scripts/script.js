@@ -8,7 +8,6 @@ import {
   achGoal,
   achValue,
   achievement,
-  blip,
   choicePosition,
   clampVol,
   deleteCookie,
@@ -17,14 +16,14 @@ import {
   isTextboxOpen,
   langText,
   onAchievementChange,
+  playSfx,
   ready,
   reduce,
   save,
   setCookie,
   setPanelOpen,
-  sfxHover,
-  sfxSelect,
   st,
+  syncLoopVolumes,
   t,
 } from "./textbox.js";
 
@@ -63,7 +62,6 @@ import {
   var settings = document.getElementById("settings");
   var panel = settings.querySelector(".panel");
   var gear = document.getElementById("gear");
-  var music = document.getElementById("music");
   var tb = document.getElementById("textbox");
   var choicesEl = document.getElementById("choices");
 
@@ -169,7 +167,7 @@ import {
     setRange("sounds", st.sounds);
     syncToggles();
     langBtnLabel.textContent = LANG_NAMES[st.lang] || st.lang;
-    music.volume = st.music / 10;
+    syncLoopVolumes();
   }
 
   // cursor smoothing, velocity, tip
@@ -216,13 +214,14 @@ import {
   document.addEventListener("pointerover", function (e) {
     if (within(e.target)) {
       cursor.classList.add("ring");
-      blip(sfxHover);
+      playSfx("hover");
     }
     if (onDark(e.target)) cursor.classList.add("dark");
   });
   document.addEventListener("pointerout", function (e) {
     if (within(e.target) && !within(e.relatedTarget)) {
       cursor.classList.remove("ring");
+      playSfx("unhover");
     }
     if (onDark(e.target) && !onDark(e.relatedTarget)) cursor.classList.remove("dark");
   });
@@ -261,7 +260,7 @@ import {
   gear.addEventListener("click", function (e) {
     e.stopPropagation();
     setOpen(!open);
-    blip(sfxSelect);
+    playSfx("select");
   });
   document.addEventListener("click", function (e) {
     if (langList && !langList.contains(e.target) && e.target !== langBtn) closeLangList();
@@ -287,11 +286,7 @@ import {
       var v = clampVol(parseInt(input.value, 10) || 0);
       st[name] = v;
       setRange(name, v);
-      if (name === "music") {
-        music.volume = v / 10;
-        if (v > 0) music.play().catch(function () {});
-        else music.pause();
-      }
+      syncLoopVolumes();
       save();
     });
   }
@@ -312,7 +307,7 @@ import {
     } else if (document.documentElement.requestFullscreen) {
       document.documentElement.requestFullscreen().catch(function () {});
     }
-    blip(sfxSelect);
+    playSfx("select");
   });
   document.addEventListener("fullscreenchange", function () {
     setToggle("fullscreen", !!document.fullscreenElement);
@@ -377,7 +372,7 @@ import {
         achievement("multilingual");
       }
     }
-    blip(sfxSelect);
+    playSfx("select");
     closeLangList(true);
   }
 
@@ -466,7 +461,7 @@ import {
       // detail 0 = keyboard, >=1 = pointer
       openLangList(e.detail ? { x: e.clientX, y: e.clientY } : null);
     }
-    blip(sfxSelect);
+    playSfx("select");
   });
 
   // clear cache then reload
@@ -487,7 +482,7 @@ import {
   }
 
   cacheBtn.addEventListener("click", function () {
-    blip(sfxSelect);
+    playSfx("select");
     if (!cacheArmed) {
       cacheArmed = true;
       refreshCacheLabel();
@@ -521,7 +516,7 @@ import {
   });
 
   optFor("legacy").addEventListener("click", function () {
-    blip(sfxSelect);
+    playSfx("select");
   });
 
   // ----- achievements viewer -----
@@ -652,13 +647,13 @@ import {
 
   optFor("achievements").addEventListener("click", function (e) {
     e.stopPropagation();
-    blip(sfxSelect);
+    playSfx("select");
     setOpen(false);
     setAchvOpen(true);
   });
 
   achvClose.addEventListener("click", function () {
-    blip(sfxSelect);
+    playSfx("select");
     setAchvOpen(false);
   });
 
@@ -752,19 +747,4 @@ import {
     equalizeSliders();
     choicePosition();
   });
-  if (st.music > 0) {
-    // try autoplay
-    music.play().catch(function () {
-      // blocked, start on first gesture
-      var resume = function () {
-        if (st.music > 0) music.play().catch(function () {});
-        document.removeEventListener("pointerdown", resume);
-        document.removeEventListener("keydown", resume);
-        document.removeEventListener("touchstart", resume);
-      };
-      document.addEventListener("pointerdown", resume, { once: true });
-      document.addEventListener("keydown", resume, { once: true });
-      document.addEventListener("touchstart", resume, { once: true });
-    });
-  }
 })();

@@ -227,23 +227,211 @@ export function cubicBezier(x1, y1, x2, y2) {
 }
 
 // ----- audio -----
-export var sfxHover = el("sfxHover");
-export var sfxSelect = el("sfxSelect");
+// how many text.ogg blips can overlap at once (tweak to taste)
+var TEXT_POOL_SIZE = 3;
+// per-character pitch spread: playbackRate is randomized in [1-RANGE, 1+RANGE]
+var TEXT_PITCH_RANGE = 0.35;
 
-// play sfx
-export function blip(elem) {
-  if (!elem || !st.sounds) return;
-  // skip if already playing
-  if (!elem.paused && !elem.ended && elem.currentTime > 0) return;
+// one-shot sfx: never overlaps itself (or, for a shared `group`, any other
+// sound in that group), plays at DEF.vol * its bus (0-1). `pool` lets N
+// instances overlap each other before new plays start getting ignored.
+var SFX_DEFS = {
+  hover: { file: "hover.ogg", vol: 0.3, bus: "sounds", group: "hover" },
+  unhover: { file: "unhover.ogg", vol: 0.3, bus: "sounds", group: "hover" },
+  textboxenter: { file: "textboxenter.ogg", vol: 0.6, bus: "sounds" },
+  textboxleave: { file: "textboxleave.ogg", vol: 0.6, bus: "sounds" },
+  zoomin: { file: "zoomin.ogg", vol: 0.6, bus: "sounds" },
+  zoomout: { file: "zoomout.ogg", vol: 0.4, bus: "sounds" },
+  select: { file: "select.ogg", vol: 0.3, bus: "sounds" },
+  text: { file: "text.ogg", vol: 0.4, bus: "sounds", pool: TEXT_POOL_SIZE },
+  wear: { file: "wear.ogg", vol: 0.6, bus: "sounds" },
+  achievement: { file: "achievement.ogg", vol: 1, bus: "sounds" },
+};
+
+// sustained ambience: setLoop(name, true/false) turns it on/off, volume
+// tracks its bus live. played through Web Audio (not <audio loop>) so the
+// ogg loops sample-accurately, with no seam between the end and the restart
+var LOOP_DEFS = {
+  pc: { file: "pc.ogg", vol: 0.2, bus: "sounds" },
+  music: { file: "music.ogg", vol: 0.8, bus: "music" },
+};
+
+// music.ogg's tempo - game.js derives the tv dance-loop's frame from it.
+// keep in sync with whatever the track actually is if it ever changes.
+export var MUSIC_BPM = 90;
+
+function isBusy(a) {
+  return !a.paused && !a.ended && a.currentTime > 0;
+}
+
+var sfxEls = {};
+for (var sfxName in SFX_DEFS) {
+  var pool = [];
+  var poolSize = SFX_DEFS[sfxName].pool || 1;
+  for (var i = 0; i < poolSize; i++) {
+    var el2 = new Audio("/sounds/" + SFX_DEFS[sfxName].file);
+    el2.preservesPitch = false;
+    el2.mozPreservesPitch = false;
+    el2.webkitPreservesPitch = false;
+    pool.push(el2);
+  }
+  sfxEls[sfxName] = pool;
+}
+
+function groupBusy(group) {
+  for (var n in SFX_DEFS) {
+    if (SFX_DEFS[n].group !== group) continue;
+    var pool = sfxEls[n];
+    for (var i = 0; i < pool.length; i++) if (isBusy(pool[i])) return true;
+  }
+  return false;
+}
+
+function busVol(bus) {
+  return (bus === "music" ? st.music : st.sounds) / 10;
+}
+
+function tryPlay(a) {
   try {
-    elem.volume = st.sounds / 10;
-    elem.currentTime = 0;
-    elem.play().catch(function () {});
+    var p = a.play();
+    if (p && p.catch) p.catch(function () {});
   } catch (e) {}
 }
 
-// game-level audio, wired up but silent for now
-export function sound(name, fade) {}
+// play a named one-shot; ignored if that sound (or another in its group,
+// e.g. hover/unhover) is already playing, or its pool is fully busy.
+// rate (optional) sets playbackRate, e.g. for per-character pitch variance
+export function playSfx(name, rate) {
+  var def = SFX_DEFS[name];
+  var pool = sfxEls[name];
+  if (!def || !pool) return;
+  var v = busVol(def.bus);
+  if (!v) return;
+  if (def.group && groupBusy(def.group)) return;
+  var a = null;
+  for (var i = 0; i < pool.length; i++) {
+    if (!isBusy(pool[i])) {
+      a = pool[i];
+      break;
+    }
+  }
+  if (!a) return;
+  try {
+    a.volume = Math.min(1, def.vol * v);
+    a.playbackRate = rate || 1;
+    a.currentTime = 0;
+    tryPlay(a);
+  } catch (e) {}
+}
+
+// ----- loop sounds (pc hum, tv theme), via Web Audio for gapless looping -----
+var audioCtx = null;
+function ctx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+var loopBuffers = {}; // name -> decoded AudioBuffer, once loaded
+var loopGains = {}; // name -> GainNode, persistent
+var loopSources = {}; // name -> currently playing AudioBufferSourceNode or null
+var loopStarted = {}; // name -> ctx().currentTime when it was started
+var loopWanted = {}; // name -> whether it should be playing
+
+function loadLoop(name) {
+  fetch("/sounds/" + LOOP_DEFS[name].file)
+    .then(function (res) {
+      return res.arrayBuffer();
+    })
+    .then(function (data) {
+      return ctx().decodeAudioData(data);
+    })
+    .then(function (buffer) {
+      loopBuffers[name] = buffer;
+      if (loopWanted[name]) startLoopSource(name);
+    })
+    .catch(function () {});
+}
+
+for (var loopName in LOOP_DEFS) {
+  loopWanted[loopName] = false;
+  loopGains[loopName] = ctx().createGain();
+  loopGains[loopName].connect(ctx().destination);
+  loadLoop(loopName);
+}
+
+function stopLoopSource(name) {
+  var src = loopSources[name];
+  if (!src) return;
+  try {
+    src.stop();
+  } catch (e) {}
+  src.disconnect();
+  loopSources[name] = null;
+  loopStarted[name] = null;
+}
+
+// starts a fresh BufferSourceNode from 0; sample-accurate loop, no restart gap
+function startLoopSource(name) {
+  var buffer = loopBuffers[name];
+  if (!buffer) return; // not decoded yet; loadLoop() picks this up once ready
+  stopLoopSource(name);
+  var src = ctx().createBufferSource();
+  src.buffer = buffer;
+  src.loop = true;
+  src.connect(loopGains[name]);
+  src.start(0);
+  loopSources[name] = src;
+  loopStarted[name] = ctx().currentTime;
+}
+
+// seconds elapsed within the loop right now, read straight off the audio
+// clock so a caller can derive an animation frame that can never drift from
+// it (two independently-ticking clocks - rAF dt and the audio hardware -
+// will always creep apart over a long loop; deriving from one clock can't).
+// null if the loop isn't currently playing (not started yet, still loading).
+export function loopTime(name) {
+  var buffer = loopBuffers[name];
+  var startedAt = loopStarted[name];
+  if (!buffer || !loopSources[name] || startedAt == null) return null;
+  return (ctx().currentTime - startedAt) % buffer.duration;
+}
+
+// resume the (possibly gesture-gated) audio context on the first interaction
+function resumeCtx() {
+  if (ctx().state === "suspended")
+    ctx()
+      .resume()
+      .catch(function () {});
+}
+document.addEventListener("pointerdown", resumeCtx);
+document.addEventListener("keydown", resumeCtx);
+document.addEventListener("touchstart", resumeCtx);
+
+function syncLoopVolume(name) {
+  var def = LOOP_DEFS[name];
+  loopGains[name].gain.value = Math.min(1, def.vol * busVol(def.bus));
+}
+
+// starts/stops a named loop (pc hum, tv theme); starting always restarts
+// from 0 so it can be kept in phase with whatever it's tied to
+export function setLoop(name, on) {
+  if (!LOOP_DEFS[name]) return;
+  loopWanted[name] = on;
+  if (on) {
+    resumeCtx();
+    startLoopSource(name);
+  } else {
+    stopLoopSource(name);
+  }
+  syncLoopVolume(name);
+}
+
+// re-applies the music/sounds sliders to any currently active loop (gain
+// only - never restarts a loop, so a slider drag can't desync it), call
+// after either changes
+export function syncLoopVolumes() {
+  for (var name in LOOP_DEFS) syncLoopVolume(name);
+}
 
 // ----- cursor + tooltip -----
 var cursor = el("cursor");
@@ -381,6 +569,7 @@ var tbHideTimer = null;
 var tbStartTimer = null; // delays the first line until the box has popped in
 var tbHoldOpen = false;
 var tbOnLastLine = null;
+var tbOnLine = null; // { at: lineIndex, fn } - fires when that line starts
 var tbJustOpened = false; // true for the rest of the click/key that opened this textbox
 
 export function isTextboxOpen() {
@@ -400,6 +589,7 @@ function tbShow() {
 }
 
 function tbHide() {
+  playSfx("textboxleave");
   tbActive = false;
   tbTyping = false;
   clearTimeout(tbStartTimer);
@@ -445,6 +635,7 @@ function tbType(now) {
   if (target > tbShown) {
     tbShown = target;
     tbText.textContent = tbFull.slice(0, tbShown);
+    playSfx("text", 1 - TEXT_PITCH_RANGE + Math.random() * TEXT_PITCH_RANGE * 2);
     // hold a beat on punctuation (but never at the very end)
     if (tbShown < tbFull.length) {
       var pause = TB_PAUSE[tbFull.charAt(tbShown - 1)];
@@ -469,6 +660,11 @@ function tbStartLine() {
     var onLast = tbOnLastLine;
     tbOnLastLine = null;
     onLast();
+  }
+  if (tbOnLine && tbIdx === tbOnLine.at) {
+    var onLine = tbOnLine.fn;
+    tbOnLine = null;
+    onLine();
   }
   // reduced motion (or an empty line): skip the typewriter, just show it
   if (reduce || !tbFull) {
@@ -501,7 +697,7 @@ function tbAdvance() {
   else tbHide();
 }
 
-export function textbox(ref, vars, hold, onLastLine) {
+export function textbox(ref, vars, hold, onLastLine, onLine) {
   var lines = DIALOGUE[ref];
   if (!lines || !lines.length || !tb) {
     if (window.console) console.warn('textbox: no dialogue for "' + ref + '"');
@@ -522,6 +718,7 @@ export function textbox(ref, vars, hold, onLastLine) {
   tbIdx = 0;
   tbHoldOpen = !!hold;
   tbOnLastLine = onLastLine || null;
+  tbOnLine = onLine || null;
   var wasShown = tb.classList.contains("show");
   tbActive = true;
   // the click/key that opened this textbox bubbles to the document-level
@@ -531,6 +728,7 @@ export function textbox(ref, vars, hold, onLastLine) {
   setTimeout(function () {
     tbJustOpened = false;
   }, 0);
+  if (!wasShown) playSfx("textboxenter");
   tbShow();
   if (reduce || wasShown) {
     // already on screen (or motion reduced): type the first line right away
@@ -555,7 +753,7 @@ if (tb) {
     if (!tbActive || choiceResolve || tbJustOpened) return;
     if (e.target.closest && e.target.closest(".settings, .achv, .dim, .choices")) return;
     e.preventDefault();
-    blip(sfxSelect);
+    playSfx("select");
     tbAdvance();
   });
 
@@ -677,7 +875,7 @@ export function choice(list, only) {
     btn.appendChild(inner);
     btn.addEventListener("click", function (e) {
       e.stopPropagation();
-      blip(sfxSelect);
+      playSfx("select");
       choiceSettle(value);
     });
     // hover takes over keyboard focus too, so enter/space always picks
@@ -773,7 +971,7 @@ function achNext() {
   achRender(job.a, job.value);
   void ach.offsetWidth; // commit the reset state before sliding in
   ach.classList.add("show");
-  blip(sfxSelect);
+  playSfx("achievement");
   if (!achBar.hidden) {
     // let the 0% commit, then grow the bar
     requestAnimationFrame(function () {
