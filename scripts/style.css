@@ -30,15 +30,11 @@
   --panel-w: 270px;
   --tb-w: min(760px, 90vw);
 
-  --game-aspect: 1.45;
   --edge: 4vmin;
   --inset-x: max(var(--edge), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
   --inset-top: max(var(--edge), env(safe-area-inset-top, 0px));
   --inset-bottom: max(var(--edge), env(safe-area-inset-bottom, 0px));
-  --screen-h: min(
-    calc(100svh - var(--inset-top) - var(--inset-bottom)),
-    calc((100vw - var(--inset-x) * 2) / var(--game-aspect))
-  );
+  --screen-h: calc(100svh - var(--inset-top) - var(--inset-bottom));
 
   --ui-top: max(22px, env(safe-area-inset-top, 0px));
   --ui-right: max(22px, env(safe-area-inset-right, 0px));
@@ -148,9 +144,7 @@ html.is-fullscreen .screen {
   left: 0;
   right: 0;
   top: 0;
-  bottom: 0;
-  height: min(100svh, calc(100vw / var(--game-aspect)));
-  margin-block: auto;
+  height: 100svh;
   border-radius: 0;
   transition:
     transform var(--t-grow) var(--ease),
@@ -1145,10 +1139,7 @@ html.is-mobile .zone-back.show {
 
 /* ----- touch ----- */
 html.is-mobile .cursor-tip {
-  top: min(
-    calc(var(--inset-top) + var(--screen-h) + 12px),
-    calc(100svh - var(--inset-bottom) - 44px)
-  );
+  top: calc(100svh - var(--inset-bottom) - 44px);
   left: 0;
   right: 0;
   text-align: center;

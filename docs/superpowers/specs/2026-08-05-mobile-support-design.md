@@ -25,10 +25,10 @@ Rendered at 390x844 and 844x390 to confirm each of these.
 6. **Dead controls.** iOS Safari has no element fullscreen, so that toggle does
    nothing there.
 
-Rejected: compensating with a wider FOV. Holding the desktop horizontal view at
-0.44 aspect needs a ~125 degree vertical FOV, which is fisheye and shows past
-the edges of the room art.
-
+Rejected: letterboxing the canvas to the desktop aspect. It frames the room
+correctly but leaves a small card at the top of the phone with dead background
+below it, and no alignment of that card hides the seam where the floor art is
+cut off.
 Out of scope: the terminal's sudo password prompt stays desktop-only. Every
 other terminal command is reachable through its `[link]`, so only `secret.txt`
 is affected.
@@ -45,20 +45,30 @@ It does not drive the letterbox. That problem is caused by aspect ratio, not by
 the device, so a narrow desktop window breaks identically. One CSS rule fixes
 both.
 
-### Letterbox
+### Portrait framing
 
-`:root` gains inset custom properties that fold in the safe-area insets, and:
+three.js `fov` is vertical, so horizontal view is a function of aspect and a
+narrow window shears the room off left and right. Portrait instead locks the
+*horizontal* view and lets the vertical grow, which is the same framing
+desktop gets plus extra floor and wall:
 
-    --screen-h: min(
-      calc(100svh - var(--inset-top) - var(--inset-bottom)),
-      calc((100vw - var(--inset-x) * 2) / var(--game-aspect))
-    );
+    fov = 2 * atan(tan(base / 2) * REF_ASPECT / aspect)
 
-with `--game-aspect: 1.45`, which reproduces the desktop framing exactly. Wide
-viewports hit the first term and are unchanged. `.screen` becomes top-anchored
-with `height: var(--screen-h)`; on desktop that is identical to filling. The
-fullscreen rule keeps the same aspect cap and centres with `margin-block: auto`
-so it does not fight the reveal transform.
+with `REF_ASPECT = 1.45` (the desktop aspect, where this returns the scene's
+authored 60) and a `MAX_FOV = 125` guard so an unusually tall viewport crops
+horizontally rather than going fisheye. At or above the reference aspect it
+returns the authored fov unchanged, so landscape and desktop are untouched.
+
+A 390x844 phone lands at 124 degrees. Because the horizontal view is locked,
+the room renders at the same pixel width at every aspect - widening only adds
+vertical extent, it does not shrink the furniture. The canvas keeps filling
+the inset viewport, so there is no letterbox and no seam.
+
+Known tradeoff: the zoomed zones (`pc-screen`, `tv-screen`, `setup`) were
+framed for the desktop aspect, so in portrait their subject sits in the middle
+of a tall frame with empty wall above and desk below. The terminal is legible
+but small. Tightening those zones would need a per-zone camera dolly and is
+not done here.
 
 ### Two-stage tap
 

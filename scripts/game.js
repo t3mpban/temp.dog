@@ -1855,6 +1855,16 @@ function stepGame(dt) {
 
 let rect = { left: 0, top: 0, width: 1, height: 1 };
 
+const REF_ASPECT = 1.45;
+const MAX_FOV = 125;
+
+function fovFor(aspect) {
+  const base = data.camera.fov;
+  if (aspect >= REF_ASPECT) return base;
+  const half = Math.tan(THREE.MathUtils.degToRad(base) / 2) * (REF_ASPECT / aspect);
+  return Math.min(MAX_FOV, THREE.MathUtils.radToDeg(2 * Math.atan(half)));
+}
+
 // offset* rather than getBoundingClientRect: the screen sits at scale(0) until
 // the loader finishes, and a scaled rect measures zero
 function resize() {
@@ -1862,6 +1872,7 @@ function resize() {
   const height = Math.max(1, screenEl.offsetHeight);
   renderer.setSize(width, height, false);
   camera.aspect = width / height;
+  camera.fov = fovFor(camera.aspect);
   camera.updateProjectionMatrix();
   rect = { left: screenEl.offsetLeft, top: screenEl.offsetTop, width, height };
   renderer.render(scene, camera);
