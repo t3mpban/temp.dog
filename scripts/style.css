@@ -136,11 +136,7 @@ html.cc-active * {
   touch-action: none;
 }
 
-/* desktop-only cue for the tap-the-edge-to-go-back band: a subtle coffee-bean
-   wash that fades in on that edge while the pointer sits inside the band.
-   clipped to .screen (overflow: hidden) so it never shows past the viewport.
-   toggled by JS (stepZones' inBand check), not CSS :hover, so it lines up
-   exactly with the same band the click handler actually uses. */
+/* desktop-only coffee-bean wash cueing the tap-the-edge-to-go-back band, clipped to .screen and toggled by JS (stepZones' inBand check) rather than :hover so it matches the band the click handler uses */
 .edge-hint {
   position: absolute;
   top: 0;
@@ -205,8 +201,7 @@ html.is-mobile.intro-done body::before {
 }
 
 /* ----- visual-novel textbox ----- */
-/* centered via left/right + margin auto so transform stays free for the
-   scale pop and `translate` stays free for the mg parallax nudge */
+/* centered via left/right + margin auto so transform stays free for the scale pop and `translate` for the mg parallax nudge */
 .textbox {
   position: fixed;
   left: 0;
@@ -294,6 +289,7 @@ html.is-mobile.intro-done body::before {
 
 .ach.show {
   transform: translateY(0);
+  pointer-events: auto;
 }
 
 /* circle container behind the icon */
@@ -371,8 +367,7 @@ html.is-mobile.intro-done body::before {
 }
 
 /* ----- achievements viewer ----- */
-/* dim sits over everything but the toast + cursor; window is a 3:4 portrait
-   card that scales in from the middle and scrolls internally */
+/* dim sits over everything but the toast + cursor; window is a 3:4 portrait card that scales in from the middle and scrolls internally */
 .dim {
   position: fixed;
   inset: 0;
@@ -550,8 +545,7 @@ html.is-mobile.intro-done body::before {
 }
 
 /* ----- multiple choice ----- */
-/* container spans viewport-top to textbox-top (height set by js), stack is
-   centred inside it. buttons are half the textbox width */
+/* container spans viewport-top to textbox-top (height set by js), stack centred inside it, buttons half the textbox width */
 .choices {
   position: fixed;
   top: 0;
@@ -569,9 +563,7 @@ html.is-mobile.intro-done body::before {
   display: none;
 }
 
-/* hit box: no gap between buttons, so the pointer never leaves a
-   .cursorable while crossing from one choice to the next. the visible
-   gap is padding (still inside the hit box) around .choice-inner */
+/* hit box: no gap between buttons so the pointer never leaves a .cursorable crossing from one choice to the next - the visible gap is padding around .choice-inner */
 .choice {
   display: block;
   width: calc(var(--tb-w) * 0.5);
@@ -642,8 +634,7 @@ html.is-mobile.intro-done body::before {
   transition: opacity var(--t) var(--ease);
 }
 
-/* full-bleed so the loader centres, so it must let clicks through to the
-   game sitting underneath it */
+/* full-bleed so the loader centres, so it must let clicks through to the game sitting underneath it */
 .stage {
   position: relative;
   z-index: 10;
@@ -670,6 +661,17 @@ html.is-mobile.intro-done body::before {
   opacity: 0;
   transform: scale(0.92);
   pointer-events: none;
+}
+
+.webgl-fallback {
+  max-width: min(320px, 80vw);
+  margin: 0;
+  color: var(--coffee-bean);
+  font-size: var(--ui-sm);
+  line-height: 1.4;
+  letter-spacing: var(--tracking);
+  text-align: center;
+  text-shadow: var(--shadow);
 }
 
 .loader {
@@ -948,8 +950,7 @@ a.opt {
   border: none;
 }
 
-/* mobile terminal keyboard bridge: must stay focusable (no display:none /
-   visibility:hidden, either of which stops the OS keyboard from opening) */
+/* mobile terminal keyboard bridge: must stay focusable (no display:none / visibility:hidden, either of which stops the OS keyboard from opening) */
 .pc-input {
   position: fixed;
   top: 0;
@@ -1134,7 +1135,7 @@ html.is-mobile .zone-back.show {
   left: 0;
   width: 12px;
   height: 12px;
-  border: 8px solid var(--coffee-bean);
+  border: 6px solid var(--coffee-bean);
   border-radius: 50%;
   background: transparent;
   will-change: transform, width, height, border-width;

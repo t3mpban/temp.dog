@@ -1,6 +1,4 @@
-// shared game <-> page api: script.json, textbox, choices, achievements, tooltip,
-// loader and cursor feedback. index.html uses all of it, /the-end only the textbox.
-// every element lookup is optional so the module is safe on a bare page.
+// shared game <-> page api (script.json, textbox, choices, achievements, tooltip, loader, cursor feedback): index.html uses all of it, /the-end only the textbox, and every element lookup is optional so the module is safe on a bare page.
 
 export var fine = window.matchMedia("(pointer: fine)").matches;
 export var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -137,8 +135,7 @@ export function toLangMap(arr) {
   return map;
 }
 
-// translations + dialogue in external file
-// shape: { ui: [...], dialogue: [...] }; plain array tolerated as ui-only
+// translations + dialogue in external file, shape { ui: [...], dialogue: [...] }; plain array tolerated as ui-only
 function loadScript() {
   return fetch("/scripts/script.json")
     .then(function (res) {
@@ -180,8 +177,7 @@ function loadScript() {
 // one fetch shared by every importer
 export var ready = loadScript();
 
-// cubic-bezier(x1,y1,x2,y2) -> y for x, newton with a bisection fallback.
-// shared by the game's camera eases and the textbox pop-in timing below.
+// cubic-bezier(x1,y1,x2,y2) -> y for x, newton with a bisection fallback; shared by the game's camera eases and the textbox pop-in timing below.
 export function cubicBezier(x1, y1, x2, y2) {
   var cx = 3 * x1,
     bx = 3 * (x2 - x1) - cx,
@@ -233,13 +229,7 @@ var TEXT_POOL_SIZE = 3;
 // per-character pitch spread: playbackRate is randomized in [1-RANGE, 1+RANGE]
 var TEXT_PITCH_RANGE = 0.35;
 
-// one-shot sfx: never overlaps itself (or, for a shared `group`, any other
-// sound in that group), plays at DEF.vol * its bus (0-1). `pool` lets N
-// instances overlap each other before new plays start getting ignored.
-// vol levels are ear-balanced against each file's measured loudness
-// (ffmpeg volumedetect mean_volume) so the default mix has music as the
-// most prominent layer and frequent/short sfx (hover, typing) sit well
-// under it rather than competing with it
+// one-shot sfx: never overlaps itself (or anything sharing its `group`), plays at DEF.vol * its bus (0-1), `pool` lets N instances overlap before new plays are ignored; vols are ear-balanced against each file's measured loudness (ffmpeg volumedetect mean_volume) so music stays the most prominent layer and frequent/short sfx sit under it
 var SFX_DEFS = {
   hover: { file: "hover.ogg", vol: 0.15, bus: "sounds", group: "hover" },
   unhover: { file: "unhover.ogg", vol: 0.15, bus: "sounds", group: "hover" },
@@ -253,16 +243,13 @@ var SFX_DEFS = {
   achievement: { file: "achievement.ogg", vol: 0.85, bus: "sounds" },
 };
 
-// sustained ambience: setLoop(name, true/false) turns it on/off, volume
-// tracks its bus live. played through Web Audio (not <audio loop>) so the
-// ogg loops sample-accurately, with no seam between the end and the restart
+// sustained ambience: setLoop(name, true/false) turns it on/off and volume tracks its bus live, played through Web Audio (not <audio loop>) so the ogg loops sample-accurately with no seam at the restart
 var LOOP_DEFS = {
   pc: { file: "pc.ogg", vol: 0.2, bus: "sounds" },
   music: { file: "music.ogg", vol: 3, bus: "music" },
 };
 
-// music.ogg's tempo - game.js derives the tv dance-loop's frame from it.
-// keep in sync with whatever the track actually is if it ever changes.
+// music.ogg's tempo - game.js derives the tv dance-loop's frame from it, so keep in sync with whatever the track actually is if it ever changes.
 export var MUSIC_BPM = 90;
 
 var sfxBuffers = {}; // name -> decoded AudioBuffer, once loaded
@@ -305,9 +292,7 @@ function tryPlay(a) {
   } catch (e) {}
 }
 
-// play a named one-shot; ignored if that sound (or another in its group,
-// e.g. hover/unhover) is already playing, or its pool is fully busy.
-// rate (optional) sets playbackRate, e.g. for per-character pitch variance
+// play a named one-shot; ignored if that sound (or another in its group, e.g. hover/unhover) is already playing or its pool is fully busy. rate (optional) sets playbackRate, e.g. for per-character pitch variance
 export function playSfx(name, rate) {
   var def = SFX_DEFS[name];
   var buffer = sfxBuffers[name];
@@ -341,10 +326,7 @@ function ctx() {
   return audioCtx;
 }
 
-// routed through a real <audio> element (via a MediaStreamDestination)
-// rather than straight to ctx().destination: on iOS, plain Web Audio output
-// ignores the phone's physical mute/silent switch, but audio played through
-// an HTMLMediaElement respects it. Shared by the sfx pool above too.
+// routed through a real <audio> element (via a MediaStreamDestination) rather than straight to ctx().destination because on iOS only HTMLMediaElement output respects the phone's physical mute switch. Shared by the sfx pool above too.
 var loopDest = null;
 var loopOutputEl = null;
 function loopDestination() {
@@ -409,11 +391,7 @@ function startLoopSource(name) {
   loopStarted[name] = ctx().currentTime;
 }
 
-// seconds elapsed within the loop right now, read straight off the audio
-// clock so a caller can derive an animation frame that can never drift from
-// it (two independently-ticking clocks - rAF dt and the audio hardware -
-// will always creep apart over a long loop; deriving from one clock can't).
-// null if the loop isn't currently playing (not started yet, still loading).
+// seconds elapsed within the loop right now, read straight off the audio clock so a caller's animation can't creep apart from it the way rAF dt would; null if the loop isn't currently playing (not started yet, still loading).
 export function loopTime(name) {
   var buffer = loopBuffers[name];
   var startedAt = loopStarted[name];
@@ -421,8 +399,7 @@ export function loopTime(name) {
   return (ctx().currentTime - startedAt) % buffer.duration;
 }
 
-// resume the (possibly gesture-gated) audio context and the loop output
-// element on the first interaction - both need a user gesture to start
+// resume the (possibly gesture-gated) audio context and the loop output element on the first interaction - both need a user gesture to start
 function resumeCtx() {
   if (ctx().state === "suspended")
     ctx()
@@ -439,8 +416,7 @@ function syncLoopVolume(name) {
   loopGains[name].gain.value = def.vol * busVol(def.bus);
 }
 
-// starts/stops a named loop (pc hum, tv theme); starting always restarts
-// from 0 so it can be kept in phase with whatever it's tied to
+// starts/stops a named loop (pc hum, tv theme); starting always restarts from 0 so it can be kept in phase with whatever it's tied to
 export function setLoop(name, on) {
   if (!LOOP_DEFS[name]) return;
   loopWanted[name] = on;
@@ -453,9 +429,7 @@ export function setLoop(name, on) {
   syncLoopVolume(name);
 }
 
-// re-applies the music/sounds sliders to any currently active loop (gain
-// only - never restarts a loop, so a slider drag can't desync it), call
-// after either changes
+// re-applies the music/sounds sliders to any currently active loop (gain only - never restarts a loop, so a slider drag can't desync it); call after either changes
 export function syncLoopVolumes() {
   for (var name in LOOP_DEFS) syncLoopVolume(name);
 }
@@ -510,8 +484,7 @@ export function tooltip(text) {
 }
 
 // ----- loading bar -----
-// setLoadProgress(0..1) drives the bar; hitting 1 fades the loader and grows
-// the screen in behind it
+// setLoadProgress(0..1) drives the bar; hitting 1 fades the loader and grows the screen in behind it
 var loaderWrap = el("loaderWrap");
 var loader = el("loader");
 var fill = el("fill");
@@ -551,9 +524,7 @@ if (fine && loader) {
 }
 
 // ----- visual-novel textbox -----
-// textbox("ref") pulls DIALOGUE[ref] from script.json and types each line out.
-// exposed on window so the webgl game can drive it; returns a promise that
-// settles once the whole sequence is dismissed.
+// textbox("ref") pulls DIALOGUE[ref] from script.json and types each line out; exposed on window so the webgl game can drive it, and returns a promise that settles once the whole sequence is dismissed.
 var tb = el("textbox");
 var tbText = el("textboxText");
 var tbNext = el("textboxNext");
@@ -748,9 +719,7 @@ export function textbox(ref, vars, hold, onLastLine, onLine) {
   tbOnLine = onLine || null;
   var wasShown = tb.classList.contains("show");
   tbActive = true;
-  // the click/key that opened this textbox bubbles to the document-level
-  // advance listeners below within the same dispatch; ignore it there so it
-  // can't immediately skip the pop-in wait it just started
+  // the click/key that opened this textbox bubbles to the document-level advance listeners below within the same dispatch; ignore it there so it can't immediately skip the pop-in wait it just started
   tbJustOpened = true;
   setTimeout(function () {
     tbJustOpened = false;
@@ -797,9 +766,7 @@ if (tb) {
 }
 
 // ----- multiple choice -----
-// choice("pc-on") pulls a set from script.json; choice(["yes","no"]) takes a
-// literal list. 2-4 options, stacked + centred above the textbox. resolves to
-// the picked option's id (or its index when the option has none).
+// choice("pc-on") pulls a set from script.json, choice(["yes","no"]) takes a literal list; 2-4 options stacked + centred above the textbox, resolving to the picked option's id (or its index when the option has none).
 var choicesEl = el("choices");
 var CHOICE_OUT_MS = 350; // keep in sync with .choice transition
 var choiceResolve = null;
@@ -842,8 +809,7 @@ function choiceSettle(value) {
   if (done) done(value);
 }
 
-// single source of truth for which option is "active" (hover, keyboard
-// focus, and arrow keys before anything has focus all funnel into this)
+// single source of truth for which option is "active" (hover, keyboard focus, and arrow keys before anything has focus all funnel into this)
 var choiceBtns = [];
 var choiceActiveBtn = null;
 
@@ -906,8 +872,7 @@ export function choice(list, only) {
       playSfx("select");
       choiceSettle(value);
     });
-    // hover takes over keyboard focus too, so enter/space always picks
-    // whichever option the pointer is actually over
+    // hover takes over keyboard focus too, so enter/space always picks whichever option the pointer is actually over
     btn.addEventListener("pointerenter", function () {
       choiceSetActive(btn);
     });
@@ -947,9 +912,7 @@ export function choice(list, only) {
 window.addEventListener("resize", choicePosition);
 
 // ----- achievement toast -----
-// achievement("id") pops an xbox-360-style toast down from the top. progress
-// achievements take the current value: achievement("explorer", 3) -> 3 / 5.
-// overlapping calls queue and play one at a time.
+// achievement("id") pops an xbox-360-style toast down from the top; progress achievements take the current value, achievement("explorer", 3) -> 3 / 5, and overlapping calls queue to play one at a time.
 var ach = el("ach");
 var achIcon = ach && el("achIcon").querySelector("i");
 var achTitle = el("achTitle");
@@ -1010,6 +973,13 @@ function achNext() {
     ach.classList.remove("show"); // slide back up
     achTimer = setTimeout(achNext, ACH_SLIDE_MS);
   }, ACH_HOLD_MS);
+}
+
+export function dismissAchToast() {
+  if (!achBusy) return;
+  clearTimeout(achTimer);
+  ach.classList.remove("show");
+  achTimer = setTimeout(achNext, ACH_SLIDE_MS);
 }
 
 // normal achievements are 0/1, progress ones 0..goal

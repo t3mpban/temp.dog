@@ -1,19 +1,299 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="robots" content="noindex, nofollow">
-	<title>t3mp's website — for hire</title>
-	<link rel="icon" type="image/png" href="/images/favicon.png">
-	<style>
-		body {
-			margin: 0;
-			min-height: 100vh;
-			background: #191919;
-		}
-	</style>
-</head>
-<body>
-</body>
+  <head>
+    <meta name="title" content="t3mp for hire" />
+    <meta
+      name="description"
+      content="t3mp — freelance web designer for hire. This page is still under construction, check back soon."
+    />
+    <meta
+      name="keywords"
+      content="t3mp, t3mpban, t3mpyt, temp, freelance web designer, hire t3mp, web design for hire"
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="t3mp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta content="#191919" data-react-helmet="true" name="theme-color" />
+
+    <meta charset="utf-8" />
+    <title>t3mp for hire</title>
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      defer
+      src="https://cloud.umami.is/script.js"
+      data-website-id="f8a25eb1-84d1-48ab-b56d-03a37097f3af"
+    ></script>
+
+    <style>
+      :root {
+        --bg: #191919;
+        --titlebar: #2f2f2f;
+        --text: #ececec;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: var(--bg);
+        font-family: "Inter", sans-serif;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+      }
+
+      .window {
+        position: relative;
+        z-index: 1;
+        width: 480px;
+        max-width: 90vw;
+        background: var(--bg);
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .hi-text {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: var(--text);
+        font-size: 16px;
+        opacity: 0.5;
+        font-weight: 600;
+      }
+
+      .titlebar {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        height: 40px;
+        padding: 0 14px;
+        background: var(--titlebar);
+        cursor: grab;
+        -webkit-user-select: none; /* Safari */
+        -ms-user-select: none; /* IE 10 and IE 11 */
+        user-select: none; /* Standard syntax */
+      }
+
+      .titlebar:active {
+        cursor: grabbing;
+      }
+
+      .dot {
+        position: relative;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--text);
+        cursor: pointer;
+      }
+
+      .dot::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 28px;
+        height: 28px;
+      }
+
+      .dot:hover {
+        background: #ff5f56;
+      }
+
+      .dot:active {
+        background: #fff;
+      }
+
+      .titlebar-text {
+        text-align: center;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text);
+        opacity: 0.75;
+      }
+
+      .content {
+        padding: 32px 32px 32px 32px;
+        font-size: 15px;
+        line-height: 1.65;
+        color: var(--text);
+      }
+
+      .content p {
+        margin: 0 0 16px;
+      }
+
+      .content p:last-child {
+        margin-bottom: 0;
+      }
+
+      .links {
+        display: flex;
+        justify-content: space-around;
+        gap: 18px;
+        margin: 4px 0 16px;
+      }
+
+      a {
+        color: var(--text);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        text-decoration-color: var(--titlebar);
+      }
+
+      a:hover {
+        text-decoration-color: var(--text);
+      }
+
+      .word {
+        opacity: 0;
+        transition: opacity 150ms ease-out;
+      }
+
+      .word.visible {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hi-text">hi</div>
+    <div class="window">
+      <div class="titlebar">
+        <span class="idot"></span>
+        <span class="titlebar-text">placeholder website</span>
+        <span class="dot"></span>
+      </div>
+      <div class="content">
+        <p>
+          <span class="word">I'm</span> <span class="word">Temp,</span> <span class="word">a</span>
+          <span class="word">freelance</span> <span class="word">web</span>
+          <span class="word">designer</span> <span class="word">from</span>
+          <span class="word">London.</span> <span class="word">I</span>
+          <span class="word">specialize</span> <span class="word">in</span>
+          <span class="word">creating</span> <span class="word">unique</span>
+          <span class="word">and</span> <span class="word">creative</span>
+          <span class="word">experiences</span> <span class="word">that'll</span>
+          <span class="word">make</span> <span class="word">your</span>
+          <span class="word">business</span> <span class="word">stand</span>
+          <span class="word">out!</span>
+        </p>
+
+        <p>
+          <span class="word">I'm</span> <span class="word">still</span>
+          <span class="word">working</span> <span class="word">on</span>
+          <span class="word">this</span> <span class="word">website</span>
+          <span class="word">and</span> <span class="word">won't</span> <span class="word">be</span>
+          <span class="word">done</span> <span class="word">by</span> <span class="word">late</span>
+          <span class="word">August.</span>
+        </p>
+
+        <p>
+          <span class="word">In</span> <span class="word">the</span>
+          <span class="word">meantime,</span> <span class="word">you</span>
+          <span class="word">can</span> <span class="word">check</span>
+          <span class="word">out</span> <span class="word">my</span>
+          <span class="word">personal</span> <span class="word">site</span>
+          <a href="#" class="word">here</a><span class="word">,</span> <span class="word">or</span>
+          <span class="word">contact</span>
+          <span class="word">me:</span>
+        </p>
+
+        <div class="links">
+          <a href="mailto:hi@temp.dog" class="word">hi@temp.dog</a>
+          <span class="word">or</span>
+          <a href="https://discord.com/users/565992682800021504" class="word">@3vu (Discord)</a>
+        </div>
+        <p>
+          <!-- empty -->
+        </p>
+        <p>
+          <span class="word">Thanks</span> <span class="word">for</span>
+          <span class="word">stopping</span> <span class="word">by,</span>
+          <span class="word">and</span> <span class="word">have</span> <span class="word">a</span>
+          <span class="word">great</span> <span class="word">day!</span>
+        </p>
+      </div>
+    </div>
+    <script>
+      var lines = document.querySelectorAll(".content > p, .content > .links");
+      var delay = 0;
+      var base = 40;
+      var perChar = 10;
+      var linePause = 200;
+
+      lines.forEach(function (line) {
+        var words = line.querySelectorAll(".word");
+        words.forEach(function (word) {
+          delay += base + word.textContent.length * perChar;
+          setTimeout(function () {
+            word.classList.add("visible");
+          }, delay);
+          var lastChar = word.textContent.slice(-1);
+          if (",;:".indexOf(lastChar) !== -1) {
+            delay += 200;
+          } else if (".!?".indexOf(lastChar) !== -1) {
+            delay += 400;
+          }
+        });
+        delay += linePause;
+      });
+
+      var win = document.querySelector(".window");
+      var titlebar = document.querySelector(".titlebar");
+      var closeDot = document.querySelector(".dot");
+
+      closeDot.addEventListener("click", function () {
+        win.style.display = "none";
+      });
+
+      var dragging = false;
+      var offsetX = 0;
+      var offsetY = 0;
+
+      titlebar.addEventListener("mousedown", function (e) {
+        if (e.target.classList.contains("dot") || e.target.classList.contains("idot")) return;
+        var rect = win.getBoundingClientRect();
+        win.style.position = "fixed";
+        win.style.margin = "0";
+        win.style.left = rect.left + "px";
+        win.style.top = rect.top + "px";
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
+        dragging = true;
+        e.preventDefault();
+      });
+
+      document.addEventListener("mousemove", function (e) {
+        if (!dragging) return;
+        win.style.left = e.clientX - offsetX + "px";
+        win.style.top = e.clientY - offsetY + "px";
+      });
+
+      document.addEventListener("mouseup", function () {
+        dragging = false;
+      });
+    </script>
+  </body>
 </html>

@@ -11,6 +11,7 @@ import {
   choicePosition,
   clampVol,
   deleteCookie,
+  dismissAchToast,
   fine,
   isChoiceOpen,
   isMobile,
@@ -523,8 +524,7 @@ import {
   });
 
   // ----- achievements viewer -----
-  // completed first, then started-but-unfinished, then the rest; alphabetical
-  // by the active language's title within each band
+  // completed first, then started-but-unfinished, then the rest; alphabetical by the active language's title within each band
   var dim = document.getElementById("dim");
   var achv = document.getElementById("achv");
   var achvList = document.getElementById("achvList");
@@ -654,6 +654,16 @@ import {
     setOpen(false);
     setAchvOpen(true);
   });
+
+  var achToast = document.getElementById("ach");
+  if (achToast) {
+    achToast.addEventListener("click", function () {
+      dismissAchToast();
+      playSfx("select");
+      setOpen(false);
+      setAchvOpen(true);
+    });
+  }
 
   achvClose.addEventListener("click", function () {
     playSfx("select");

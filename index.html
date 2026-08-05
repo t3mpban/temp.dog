@@ -27,7 +27,7 @@
     <meta content="https://temp.dog/images/banner.webp" property="og:image" />
     <meta content="#fed8b1" data-react-helmet="true" name="theme-color" />
 
-    <!-- Discord embed tags -->
+    <!-- discord embed tags -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="temp.dog" />
     <meta property="og:title" content="t3mp's website" />
@@ -42,6 +42,9 @@
     <meta charset="utf-8" />
     <title>t3mp's website</title>
     <link rel="icon" type="image/png" href="images/favicon.png" />
+    <link rel="preload" href="font/t3mp.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="font/JetBrainsMono.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
     <link rel="stylesheet" type="text/css" href="scripts/style.css" />
     <link
       rel="stylesheet"
@@ -54,18 +57,15 @@
     ></script>
   </head>
   <body>
-    <!-- content surface: a background rect revealed once loading finishes.
-		     sits below the foreground UI and isn't one of the parallax-nudged layers.
-		     the webgl game renders into the canvas it clips -->
+    <!-- webgl game -->
     <div class="screen" id="screen" aria-hidden="true">
       <canvas class="game" id="game"></canvas>
-      <!-- desktop only: hints at the tap-the-edge-to-go-back band -->
+      <!-- desktop only hints -->
       <div class="edge-hint edge-hint-left" id="edgeHintLeft" aria-hidden="true"></div>
       <div class="edge-hint edge-hint-right" id="edgeHintRight" aria-hidden="true"></div>
     </div>
 
-    <!-- mobile-only bridge: focusing this on tap summons the OS keyboard;
-	       its value is resynced into pc.buffer on every input event -->
+    <!-- mobile-only bridge, summoning the OS keyboard -->
     <input
       id="pcInput"
       class="pc-input"
@@ -79,8 +79,7 @@
       aria-hidden="true"
     />
 
-    <!-- visual-novel textbox: hidden + inert until textbox("ref") is called from js.
-		     mid-ground layer (parallax-nudged), pops in/out by scaling from 0 -->
+    <!-- textbox -->
     <div class="textbox" id="textbox" aria-hidden="true" inert>
       <p class="textbox-text" id="textboxText"></p>
       <span class="textbox-next" id="textboxNext" aria-hidden="true">
@@ -88,9 +87,8 @@
       </span>
     </div>
 
-    <!-- achievement toast: slides down from the top (xbox-360 style) when
-		     achievement("id") is called. status region so it's announced -->
-    <div class="ach" id="ach" role="status" aria-live="polite">
+    <!-- xbox 360 type achievement toast  -->
+    <div class="ach cursorable" id="ach" role="status" aria-live="polite">
       <span class="ach-icon" id="achIcon"><i class="fa-solid" aria-hidden="true"></i></span>
       <span class="ach-body">
         <span class="ach-title" id="achTitle"></span>
@@ -102,7 +100,7 @@
       </span>
     </div>
 
-    <!-- center stage: the loading bar -->
+    <!-- loading bar -->
     <main class="stage">
       <div class="loader-wrap" id="loaderWrap">
         <div
@@ -116,6 +114,7 @@
         >
           <div class="track"><div class="fill dark" id="fill"></div></div>
         </div>
+        <p class="webgl-fallback" id="webglFallback" hidden>your device does not support WebGL.</p>
       </div>
     </main>
 
@@ -123,7 +122,7 @@
       <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
     </button>
 
-    <!-- top-right settings: square container morphs to reveal options -->
+    <!-- settings -->
     <aside class="settings" id="settings">
       <button
         class="gear cursorable"
@@ -249,10 +248,10 @@
 
     <div class="notice" id="notice" role="status" aria-live="polite"></div>
 
-    <!-- corner signature -->
+    <!-- sig -->
     <footer class="sig" data-i18n="small-text">made by t3mp</footer>
 
-    <!-- custom weighted cursor + helpers (decorative, no-op without JS / on touch) -->
+    <!-- weighted cursor -->
     <div class="cursor" id="cursor" aria-hidden="true"><div class="cursor-dot"></div></div>
     <div class="cursor-tip" id="tip" aria-hidden="true"><span class="bubble">0%</span></div>
 

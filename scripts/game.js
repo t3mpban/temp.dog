@@ -179,10 +179,30 @@ const MIN_BOX = 0.15;
 
 const canvas = document.getElementById("game");
 const screenEl = document.getElementById("screen");
+const achToastEl = document.getElementById("ach");
 const backBtn = document.getElementById("zoneBack");
 const pcInput = document.getElementById("pcInput");
 const edgeHintLeft = document.getElementById("edgeHintLeft");
 const edgeHintRight = document.getElementById("edgeHintRight");
+
+function hasWebGL() {
+  try {
+    const test = document.createElement("canvas");
+    return !!(
+      window.WebGLRenderingContext &&
+      (test.getContext("webgl") || test.getContext("experimental-webgl"))
+    );
+  } catch (e) {
+    return false;
+  }
+}
+
+if (!hasWebGL()) {
+  document.getElementById("loader")?.remove();
+  const fallback = document.getElementById("webglFallback");
+  if (fallback) fallback.hidden = false;
+  throw new Error("WebGL is not supported on this device.");
+}
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(60, 1, 0.05, 4000);
@@ -289,8 +309,7 @@ function tag(entry, prefix) {
 }
 
 // ----- labels -----
-// Label3D as a canvas texture: the quad is canvas px * pixel_size, anchored by
-// the node's alignment (cmd hangs from its top-left, the clock is centred)
+// Label3D as a canvas texture: quad is canvas px * pixel_size, anchored by the node's alignment (cmd hangs from its top-left, the clock is centred)
 
 const MARK_DIM = "\x01";
 const MARK_OK = "\x02";
@@ -319,12 +338,9 @@ function colorRuns(text, base) {
   return runs;
 }
 
-// "[token]" runs are clickable, but rendered without the brackets: stripLinks()
-// drops them from what's drawn, and findLinks() reports columns in that same
-// (marks + brackets stripped) space so they line up with the drawn text
+// "[token]" runs are clickable but drawn without the brackets: stripLinks() drops them, and findLinks() reports columns in that same (marks + brackets stripped) space so they line up
 const LINK_RE = /(?<![\x01-\x03])\[[^\]\n]+\]/g;
-// findLinks' exec loop below calls stripLinks while it's mid-iteration; sharing
-// one regex object between the two would clobber lastIndex and spin forever
+// findLinks' exec loop calls stripLinks mid-iteration; one shared regex object would clobber lastIndex and spin forever
 const LINK_SCAN_RE = /(?<![\x01-\x03])\[[^\]\n]+\]/g;
 function stripLinks(text) {
   return text.replace(LINK_RE, (m) => m.slice(1, -1));
@@ -572,8 +588,7 @@ const ZONES = {
   "tv-screen": { marker: "tv-screen", parent: "tv", area: "tv" },
 };
 const LOCKED = { "pc-screen": true, "tv-screen": true };
-// tap-the-edge-to-go-back is desktop only: on mobile it's too easy to trigger
-// by accident (the dedicated back button covers that case there instead)
+// tap-the-edge-to-go-back is desktop only: too easy to trigger by accident on mobile, where the dedicated back button covers that case instead
 const BACK_BAND = 0.15;
 const HOVER_LOCK_FRAC = 0.02;
 
@@ -603,6 +618,19 @@ const lookTarget = new THREE.Vector3();
 const pointer = new THREE.Vector2();
 let pointerX = 0.5;
 let pointerY = 0.5;
+let pointerClientX = 0;
+let pointerClientY = 0;
+
+function overAchToast() {
+  if (!achToastEl || !achToastEl.classList.contains("show")) return false;
+  const r = achToastEl.getBoundingClientRect();
+  return (
+    pointerClientX >= r.left &&
+    pointerClientX <= r.right &&
+    pointerClientY >= r.top &&
+    pointerClientY <= r.bottom
+  );
+}
 
 let mouseMesh = null;
 let mouseEntry = null;
@@ -658,14 +686,7 @@ function looks(id) {
   return id !== "" && !nolook.has(id);
 }
 
-// pc-screen's marker was framed assuming the desktop FOV. On mobile,
-// fovFor() widens the vertical FOV a lot to lock the horizontal FOV on
-// narrow/portrait screens (see resize()), which from that same fixed
-// camera position makes the monitor read as small and far away. Dolly
-// the camera forward (along the direction it's already facing) by
-// however much the FOV widened, so the monitor keeps roughly the same
-// on-screen size it has on desktop. Distance is an eyeballed constant,
-// not measured - this only needs to look right, not be exact.
+// pc-screen's marker was framed for the desktop FOV; on mobile fovFor() widens it (see resize()) and the monitor reads small and far, so dolly the camera forward by however much the FOV widened - eyeballed, only needs to look right
 const PC_SCREEN_DOLLY_DISTANCE = 0.75;
 
 function zoneCameraPosition(name, marker) {
@@ -735,9 +756,8 @@ function hoverLockBroken() {
 }
 
 function stepZones() {
-  if (isPanelOpen()) {
-    // settings/achievements own hover + cursor while open; ignore the game world,
-    // but leave the ring alone so their own .cursorable hover state still shows
+  if (isPanelOpen() || overAchToast()) {
+    // settings/achievements own hover + cursor while open; ignore the game world, but leave the ring alone so their own .cursorable hover state still shows
     inBand = false;
     edgeHintLeft.classList.remove("show");
     edgeHintRight.classList.remove("show");
@@ -814,7 +834,7 @@ const BOOT_LOG = `[    0.000000] Command line: BOOT SEQ START
 [0.401337] Reached target GUI               [  OK  ]
 [0.512004] Starting temp.dog message...     [  OK  ]`;
 
-const WELCOME = `Temp Linux (Version 26w31a)
+const WELCOME = `Temp Linux (ver 5.48-050826+23)
 Copyright (c) t3mp 2026. All rights reserved.
 
 Welcome back, Temp!
@@ -1494,9 +1514,7 @@ function terminalLinkAt(uv) {
   return pc.label.hitLink(px, py);
 }
 
-// the bare "temp@temp ~$ " prompt (top-level, nothing typed yet) has no [link]
-// of its own, but clicking it should still run help — keeps the whole game
-// playable without a keyboard
+// the bare "temp@temp ~$ " prompt has no [link] of its own, but clicking it still runs help — keeps the whole game playable without a keyboard
 function terminalPromptHit(uv) {
   if (!uv || pc.mode !== ASK || pc.prompt !== PROMPT || pc.buffer) return false;
   const py = (1 - uv.y) * pc.label.canvasHeight;
@@ -1520,9 +1538,7 @@ function openPcKeyboard() {
   pcInput.focus();
 }
 
-// true only while WE are the ones blurring pcInput (leaving the pc-screen
-// zone), so the blur listener below can tell that apart from the user
-// dismissing the on-screen keyboard themselves
+// true only while we blur pcInput ourselves (leaving the pc-screen zone), so the blur listener below can tell that apart from the user dismissing the keyboard
 let closingPcKeyboard = false;
 
 function closePcKeyboard() {
@@ -1532,11 +1548,7 @@ function closePcKeyboard() {
   closingPcKeyboard = false;
 }
 
-// while the on-screen keyboard covers part of the screen (mobile only), the
-// game world stops responding to taps entirely - only the back button still
-// works - and a vertical swipe nudges the camera instead. see the canvas
-// listeners further down for the swipe handling and pcVerticalOffset's use
-// in stepCamera() above for how it's applied.
+// while the on-screen keyboard covers the screen (mobile only) the game world ignores taps - only the back button works - and a vertical swipe nudges the camera instead, via pcVerticalOffset in stepCamera()
 let pcKeyboardOpen = false;
 
 function syncKeyboardShift() {
@@ -1556,10 +1568,7 @@ pcInput.addEventListener("focus", () => {
   syncKeyboardShift();
 });
 
-// dismissing the on-screen keyboard (back button, its own down-arrow/done
-// control) blurs pcInput same as any other blur - treat that as "done
-// typing" and back out of the pc screen, since the keyboard is the intended
-// way to use the terminal on mobile
+// dismissing the on-screen keyboard blurs pcInput like any other blur - treat that as "done typing" and back out of the pc screen, since the keyboard is the intended way to use the terminal on mobile
 pcInput.addEventListener("blur", () => {
   pcKeyboardOpen = false;
   pcVerticalOffset = 0;
@@ -1568,11 +1577,7 @@ pcInput.addEventListener("blur", () => {
   if (zone === "pc-screen") zoneBack();
 });
 
-// re-derives pc.buffer from pcInput's current value on every native input
-// event, clamped to the same width limit desktop typing already respects.
-// Reading the whole value fresh (rather than trying to interpret discrete
-// keystrokes) is what makes this correct across autocorrect/predictive-text
-// rewrites: it doesn't matter how the value changed, only what it is now.
+// re-derives pc.buffer from pcInput's whole current value (clamped to the width desktop typing respects) rather than from discrete keystrokes, which is what keeps it correct across autocorrect/predictive-text rewrites
 function pcInputOnInput() {
   if (!pc.captured || !pc.on) return;
   if (pc.mode === PAGE) {
@@ -1818,9 +1823,7 @@ async function ask(topic) {
     await textbox("plush-donate");
     return;
   }
-  // "So without thinking, you squeeze [Marketable Plush] and the TV turns
-  // on!" - line 3 of plush-remote; the tv should react right as that's read,
-  // not after the whole exchange closes
+  // line 3 of plush-remote is "you squeeze [Marketable Plush] and the TV turns on!", so the tv reacts right as that line is read, not after the whole exchange closes
   const onSqueeze =
     topic === "remote"
       ? {
@@ -1874,13 +1877,13 @@ async function actGuitar() {
   }
   game.plays[stage] = Math.min(game.plays[stage] + 1, game.guitarLearned ? 3 : 2);
   saveGame();
-  if (stage === "after") award("fast-learner");
   holdGuitar(false);
   playSfx("wear");
   await wait(PLAY_HOLD);
-  await textbox("guitar-" + stage + "-play-" + game.plays[stage], null, false, () =>
-    holdGuitar(true)
-  );
+  await textbox("guitar-" + stage + "-play-" + game.plays[stage], null, false, () => {
+    holdGuitar(true);
+    if (stage === "after") award("fast-learner");
+  });
 }
 
 async function act(id) {
@@ -1959,8 +1962,7 @@ function stepSky() {
   for (const mesh of roles.get("sky") || []) mesh.material = material(mesh.userData[key]);
 }
 
-// the pair we did not boot with, fetched once the page is idle so a rollover
-// at 06:00 / 20:00 never stalls
+// the pair we did not boot with, fetched once the page is idle so a rollover at 06:00 / 20:00 never stalls
 function prefetchSky() {
   const other = skyKey === "day" ? "night" : "day";
   for (const mesh of roles.get("sky") || []) material(mesh.userData[other]);
@@ -1975,15 +1977,11 @@ function stepGame(dt) {
     stepSky();
   }
   if (!game.tvOn) return;
-  const sheet = tvSheet();
+  const frames = role("tvframes");
+  const sheet = frames && frames.material.map;
   if (!sheet) return;
-  const count = data.mats[role("tvframes").userData.mat].frames;
-  // tv-frames.webp is an 8-pose dance loop - the frame index is elapsed
-  // beats (x TV_POSES_PER_BEAT), not elapsed seconds. driven off the music's
-  // own audio-clock position so it can't drift apart from what's actually
-  // playing the way two independently-ticking clocks (rAF dt vs audio
-  // hardware) would; only falls back to dt-stepping while the track itself
-  // isn't playing yet (still loading, or blocked pending a user gesture)
+  const count = data.mats[frames.userData.mat].frames;
+  // tv-frames.webp is an 8-pose dance loop indexed by elapsed beats (x TV_POSES_PER_BEAT), read off the music's own audio clock so rAF dt can't drift from it; dt-stepping only while the track isn't playing yet (loading, or blocked pending a gesture)
   const musicT = loopTime("music");
   tvFrame =
     musicT == null
@@ -2006,8 +2004,7 @@ function fovFor(aspect) {
   return Math.min(MAX_FOV, THREE.MathUtils.radToDeg(2 * Math.atan(half)));
 }
 
-// offset* rather than getBoundingClientRect: the screen sits at scale(0) until
-// the loader finishes, and a scaled rect measures zero
+// offset* rather than getBoundingClientRect: the screen sits at scale(0) until the loader finishes, and a scaled rect measures zero
 function resize() {
   const width = Math.max(1, screenEl.offsetWidth);
   const height = Math.max(1, screenEl.offsetHeight);
@@ -2022,17 +2019,18 @@ function resize() {
 function trackPointer(event) {
   pointerX = THREE.MathUtils.clamp((event.clientX - rect.left) / rect.width, 0, 1);
   pointerY = THREE.MathUtils.clamp((event.clientY - rect.top) / rect.height, 0, 1);
+  pointerClientX = event.clientX;
+  pointerClientY = event.clientY;
 }
 
 window.addEventListener("pointermove", trackPointer);
 
-// picked like an eyedropper: read the rendered pixel under the pointer and
-// judge the cursor against its luminance, so painted-dark art counts too
+// picked like an eyedropper: read the rendered pixel under the pointer and judge the cursor against its luminance, so painted-dark art counts too
 const DARK_LUMA = 0.5;
 const pixel = new Uint8Array(4);
 function sampleCursorColor() {
   if (!fine) return;
-  if (isPanelOpen() || isChoiceOpen()) return; // dom overlays own the cursor color while shown
+  if (isPanelOpen() || isChoiceOpen() || overAchToast()) return; // dom overlays own the cursor color while shown
   const px = Math.min(rect.width - 1, Math.floor(pointerX * rect.width));
   const py = Math.min(rect.height - 1, Math.floor((1 - pointerY) * rect.height));
   gl.readPixels(px, py, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
@@ -2161,6 +2159,8 @@ function build() {
     if (named) roles.set(named, label);
   }
   pc.label = role("cmd");
+  cmdLabel = pc.label;
+  clockLabel = role("clock");
   tvSheet();
 
   buildZones();
@@ -2180,6 +2180,9 @@ function stepMouse() {
 }
 
 let last = performance.now();
+let cmdLabel = null;
+let clockLabel = null;
+const framePointer = { x: 0, y: 0 };
 
 function onIntroRevealEnd(event) {
   if (event.target !== screenEl || event.propertyName !== "transform") return;
@@ -2199,8 +2202,11 @@ function frame(now) {
     if (uv && (pc.mode === PAGE || terminalLinkAt(uv) != null || terminalPromptHit(uv)))
       setCursorRing(true);
   }
-  stepCamera(dt, { x: pointerX * 2 - 1, y: pointerY * 2 - 1 });
-  for (const label of [role("cmd"), role("clock")]) if (label) label.paint();
+  framePointer.x = pointerX * 2 - 1;
+  framePointer.y = pointerY * 2 - 1;
+  stepCamera(dt, framePointer);
+  if (cmdLabel) cmdLabel.paint();
+  if (clockLabel) clockLabel.paint();
   renderer.render(scene, camera);
   sampleCursorColor();
   requestAnimationFrame(frame);
