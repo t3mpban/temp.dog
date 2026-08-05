@@ -236,17 +236,21 @@ var TEXT_PITCH_RANGE = 0.35;
 // one-shot sfx: never overlaps itself (or, for a shared `group`, any other
 // sound in that group), plays at DEF.vol * its bus (0-1). `pool` lets N
 // instances overlap each other before new plays start getting ignored.
+// vol levels are ear-balanced against each file's measured loudness
+// (ffmpeg volumedetect mean_volume) so the default mix has music as the
+// most prominent layer and frequent/short sfx (hover, typing) sit well
+// under it rather than competing with it
 var SFX_DEFS = {
-  hover: { file: "hover.ogg", vol: 0.3, bus: "sounds", group: "hover" },
-  unhover: { file: "unhover.ogg", vol: 0.3, bus: "sounds", group: "hover" },
-  textboxenter: { file: "textboxenter.ogg", vol: 0.6, bus: "sounds" },
-  textboxleave: { file: "textboxleave.ogg", vol: 0.6, bus: "sounds" },
+  hover: { file: "hover.ogg", vol: 0.15, bus: "sounds", group: "hover" },
+  unhover: { file: "unhover.ogg", vol: 0.15, bus: "sounds", group: "hover" },
+  textboxenter: { file: "textboxenter.ogg", vol: 0.25, bus: "sounds" },
+  textboxleave: { file: "textboxleave.ogg", vol: 0.25, bus: "sounds" },
   zoomin: { file: "zoomin.ogg", vol: 0.6, bus: "sounds" },
   zoomout: { file: "zoomout.ogg", vol: 0.4, bus: "sounds" },
   select: { file: "select.ogg", vol: 0.3, bus: "sounds" },
-  text: { file: "text.ogg", vol: 0.4, bus: "sounds", pool: TEXT_POOL_SIZE },
+  text: { file: "text.ogg", vol: 0.25, bus: "sounds", pool: TEXT_POOL_SIZE },
   wear: { file: "wear.ogg", vol: 0.6, bus: "sounds" },
-  achievement: { file: "achievement.ogg", vol: 1, bus: "sounds" },
+  achievement: { file: "achievement.ogg", vol: 0.85, bus: "sounds" },
 };
 
 // sustained ambience: setLoop(name, true/false) turns it on/off, volume
@@ -254,36 +258,38 @@ var SFX_DEFS = {
 // ogg loops sample-accurately, with no seam between the end and the restart
 var LOOP_DEFS = {
   pc: { file: "pc.ogg", vol: 0.2, bus: "sounds" },
-  music: { file: "music.ogg", vol: 0.8, bus: "music" },
+  music: { file: "music.ogg", vol: 3, bus: "music" },
 };
 
 // music.ogg's tempo - game.js derives the tv dance-loop's frame from it.
 // keep in sync with whatever the track actually is if it ever changes.
 export var MUSIC_BPM = 90;
 
-function isBusy(a) {
-  return !a.paused && !a.ended && a.currentTime > 0;
+var sfxBuffers = {}; // name -> decoded AudioBuffer, once loaded
+var sfxPlaying = {}; // name -> count of currently active source nodes
+
+function loadSfxBuffer(name) {
+  fetch("/sounds/" + SFX_DEFS[name].file)
+    .then(function (res) {
+      return res.arrayBuffer();
+    })
+    .then(function (data) {
+      return ctx().decodeAudioData(data);
+    })
+    .then(function (buffer) {
+      sfxBuffers[name] = buffer;
+    })
+    .catch(function () {});
 }
 
-var sfxEls = {};
 for (var sfxName in SFX_DEFS) {
-  var pool = [];
-  var poolSize = SFX_DEFS[sfxName].pool || 1;
-  for (var i = 0; i < poolSize; i++) {
-    var el2 = new Audio("/sounds/" + SFX_DEFS[sfxName].file);
-    el2.preservesPitch = false;
-    el2.mozPreservesPitch = false;
-    el2.webkitPreservesPitch = false;
-    pool.push(el2);
-  }
-  sfxEls[sfxName] = pool;
+  sfxPlaying[sfxName] = 0;
+  loadSfxBuffer(sfxName);
 }
 
 function groupBusy(group) {
   for (var n in SFX_DEFS) {
-    if (SFX_DEFS[n].group !== group) continue;
-    var pool = sfxEls[n];
-    for (var i = 0; i < pool.length; i++) if (isBusy(pool[i])) return true;
+    if (SFX_DEFS[n].group === group && sfxPlaying[n] > 0) return true;
   }
   return false;
 }
@@ -304,25 +310,28 @@ function tryPlay(a) {
 // rate (optional) sets playbackRate, e.g. for per-character pitch variance
 export function playSfx(name, rate) {
   var def = SFX_DEFS[name];
-  var pool = sfxEls[name];
-  if (!def || !pool) return;
+  var buffer = sfxBuffers[name];
+  if (!def || !buffer) return;
   var v = busVol(def.bus);
   if (!v) return;
   if (def.group && groupBusy(def.group)) return;
-  var a = null;
-  for (var i = 0; i < pool.length; i++) {
-    if (!isBusy(pool[i])) {
-      a = pool[i];
-      break;
-    }
-  }
-  if (!a) return;
-  try {
-    a.volume = Math.min(1, def.vol * v);
-    a.playbackRate = rate || 1;
-    a.currentTime = 0;
-    tryPlay(a);
-  } catch (e) {}
+  var poolSize = def.pool || 1;
+  if (sfxPlaying[name] >= poolSize) return;
+
+  resumeCtx();
+  var src = ctx().createBufferSource();
+  src.buffer = buffer;
+  src.playbackRate.value = rate || 1;
+  var gain = ctx().createGain();
+  gain.gain.value = def.vol * v;
+  src.connect(gain).connect(loopDestination());
+  sfxPlaying[name]++;
+  src.onended = function () {
+    sfxPlaying[name]--;
+    src.disconnect();
+    gain.disconnect();
+  };
+  src.start(0);
 }
 
 // ----- loop sounds (pc hum, tv theme), via Web Audio for gapless looping -----
@@ -330,6 +339,21 @@ var audioCtx = null;
 function ctx() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   return audioCtx;
+}
+
+// routed through a real <audio> element (via a MediaStreamDestination)
+// rather than straight to ctx().destination: on iOS, plain Web Audio output
+// ignores the phone's physical mute/silent switch, but audio played through
+// an HTMLMediaElement respects it. Shared by the sfx pool above too.
+var loopDest = null;
+var loopOutputEl = null;
+function loopDestination() {
+  if (!loopDest) {
+    loopDest = ctx().createMediaStreamDestination();
+    loopOutputEl = new Audio();
+    loopOutputEl.srcObject = loopDest.stream;
+  }
+  return loopDest;
 }
 
 var loopBuffers = {}; // name -> decoded AudioBuffer, once loaded
@@ -356,7 +380,7 @@ function loadLoop(name) {
 for (var loopName in LOOP_DEFS) {
   loopWanted[loopName] = false;
   loopGains[loopName] = ctx().createGain();
-  loopGains[loopName].connect(ctx().destination);
+  loopGains[loopName].connect(loopDestination());
   loadLoop(loopName);
 }
 
@@ -397,12 +421,14 @@ export function loopTime(name) {
   return (ctx().currentTime - startedAt) % buffer.duration;
 }
 
-// resume the (possibly gesture-gated) audio context on the first interaction
+// resume the (possibly gesture-gated) audio context and the loop output
+// element on the first interaction - both need a user gesture to start
 function resumeCtx() {
   if (ctx().state === "suspended")
     ctx()
       .resume()
       .catch(function () {});
+  if (loopOutputEl && loopOutputEl.paused) tryPlay(loopOutputEl);
 }
 document.addEventListener("pointerdown", resumeCtx);
 document.addEventListener("keydown", resumeCtx);
@@ -410,7 +436,7 @@ document.addEventListener("touchstart", resumeCtx);
 
 function syncLoopVolume(name) {
   var def = LOOP_DEFS[name];
-  loopGains[name].gain.value = Math.min(1, def.vol * busVol(def.bus));
+  loopGains[name].gain.value = def.vol * busVol(def.bus);
 }
 
 // starts/stops a named loop (pc hum, tv theme); starting always restarts

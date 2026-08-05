@@ -113,7 +113,7 @@
   // however much the FOV widened, so the monitor keeps roughly the same
   // on-screen size it has on desktop. Distance is an eyeballed constant,
   // not measured — this only needs to look right, not be exact.
-  const PC_SCREEN_DOLLY_DISTANCE = 1.8;
+  const PC_SCREEN_DOLLY_DISTANCE = 0.9;
 
   function zoneCameraPosition(name, marker) {
     if (name !== "pc-screen" || !isMobile) return marker.position;
@@ -235,7 +235,12 @@
 
   function openPcKeyboard() {
     pcInput.value = pc.buffer;
-    pcInput.focus();
+    // called from the canvas's pointerdown handler; the browser's own default
+    // mousedown handling runs right after and shifts focus to the (non-
+    // focusable) canvas, which would steal it straight back. Deferring past
+    // that lets our focus stick. (Discovered live-testing in a browser —
+    // a plain synchronous `.focus()` here silently loses focus to `<body>`.)
+    setTimeout(() => pcInput.focus(), 0);
   }
 
   function closePcKeyboard() {

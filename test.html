@@ -114,7 +114,25 @@
   <body>
     <!-- background rect, revealed once the fake loader below finishes.
 			     canvas intentionally omitted: no three.js on this page -->
-    <div class="screen" id="screen" aria-hidden="true"></div>
+    <div class="screen" id="screen" aria-hidden="true">
+      <div
+        id="rigKbMarker"
+        style="
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 55%;
+          text-align: center;
+          font-size: 13px;
+          letter-spacing: 0.1em;
+          color: var(--coffee-bean);
+          padding: 6px;
+          background: var(--tan);
+        "
+      >
+        terminal text sits ~here
+      </div>
+    </div>
 
     <!-- visual-novel textbox -->
     <div class="textbox" id="textbox" aria-hidden="true" inert>
@@ -363,6 +381,132 @@
         <div class="rig-row">
           <span class="rig-tip-target cursorable" id="rigTipTarget">hover me</span>
         </div>
+      </div>
+
+      <div class="rig-divider"></div>
+
+      <div class="rig-grp">
+        <h2>audio — sfx: does .volume even work?</h2>
+        <div class="rig-row">
+          <button id="rigSfxSiteQuiet" class="cursorable">site hover (vol 0.15)</button>
+          <button id="rigSfxSiteLoud" class="cursorable">site achievement (vol 0.85)</button>
+        </div>
+        <div class="rig-row">
+          <button id="rigSfxPlainQuiet" class="cursorable">plain audio.volume=0.15</button>
+          <button id="rigSfxPlainLoud" class="cursorable">plain audio.volume=1</button>
+        </div>
+        <div class="rig-row">
+          <button id="rigSfxGainQuiet" class="cursorable">gain=0.15 &rarr; destination</button>
+          <button id="rigSfxGainLoud" class="cursorable">gain=1 &rarr; destination</button>
+        </div>
+        <div class="rig-row">
+          <button id="rigSfxStreamQuiet" class="cursorable">gain=0.15 &rarr; mediastream</button>
+          <button id="rigSfxStreamLoud" class="cursorable">gain=1 &rarr; mediastream</button>
+        </div>
+        <p class="rig-note">
+          each row plays hover.ogg quiet then loud. if a row's quiet and loud sound the same to
+          you, that method's volume control isn't working on this device. "site" is exactly what
+          the live game does today; "destination" ignores the phone's silent switch (comparison
+          only); "mediastream" is the site's current mute-switch-safe routing.
+        </p>
+        <p class="rig-log" id="rigSfxLog"></p>
+      </div>
+
+      <div class="rig-divider"></div>
+
+      <div class="rig-grp">
+        <h2>audio — music loudness by routing</h2>
+        <div class="rig-row">
+          <button id="rigMusicRealOn" class="cursorable">site music on</button>
+          <button id="rigMusicRealOff" class="cursorable">site music off</button>
+        </div>
+        <div class="rig-row">
+          <button id="rigMusicDirect1x" class="cursorable">gain=1 &rarr; destination</button>
+          <button id="rigMusicDirect3x" class="cursorable">gain=3 &rarr; destination</button>
+        </div>
+        <div class="rig-row">
+          <button id="rigMusicStream1x" class="cursorable">gain=1 &rarr; mediastream</button>
+          <button id="rigMusicStream3x" class="cursorable">gain=3 &rarr; mediastream</button>
+        </div>
+        <div class="rig-row">
+          <button id="rigMusicStop" class="cursorable">stop experimental music</button>
+        </div>
+        <p class="rig-note">
+          "site music" is the real production path at whatever the settings sliders above are
+          set to. the other rows are the same music.ogg through alternate routings/gains, for
+          direct A/B against it and against each other.
+        </p>
+        <p class="rig-log" id="rigMusicLog"></p>
+      </div>
+
+      <div class="rig-divider"></div>
+
+      <div class="rig-grp">
+        <h2>mobile keyboard — different focus methods</h2>
+        <div class="rig-row">
+          <button id="rigKbA" class="cursorable">A: pointerdown + preventDefault</button>
+          <button id="rigKbB" class="cursorable">B: pointerdown, no preventDefault</button>
+        </div>
+        <div class="rig-row">
+          <button id="rigKbC" class="cursorable">C: click event</button>
+          <button id="rigKbD" class="cursorable">D: touchend event</button>
+        </div>
+        <div class="rig-row">
+          <button id="rigKbE" class="cursorable">E: textarea instead of input</button>
+          <button id="rigKbF" class="cursorable">F: visible tiny input</button>
+        </div>
+        <div class="rig-row">
+          <button id="rigKbG" class="cursorable">G: focus(preventScroll)</button>
+          <button id="rigKbH" class="cursorable">H: focus() then .click()</button>
+        </div>
+        <p class="rig-note">
+          each button tries a different way to summon the OS keyboard, into its own dedicated
+          input so they can't interfere with each other. tap one, then check by eye whether the
+          keyboard actually opened - the log only reports whether DOM focus landed, which doesn't
+          guarantee the keyboard followed.
+        </p>
+        <p class="rig-log" id="rigKbLog"></p>
+        <input id="rigKbInputA" class="pc-input" type="text" tabindex="-1" aria-hidden="true" />
+        <input id="rigKbInputB" class="pc-input" type="text" tabindex="-1" aria-hidden="true" />
+        <input id="rigKbInputC" class="pc-input" type="text" tabindex="-1" aria-hidden="true" />
+        <input id="rigKbInputD" class="pc-input" type="text" tabindex="-1" aria-hidden="true" />
+        <textarea id="rigKbInputE" class="pc-input" tabindex="-1" aria-hidden="true"></textarea>
+        <input
+          id="rigKbInputF"
+          type="text"
+          tabindex="-1"
+          style="position: relative; width: 70px; padding: 4px; margin-top: 6px"
+        />
+        <input id="rigKbInputG" class="pc-input" type="text" tabindex="-1" aria-hidden="true" />
+        <input id="rigKbInputH" class="pc-input" type="text" tabindex="-1" aria-hidden="true" />
+      </div>
+
+      <div class="rig-divider"></div>
+
+      <div class="rig-grp">
+        <h2>pc screen vs on-screen keyboard</h2>
+        <div class="rig-row">
+          <button id="rigKbvFocus" class="cursorable">focus (open keyboard)</button>
+          <button id="rigKbvBlur" class="cursorable">blur (close keyboard)</button>
+        </div>
+        <div class="rig-row">
+          <button id="rigKbvNone" class="cursorable">1: do nothing (today's real behavior)</button>
+        </div>
+        <div class="rig-row">
+          <button id="rigKbvShrink" class="cursorable">2: shrink screen to visualViewport</button>
+        </div>
+        <div class="rig-row">
+          <button id="rigKbvShift" class="cursorable">3: shift screen up (recentre)</button>
+        </div>
+        <p class="rig-note">
+          the tan bar inside the screen rect above stands in for where the terminal text actually
+          sits. pick a method, then tap "focus" to open the keyboard and see whether the bar stays
+          visible above it. switch methods and re-open to compare. the log shows the raw numbers
+          so we know whether visualViewport is even reporting the keyboard reliably on this
+          device, independent of which method looks best.
+        </p>
+        <p class="rig-log" id="rigKbvLog"></p>
+        <input id="rigKbvInput" class="pc-input" type="text" tabindex="-1" aria-hidden="true" />
       </div>
     </aside>
 

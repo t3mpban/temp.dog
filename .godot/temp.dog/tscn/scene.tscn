@@ -350,7 +350,7 @@ material_override = ExtResource("29_1wt3g")
 mesh = SubResource("QuadMesh_jxmlf")
 surface_material_override/0 = ExtResource("6_x5xss")
 
-[node name="chair" type="MeshInstance3D" parent="." unique_id=1479173146 groups=["nolookat", "obj:chair", "zone:main", "zone:setup"]]
+[node name="chair" type="MeshInstance3D" parent="." unique_id=1479173146 groups=["nolookat", "obj:chair", "zone:main"]]
 transform = Transform3D(1.4142135, 0, 0.70710677, 1.3398122e-14, 2.4750001, 9.88027e-15, -1.4142135, 2.3447912e-14, 0.70710677, -1.9920307, 1.2449999, 2.2677672)
 material_override = ExtResource("28_8uvqf")
 mesh = SubResource("QuadMesh_jxmlf")
@@ -432,7 +432,7 @@ mesh = SubResource("QuadMesh_jxmlf")
 
 [node name="cmd" type="Label3D" parent="." unique_id=1620706492 groups=["obj:monitor", "role:cmd", "zone:setup"]]
 transform = Transform3D(-9.1793915e-08, -0.59528387, 1.0190517, 0, 2.2216294, 0.27305412, -2.1, 2.6020684e-08, -4.4544166e-08, -3.8, 2.725, 0.825)
-pixel_size = 0.001
+pixel_size = 0.0006667
 double_sided = false
 modulate = Color(1, 0.9372549, 0.8352941, 1)
 text = "[    0.000000] Command line: BOOT SEQ START
@@ -446,13 +446,13 @@ text = "[    0.000000] Command line: BOOT SEQ START
 [    0.118732] Mounting /home...                                  [  OK  ]
 [    0.203119] Starting Wayland compositor: Hyprland              [  OK  ]"
 font = ExtResource("32_jikjf")
-font_size = 31
+font_size = 47
 outline_size = 0
 horizontal_alignment = 0
 vertical_alignment = 0
 autowrap_mode = 2
 justification_flags = 0
-width = 1000.0
+width = 1500.0
 script = ExtResource("36_pc")
 
 [node name="clockface" type="Label3D" parent="." unique_id=640646957 groups=["obj:monitor", "role:clock", "zone:setup"]]
@@ -507,12 +507,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.3999999, 1.85, -0.20000005
 shape = SubResource("BoxShape3D_cw53t")
 debug_color = Color(0, 0.5254902, 0.8509804, 1)
 
-[node name="chairlookatzone" type="CollisionShape3D" parent="." unique_id=1912992675 groups=["nolookat", "obj:chair", "zone:main", "zone:setup"]]
+[node name="chairlookatzone" type="CollisionShape3D" parent="." unique_id=1912992675 groups=["nolookat", "obj:chair", "zone:main"]]
 transform = Transform3D(0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, 0.70710677, -2.2474873, 1.25, 2.5060658)
 shape = SubResource("BoxShape3D_2ep0q")
 debug_color = Color(0, 0.5254902, 0.8509804, 1)
 
-[node name="chairlookatzone2" type="CollisionShape3D" parent="." unique_id=1114875583 groups=["nolookat", "obj:chair", "zone:main", "zone:setup"]]
+[node name="chairlookatzone2" type="CollisionShape3D" parent="." unique_id=1114875583 groups=["nolookat", "obj:chair", "zone:main"]]
 transform = Transform3D(0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, 0.70710677, -1.6110913, 0.85, 1.8696698)
 shape = SubResource("BoxShape3D_3j3uf")
 debug_color = Color(0, 0.5254902, 0.8509804, 1)

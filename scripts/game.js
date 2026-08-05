@@ -180,6 +180,9 @@ const MIN_BOX = 0.15;
 const canvas = document.getElementById("game");
 const screenEl = document.getElementById("screen");
 const backBtn = document.getElementById("zoneBack");
+const pcInput = document.getElementById("pcInput");
+const edgeHintLeft = document.getElementById("edgeHintLeft");
+const edgeHintRight = document.getElementById("edgeHintRight");
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(60, 1, 0.05, 4000);
@@ -458,6 +461,8 @@ const CURSOR_EASE = 3;
 const HOVER_BLEND = 0.3;
 const HOVER_EASE = 4;
 const UP = new THREE.Vector3(0, 1, 0);
+const PC_VERTICAL_OFFSET_CLAMP = 0.3;
+let pcVerticalOffset = 0;
 
 const rig = {
   zonePos: new THREE.Vector3(),
@@ -529,6 +534,7 @@ function stepCamera(dt, pointer) {
   }
 
   rigBase(BEZ(rig.t));
+  if (zone === "pc-screen") basePos.y += pcVerticalOffset;
 
   if (rig.hoverWeight > 0.001 && !isPanelOpen()) {
     look.subVectors(rig.hoverAt, basePos);
@@ -566,7 +572,9 @@ const ZONES = {
   "tv-screen": { marker: "tv-screen", parent: "tv", area: "tv" },
 };
 const LOCKED = { "pc-screen": true, "tv-screen": true };
-const BACK_BAND = isMobile ? 0.08 : 0.15;
+// tap-the-edge-to-go-back is desktop only: on mobile it's too easy to trigger
+// by accident (the dedicated back button covers that case there instead)
+const BACK_BAND = 0.15;
 const HOVER_LOCK_FRAC = 0.02;
 
 const boxes = new Map();
@@ -650,8 +658,29 @@ function looks(id) {
   return id !== "" && !nolook.has(id);
 }
 
+// pc-screen's marker was framed assuming the desktop FOV. On mobile,
+// fovFor() widens the vertical FOV a lot to lock the horizontal FOV on
+// narrow/portrait screens (see resize()), which from that same fixed
+// camera position makes the monitor read as small and far away. Dolly
+// the camera forward (along the direction it's already facing) by
+// however much the FOV widened, so the monitor keeps roughly the same
+// on-screen size it has on desktop. Distance is an eyeballed constant,
+// not measured - this only needs to look right, not be exact.
+const PC_SCREEN_DOLLY_DISTANCE = 0.75;
+
+function zoneCameraPosition(name, marker) {
+  if (name !== "pc-screen" || !isMobile) return marker.position;
+  const baseFov = THREE.MathUtils.degToRad(data.camera.fov);
+  const currentFov = THREE.MathUtils.degToRad(fovFor(camera.aspect));
+  const ratio = Math.tan(baseFov / 2) / Math.tan(currentFov / 2);
+  const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(marker.rotation);
+  const advance = PC_SCREEN_DOLLY_DISTANCE * (1 - ratio);
+  return marker.position.clone().addScaledVector(forward, advance);
+}
+
 function gotoZone(to, instant) {
   if (!ZONES[to] || to === zone) return;
+  closePcKeyboard();
   if (!instant) playSfx(ZONES[to].parent === zone ? "zoomin" : "zoomout");
   zone = to;
   hot = [];
@@ -669,7 +698,7 @@ function gotoZone(to, instant) {
     }
   }
   const marker = markers.get(ZONES[zone].marker);
-  setZone(marker.position, marker.rotation, instant);
+  setZone(zoneCameraPosition(zone, marker), marker.rotation, instant);
   onZone(zone);
 }
 
@@ -710,6 +739,8 @@ function stepZones() {
     // settings/achievements own hover + cursor while open; ignore the game world,
     // but leave the ring alone so their own .cursorable hover state still shows
     inBand = false;
+    edgeHintLeft.classList.remove("show");
+    edgeHintRight.classList.remove("show");
     hoverLocked = false;
     hoverHot = null;
     if (hovered !== "" || hoveredZone !== "") {
@@ -722,7 +753,12 @@ function stepZones() {
     return;
   }
   inBand =
-    !blocked && ZONES[zone].parent !== "" && (pointerX < BACK_BAND || pointerX > 1 - BACK_BAND);
+    !isMobile &&
+    !blocked &&
+    ZONES[zone].parent !== "" &&
+    (pointerX < BACK_BAND || pointerX > 1 - BACK_BAND);
+  edgeHintLeft.classList.toggle("show", inBand && pointerX < BACK_BAND);
+  edgeHintRight.classList.toggle("show", inBand && pointerX > 1 - BACK_BAND);
 
   let found;
   if (inBand || blocked) {
@@ -1468,13 +1504,108 @@ function terminalPromptHit(uv) {
   return py >= rowTop && py < rowTop + pc.label.height;
 }
 
-function tryTerminalClick() {
-  const uv = terminalHitUV();
-  if (!uv) return;
+// shared by desktop Enter and the mobile keyboard bridge's Enter
+function submitCurrentLine() {
+  let value = pc.buffer;
+  if (pc.complete) {
+    const hint = suggest();
+    if (hint) value = clip(pc.prompt, hint);
+  }
+  submitLine(value);
+}
+
+function openPcKeyboard() {
+  pcInput.value = pc.buffer;
+  pcInput.focus();
+}
+
+// true only while WE are the ones blurring pcInput (leaving the pc-screen
+// zone), so the blur listener below can tell that apart from the user
+// dismissing the on-screen keyboard themselves
+let closingPcKeyboard = false;
+
+function closePcKeyboard() {
+  if (document.activeElement !== pcInput) return;
+  closingPcKeyboard = true;
+  pcInput.blur();
+  closingPcKeyboard = false;
+}
+
+// while the on-screen keyboard covers part of the screen (mobile only), the
+// game world stops responding to taps entirely - only the back button still
+// works - and a vertical swipe nudges the camera instead. see the canvas
+// listeners further down for the swipe handling and pcVerticalOffset's use
+// in stepCamera() above for how it's applied.
+let pcKeyboardOpen = false;
+
+function syncKeyboardShift() {
+  if (!pcKeyboardOpen || !window.visualViewport) {
+    canvas.style.transform = "";
+    return;
+  }
+  const covered = window.innerHeight - window.visualViewport.height;
+  canvas.style.transform = `translateY(${-covered / 2}px)`;
+}
+
+if (window.visualViewport) window.visualViewport.addEventListener("resize", syncKeyboardShift);
+
+pcInput.addEventListener("focus", () => {
+  if (!isMobile) return;
+  pcKeyboardOpen = true;
+  syncKeyboardShift();
+});
+
+// dismissing the on-screen keyboard (back button, its own down-arrow/done
+// control) blurs pcInput same as any other blur - treat that as "done
+// typing" and back out of the pc screen, since the keyboard is the intended
+// way to use the terminal on mobile
+pcInput.addEventListener("blur", () => {
+  pcKeyboardOpen = false;
+  pcVerticalOffset = 0;
+  syncKeyboardShift();
+  if (closingPcKeyboard) return;
+  if (zone === "pc-screen") zoneBack();
+});
+
+// re-derives pc.buffer from pcInput's current value on every native input
+// event, clamped to the same width limit desktop typing already respects.
+// Reading the whole value fresh (rather than trying to interpret discrete
+// keystrokes) is what makes this correct across autocorrect/predictive-text
+// rewrites: it doesn't matter how the value changed, only what it is now.
+function pcInputOnInput() {
+  if (!pc.captured || !pc.on) return;
   if (pc.mode === PAGE) {
+    pcInput.value = "";
     pc.anyKey.resolve();
     return;
   }
+  if (pc.mode !== ASK) return;
+  let next = "";
+  for (const ch of pcInput.value) {
+    if (!pc.label.fits(pc.prompt + next + ch)) break;
+    next += ch;
+  }
+  pc.buffer = next;
+  if (pcInput.value !== next) pcInput.value = next;
+  paint();
+}
+
+pcInput.addEventListener("input", pcInputOnInput);
+pcInput.addEventListener("keydown", (event) => {
+  if (pc.mode === PAGE) {
+    event.preventDefault();
+    pc.anyKey.resolve();
+    return;
+  }
+  if (event.key !== "Enter") return;
+  event.preventDefault();
+  submitCurrentLine();
+  pcInput.value = "";
+});
+
+function tryTerminalClick() {
+  const uv = terminalHitUV();
+  if (!uv) return;
   if (terminalPromptHit(uv)) {
     submitLine("help");
     return;
@@ -1483,8 +1614,13 @@ function tryTerminalClick() {
   if (text != null) submitLine(text);
 }
 
+canvas.addEventListener("click", () => {
+  if (blocked || !data || !isMobile || !pc.captured || pc.mode !== ASK || pcKeyboardOpen) return;
+  if (terminalHitUV()) openPcKeyboard();
+});
+
 window.addEventListener("keydown", (event) => {
-  if (!pc.captured || !pc.on) return;
+  if (!pc.captured || !pc.on || isMobile) return;
   event.preventDefault();
   if (pc.mode === PAGE) {
     pc.anyKey.resolve();
@@ -1492,12 +1628,7 @@ window.addEventListener("keydown", (event) => {
   }
   if (pc.mode !== ASK) return;
   if (event.key === "Enter") {
-    let value = pc.buffer;
-    if (pc.complete) {
-      const hint = suggest();
-      if (hint) value = clip(pc.prompt, hint);
-    }
-    submitLine(value);
+    submitCurrentLine();
     return;
   }
   if (event.key === "Backspace") {
@@ -1899,9 +2030,20 @@ function sampleCursorColor() {
   setCursorDark(luma < DARK_LUMA);
 }
 
+const PC_SWIPE_SENSITIVITY = 0.003;
+let pcDragActive = false;
+let pcDragStartY = 0;
+let pcDragStartOffset = 0;
+
 // taps arrive without a preceding move, so pick from the event itself
 canvas.addEventListener("pointerdown", (event) => {
   if (blocked || !data) return;
+  if (pcKeyboardOpen) {
+    pcDragActive = true;
+    pcDragStartY = event.clientY;
+    pcDragStartOffset = pcVerticalOffset;
+    return;
+  }
   trackPointer(event);
   stepMouse();
   stepZones();
@@ -1939,6 +2081,22 @@ backBtn.addEventListener("click", () => {
   if (blocked || !data) return;
   playSfx("select");
   zoneBack();
+});
+
+window.addEventListener("pointermove", (event) => {
+  if (!pcDragActive) return;
+  const dy = event.clientY - pcDragStartY;
+  pcVerticalOffset = THREE.MathUtils.clamp(
+    pcDragStartOffset + dy * PC_SWIPE_SENSITIVITY,
+    -PC_VERTICAL_OFFSET_CLAMP,
+    PC_VERTICAL_OFFSET_CLAMP
+  );
+});
+window.addEventListener("pointerup", () => {
+  pcDragActive = false;
+});
+window.addEventListener("pointercancel", () => {
+  pcDragActive = false;
 });
 
 window.addEventListener("keydown", (event) => {
@@ -2012,6 +2170,13 @@ function stepMouse() {
 }
 
 let last = performance.now();
+
+function onIntroRevealEnd(event) {
+  if (event.target !== screenEl || event.propertyName !== "transform") return;
+  document.documentElement.classList.add("intro-done");
+  screenEl.removeEventListener("transitionend", onIntroRevealEnd);
+}
+screenEl.addEventListener("transitionend", onIntroRevealEnd);
 
 function frame(now) {
   const dt = Math.min((now - last) / 1000, 0.1);

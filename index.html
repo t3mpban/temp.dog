@@ -59,7 +59,25 @@
 		     the webgl game renders into the canvas it clips -->
     <div class="screen" id="screen" aria-hidden="true">
       <canvas class="game" id="game"></canvas>
+      <!-- desktop only: hints at the tap-the-edge-to-go-back band -->
+      <div class="edge-hint edge-hint-left" id="edgeHintLeft" aria-hidden="true"></div>
+      <div class="edge-hint edge-hint-right" id="edgeHintRight" aria-hidden="true"></div>
     </div>
+
+    <!-- mobile-only bridge: focusing this on tap summons the OS keyboard;
+	       its value is resynced into pc.buffer on every input event -->
+    <input
+      id="pcInput"
+      class="pc-input"
+      type="text"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="off"
+      spellcheck="false"
+      enterkeyhint="send"
+      tabindex="-1"
+      aria-hidden="true"
+    />
 
     <!-- visual-novel textbox: hidden + inert until textbox("ref") is called from js.
 		     mid-ground layer (parallax-nudged), pops in/out by scaling from 0 -->

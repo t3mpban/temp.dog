@@ -136,6 +136,35 @@ html.cc-active * {
   touch-action: none;
 }
 
+/* desktop-only cue for the tap-the-edge-to-go-back band: a subtle coffee-bean
+   wash that fades in on that edge while the pointer sits inside the band.
+   clipped to .screen (overflow: hidden) so it never shows past the viewport.
+   toggled by JS (stepZones' inBand check), not CSS :hover, so it lines up
+   exactly with the same band the click handler actually uses. */
+.edge-hint {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.edge-hint-left {
+  left: 0;
+  background: linear-gradient(to right, var(--coffee-bean), transparent);
+}
+
+.edge-hint-right {
+  right: 0;
+  background: linear-gradient(to left, var(--coffee-bean), transparent);
+}
+
+.edge-hint.show {
+  opacity: 0.1;
+}
+
 html.is-fullscreen body::before {
   display: none;
 }
@@ -153,6 +182,26 @@ html.is-fullscreen .screen {
     top var(--t) var(--ease),
     height var(--t) var(--ease),
     border-radius var(--t) var(--ease);
+}
+
+html.is-mobile .screen {
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100svh;
+}
+
+html.is-mobile.intro-done .screen {
+  border-radius: 0;
+  transition: border-radius 0.3s var(--ease);
+}
+
+html.is-mobile.intro-done .sig {
+  display: none;
+}
+
+html.is-mobile.intro-done body::before {
+  display: none;
 }
 
 /* ----- visual-novel textbox ----- */
@@ -899,6 +948,21 @@ a.opt {
   border: none;
 }
 
+/* mobile terminal keyboard bridge: must stay focusable (no display:none /
+   visibility:hidden, either of which stops the OS keyboard from opening) */
+.pc-input {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: none;
+  outline: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* ----- language select ----- */
 .sel-wrap {
   position: relative;
@@ -1138,6 +1202,10 @@ html.is-mobile .zone-back.show {
 }
 
 /* ----- touch ----- */
+html.is-mobile .sig {
+  bottom: 4px;
+}
+
 html.is-mobile .cursor-tip {
   top: calc(100svh - var(--inset-bottom) - 44px);
   left: 0;
