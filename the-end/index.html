@@ -148,6 +148,50 @@
         var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         if (reduce) document.documentElement.classList.add("reduce");
 
+        // credits music: decoded buffer + AudioBufferSourceNode(loop=true), same technique game.js uses for the tv theme, so 5.ogg loops sample-accurately with no seam at the restart (unlike <audio loop>)
+        var audioCtx = null;
+        function ctx() {
+          if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          return audioCtx;
+        }
+        var musicBuffer = null;
+        var musicSource = null;
+
+        function playMusic() {
+          if (!musicBuffer || musicSource) return;
+          var src = ctx().createBufferSource();
+          src.buffer = musicBuffer;
+          src.loop = true;
+          var gain = ctx().createGain();
+          gain.gain.value = 0.3;
+          src.connect(gain).connect(ctx().destination);
+          src.start(0);
+          musicSource = src;
+        }
+
+        function loadMusic() {
+          fetch("/sounds/5.ogg")
+            .then(function (res) {
+              return res.arrayBuffer();
+            })
+            .then(function (data) {
+              return ctx().decodeAudioData(data);
+            })
+            .then(function (buffer) {
+              musicBuffer = buffer;
+              playMusic();
+            })
+            .catch(function () {});
+        }
+
+        function resumeMusic() {
+          if (ctx().state === "suspended") ctx().resume().catch(function () {});
+          playMusic();
+        }
+        document.addEventListener("pointerdown", resumeMusic);
+        document.addEventListener("keydown", resumeMusic);
+        document.addEventListener("touchstart", resumeMusic);
+
         function readEndReached() {
           try {
             var g = JSON.parse(localStorage.getItem("t3mp.game") || "{}");
@@ -163,6 +207,7 @@
         }
 
         function showCredits() {
+          loadMusic();
           var scroll = document.getElementById("scroll");
           LINES.forEach(function (line) {
             var p = document.createElement("p");

@@ -870,6 +870,7 @@ const HELP = `[ls] lists all files
 const LS_FILES = [
   "dog.png",
   "idklol.mp4",
+  "piano.mp3",
   "secret.txt",
   "casino.py",
   "theanswertolifetheuniverseandeverything.txt",
@@ -1075,7 +1076,7 @@ const CASINO_RULES = [
   },
 ];
 
-const EXTENSIONS = [".txt", ".py", ".png", ".mp4"];
+const EXTENSIONS = [".txt", ".py", ".png", ".mp4", ".mp3"];
 const EXTRA_COMMANDS = ["help", "ls", "ping", "clr", "rm -rf /"];
 
 const BUSY = 0;
@@ -1422,6 +1423,11 @@ async function open(base, command) {
     case "idklol":
       window.open("/idklol.mp4", "_blank");
       await type("opened [idklol]" + MARK_DIM + ".mp4" + MARK_RESET + " in new tab");
+      await type("");
+      break;
+    case "piano":
+      window.open("/piano.mp3", "_blank");
+      await type("opened [piano]" + MARK_DIM + ".mp3" + MARK_RESET + " in new tab");
       await type("");
       break;
     case "secret": {
