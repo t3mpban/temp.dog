@@ -39,8 +39,6 @@ import {
   var CURSOR_VEL_REF = 1000; // px/sec = velocity 1
   var CURSOR_THIN_MAX = 0.2; // max height shrink
   var CURSOR_WIDE_MAX = 0.2; // max width grow
-  var GEAR_STEP = 60; // cog nudge per hover
-
   // parallax: layers nudged by velocity, bounce home
   var PARALLAX_REF = 2500; // px/sec = full nudge
   var PARALLAX_MG = 5; // mid layer bounce px
@@ -64,7 +62,7 @@ import {
   var sig = document.querySelector(".sig");
   var settings = document.getElementById("settings");
   var panel = settings.querySelector(".panel");
-  var gear = document.getElementById("gear");
+  var menuBtn = document.getElementById("menuBtn");
   var tb = document.getElementById("textbox");
   var choicesEl = document.getElementById("choices");
 
@@ -229,18 +227,6 @@ import {
     if (onDark(e.target) && !onDark(e.relatedTarget)) cursor.classList.remove("dark");
   });
 
-  // cog: nudge forward, never back
-  var gearRot = 0;
-  function nudgeGear() {
-    gearRot += GEAR_STEP;
-    gear.style.transform = "rotate(" + gearRot + "deg)";
-  }
-  gear.addEventListener("pointerenter", nudgeGear);
-  // same nudge on keyboard focus
-  gear.addEventListener("focus", function () {
-    if (gear.matches(":focus-visible")) nudgeGear();
-  });
-
   // settings open/close, measured size
   var open = false;
   panel.inert = true; // collapsed = no tab
@@ -256,11 +242,11 @@ import {
       closeLangList();
     }
     panel.inert = !open;
-    gear.setAttribute("aria-expanded", open ? "true" : "false");
+    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
     setPanelOpen(open || achvOpen);
   }
 
-  gear.addEventListener("click", function (e) {
+  menuBtn.addEventListener("click", function (e) {
     e.stopPropagation();
     setOpen(!open);
     playSfx("select");

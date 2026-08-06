@@ -1799,7 +1799,9 @@ function holdGuitar(shown) {
 }
 
 function topics() {
-  return TOPICS.concat("donate").filter((t) => !game.knowledge[t]);
+  return TOPICS.concat("donate").filter((t) =>
+    t === "donate" ? !(game.donatePaid && game.donateAsked) : !game.knowledge[t]
+  );
 }
 
 function learn(key) {
@@ -1877,11 +1879,11 @@ async function ask(topic) {
       game.coin = false;
       game.donatePaid = true;
       award("philanthropist");
+      learn("donate-paid");
     } else {
       game.donateAsked = true;
+      learn("donate-asked");
     }
-    saveGame();
-    if (game.donatePaid && game.donateAsked) learn("donate");
     return;
   }
   // line 3 of plush-remote is "you squeeze [Marketable Plush] and the TV turns on!", so the tv reacts right as that line is read, not after the whole exchange closes

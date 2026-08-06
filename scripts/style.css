@@ -1042,8 +1042,8 @@ a.opt {
   color: var(--papaya-whip);
 }
 
-/* ----- gear ----- */
-.gear {
+/* ----- menu button ----- */
+.menu-btn {
   position: absolute;
   top: 0;
   right: 0;
@@ -1055,20 +1055,19 @@ a.opt {
   border: none;
   background: transparent;
   color: var(--coffee-bean);
-  transition: transform 0.9s var(--ease);
 }
 
-.gear:focus-visible {
+.menu-btn:focus-visible {
   outline: none;
 }
 
-.gear svg {
+.menu-btn svg {
   width: 26px;
   height: 26px;
   fill: currentColor;
 }
 
-.gear i {
+.menu-btn i {
   font-size: 22px;
   line-height: 1;
 }
@@ -1172,6 +1171,10 @@ html.is-mobile .zone-back.show {
     -webkit-text-stroke-color var(--t) var(--ease);
 }
 
+.fa-bars {
+  -webkit-text-stroke: 1px var(--coffee-bean);
+}
+
 .cursor.dark .cursor-arrow {
   color: var(--papaya-whip);
   -webkit-text-stroke-color: var(--papaya-whip);
@@ -1265,9 +1268,6 @@ html.is-mobile .achv-close {
 @media (prefers-reduced-motion: reduce) {
   body::before {
     animation: none;
-  }
-  .gear {
-    transition-duration: 0.001ms;
   }
   .settings {
     transition-duration: 0.2s;

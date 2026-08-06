@@ -60,7 +60,7 @@ import {
   });
 
   document.getElementById("rigSettingsOpen").addEventListener("click", function () {
-    document.getElementById("gear").click();
+    document.getElementById("menuBtn").click();
   });
 
   var tipTarget = document.getElementById("rigTipTarget");

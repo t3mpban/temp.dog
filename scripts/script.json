@@ -14,16 +14,16 @@
       ]
     },
     {
-      "id": "settings-title",
+      "id": "menu-title",
       "strings": [
-        { "lang": "en", "text": "settings" },
-        { "lang": "es", "text": "ajustes" },
-        { "lang": "pt", "text": "configurações" },
-        { "lang": "fr", "text": "paramètres" },
-        { "lang": "de", "text": "einstellungen" },
-        { "lang": "jp", "text": "設定" },
-        { "lang": "kr", "text": "설정" },
-        { "lang": "zh", "text": "设置" }
+        { "lang": "en", "text": "menu" },
+        { "lang": "es", "text": "menú" },
+        { "lang": "pt", "text": "menu" },
+        { "lang": "fr", "text": "menu" },
+        { "lang": "de", "text": "menü" },
+        { "lang": "jp", "text": "メニュー" },
+        { "lang": "kr", "text": "메뉴" },
+        { "lang": "zh", "text": "菜单" }
       ]
     },
     {

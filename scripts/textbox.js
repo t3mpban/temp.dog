@@ -69,7 +69,7 @@ export var CHOICES = {}; // multiple choice sets, id -> array of { id, text }
 export var TIPS = {}; // hover labels, id -> { lang: text }
 var I18N_FALLBACK = {
   // baked-in fallback
-  "settings-title": "settings",
+  "menu-title": "menu",
   "label-music": "music",
   "label-sounds": "sound",
   "label-fullscreen": "fullscreen",
