@@ -1034,7 +1034,7 @@
       "id": "bed-busy-4",
       "lines": [
         [
-          { "lang": "en", "text": "You can sleep when your finished." },
+          { "lang": "en", "text": "You can sleep when you're finished." },
           { "lang": "es", "text": "Puedes dormir cuando termines." },
           { "lang": "pt", "text": "Você pode dormir quando terminar." },
           { "lang": "fr", "text": "Tu pourras dormir quand tu auras fini." },
@@ -1247,7 +1247,7 @@
           { "lang": "zh", "text": "你感觉[Marketable Plush]发现了什么" }
         ],
         [
-          { "lang": "en", "text": "Or your on something..." },
+          { "lang": "en", "text": "Or you're on something..." },
           { "lang": "es", "text": "O quizás tú estás metido en algo..." },
           { "lang": "pt", "text": "Ou talvez seja você que está metido em algo..." },
           { "lang": "fr", "text": "Ou peut-être que c'est toi qui es sur quelque chose..." },
@@ -1483,7 +1483,7 @@
         [
           {
             "lang": "en",
-            "text": "Though you probably should've asked permission before squeezing him."
+            "text": "Though you probably should've asked permission before squeezing it."
           },
           {
             "lang": "es",
@@ -1935,7 +1935,7 @@
         [
           {
             "lang": "en",
-            "text": "You're so good that your playing percussion, bass and piano, all on the guitar"
+            "text": "You're so good that you're playing percussion, bass and piano, all on the guitar"
           },
           {
             "lang": "es",
@@ -2436,66 +2436,14 @@
       "id": "shelf-2",
       "lines": [
         [
-          {
-            "lang": "en",
-            "text": "There used to be many books here... and yet he hadn't read a day in his life"
-          },
-          {
-            "lang": "es",
-            "text": "Solía haber muchos libros aquí... y sin embargo él no había leído ni un día en toda su vida"
-          },
-          {
-            "lang": "pt",
-            "text": "Costumava ter muitos livros aqui... e ainda assim ele nunca leu um dia na vida"
-          },
-          {
-            "lang": "fr",
-            "text": "Il y avait autrefois beaucoup de livres ici... et pourtant il n'avait jamais lu un seul jour de sa vie"
-          },
-          {
-            "lang": "de",
-            "text": "früher gab es hier viele bücher... und trotzdem hat er in seinem ganzen leben keinen tag gelesen"
-          },
-          {
-            "lang": "jp",
-            "text": "ここには昔たくさんの本があった…それでも彼は人生で一日も読書をしたことがなかった"
-          },
-          {
-            "lang": "kr",
-            "text": "여기엔 예전에 책이 많았다… 그런데도 그는 평생 하루도 책을 읽은 적이 없었다"
-          },
-          { "lang": "zh", "text": "这里曾经有很多书……可他这一生却一天都没读过书" }
-        ],
-        [
-          { "lang": "en", "text": "Apart from maybe cereal boxes... and visual novels..." },
-          { "lang": "es", "text": "Aparte de tal vez cajas de cereal... y novelas visuales..." },
-          { "lang": "pt", "text": "Além de talvez caixas de cereal... e visual novels..." },
-          {
-            "lang": "fr",
-            "text": "À part peut-être des boîtes de céréales... et des visual novels..."
-          },
-          {
-            "lang": "de",
-            "text": "abgesehen von vielleicht cerealienschachteln... und visual novels..."
-          },
-          { "lang": "jp", "text": "シリアルの箱と…ビジュアルノベルは別として…" },
-          { "lang": "kr", "text": "시리얼 상자랑… 비주얼 노벨은 빼고…" },
-          { "lang": "zh", "text": "除了麦片盒……和视觉小说之外…" }
-        ]
-      ]
-    },
-    {
-      "id": "shelf-3",
-      "lines": [
-        [
-          { "lang": "en", "text": "If you like reading so much, why don't you pick up a book?" },
-          { "lang": "es", "text": "Si te gusta tanto leer, ¿por qué no agarras un libro?" },
-          { "lang": "pt", "text": "Se você gosta tanto de ler, por que não pega um livro?" },
-          { "lang": "fr", "text": "Si tu aimes tant lire, pourquoi tu ne prends pas un livre ?" },
-          { "lang": "de", "text": "wenn du so gerne liest, warum nimmst du dir nicht ein buch?" },
-          { "lang": "jp", "text": "そんなに読書が好きなら、本を読めばいいんじゃない？" },
-          { "lang": "kr", "text": "그렇게 책 읽는 걸 좋아하면, 책을 한 권 집어 들지 그래?" },
-          { "lang": "zh", "text": "你要是这么喜欢读书，怎么不拿本书来看呢？" }
+          { "lang": "en", "text": "You remember that the password is 'dogs100'" },
+          { "lang": "es", "text": "Recuerdas que la contraseña es 'dogs100'" },
+          { "lang": "pt", "text": "Você se lembra que a senha é 'dogs100'" },
+          { "lang": "fr", "text": "Tu te souviens que le mot de passe est 'dogs100'" },
+          { "lang": "de", "text": "du erinnerst dich, dass das passwort 'dogs100' ist" },
+          { "lang": "jp", "text": "パスワードが'dogs100'だったことを思い出す" },
+          { "lang": "kr", "text": "비밀번호가 'dogs100'라는 걸 기억해낸다" },
+          { "lang": "zh", "text": "你想起密码是'dogs100'" }
         ]
       ]
     },

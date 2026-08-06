@@ -431,7 +431,7 @@ material_override = ExtResource("33_n0a6i")
 mesh = SubResource("QuadMesh_jxmlf")
 
 [node name="cmd" type="Label3D" parent="." unique_id=1620706492 groups=["obj:monitor", "role:cmd", "zone:setup"]]
-transform = Transform3D(-9.1793915e-08, -0.59528387, 1.0190517, 0, 2.2216294, 0.27305412, -2.1, 2.6020684e-08, -4.4544166e-08, -3.8, 2.725, 0.825)
+transform = Transform3D(-9.02875e-08, -0.59528387, 1.0190517, 0, 2.2216294, 0.27305412, -2.0655372, 2.6020684e-08, -4.4544166e-08, -3.8, 2.725, 0.825)
 pixel_size = 0.0006667
 double_sided = false
 modulate = Color(1, 0.9372549, 0.8352941, 1)

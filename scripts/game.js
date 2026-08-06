@@ -17,6 +17,7 @@ import {
   playSfx,
   ready,
   setCursorDark,
+  setCursorEdge,
   setCursorRing,
   setLoadProgress,
   setLoop,
@@ -197,18 +198,32 @@ function hasWebGL() {
   }
 }
 
-if (!hasWebGL()) {
+function failWebGL() {
   document.getElementById("loader")?.remove();
   const fallback = document.getElementById("webglFallback");
   if (fallback) fallback.hidden = false;
+}
+
+if (!hasWebGL()) {
+  failWebGL();
   throw new Error("WebGL is not supported on this device.");
 }
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(60, 1, 0.05, 4000);
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: false });
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: false });
+} catch (e) {
+  failWebGL();
+  throw e;
+}
 renderer.setPixelRatio(1);
 const gl = renderer.getContext();
+if (!gl) {
+  failWebGL();
+  throw new Error("WebGL context is unavailable.");
+}
 
 const manager = new THREE.LoadingManager();
 const texLoader = new THREE.TextureLoader(manager);
@@ -761,6 +776,7 @@ function stepZones() {
     inBand = false;
     edgeHintLeft.classList.remove("show");
     edgeHintRight.classList.remove("show");
+    setCursorEdge(null);
     hoverLocked = false;
     hoverHot = null;
     if (hovered !== "" || hoveredZone !== "") {
@@ -779,6 +795,7 @@ function stepZones() {
     (pointerX < BACK_BAND || pointerX > 1 - BACK_BAND);
   edgeHintLeft.classList.toggle("show", inBand && pointerX < BACK_BAND);
   edgeHintRight.classList.toggle("show", inBand && pointerX > 1 - BACK_BAND);
+  setCursorEdge(inBand ? (pointerX < BACK_BAND ? "left" : "right") : null);
 
   let found;
   if (inBand || blocked) {
@@ -801,12 +818,13 @@ function stepZones() {
     hoveredZone = zn;
     onHovered(hovered);
   }
-  if (!!found !== wasHot) {
-    wasHot = !!found;
+  const hot = inBand || !!found;
+  if (hot !== wasHot) {
+    wasHot = hot;
     playSfx(wasHot ? "hover" : "unhover");
   }
   setHover(found ? found.look : false, lookTarget);
-  setCursorRing(inBand || !!found);
+  setCursorRing(!!found);
 }
 
 // ----- terminal -----
@@ -834,7 +852,7 @@ const BOOT_LOG = `[    0.000000] Command line: BOOT SEQ START
 [0.401337] Reached target GUI               [  OK  ]
 [0.512004] Starting temp.dog message...     [  OK  ]`;
 
-const WELCOME = `Temp Linux (ver 5.48-050826+23)
+const WELCOME = `Temp Linux (ver 5.48-060826+23*)
 Copyright (c) t3mp 2026. All rights reserved.
 
 Welcome back, Temp!
@@ -1023,6 +1041,7 @@ const CASINO_START = 100;
 const CASINO_ROLL_COST = 20;
 const CASINO_PROFIT_GOAL = 50;
 const CASINO_GUESSES = ["odd", "even", "1", "2", "3", "4", "5", "6"];
+const YES_NO = ["y", "n"];
 const CASINO_RULES = [
   {
     en: "(1/3)\nWelcome to my casino! Each dice roll costs $20. You must choose between odd, even or the specific number.",
@@ -1080,6 +1099,7 @@ const pc = {
   prompt: "",
   hidden: false,
   complete: false,
+  autoValues: null,
   entered: "",
   running: false,
   lineDone: defer(),
@@ -1123,6 +1143,14 @@ function suggest() {
     }
   }
   return best;
+}
+
+// once the buffer exactly spells out a full valid answer, submit it right away - no need to tab/enter first
+function autoAcceptReady() {
+  if (!pc.buffer) return false;
+  if (pc.complete) return commands().indexOf(pc.buffer) !== -1;
+  if (pc.autoValues) return pc.autoValues.indexOf(pc.buffer.trim().toLowerCase()) !== -1;
+  return false;
 }
 
 function clip(head, tail) {
@@ -1222,11 +1250,12 @@ async function slow(body) {
   if (pc.on) await type(body);
 }
 
-async function read(prompt, hidden, complete) {
+async function read(prompt, hidden, complete, autoValues) {
   if (!pc.on) return "";
   pc.prompt = prompt;
   pc.hidden = hidden;
   pc.complete = complete;
+  pc.autoValues = autoValues || null;
   pc.buffer = "";
   pc.entered = "";
   pcInput.value = "";
@@ -1257,7 +1286,14 @@ async function paginate(pages) {
 async function guessRound() {
   let guess;
   for (;;) {
-    guess = (await read("Type [odd], [even], [1], [2], [3], [4], [5], or [6]: ", false, false))
+    guess = (
+      await read(
+        "Type [odd], [even], [1], [2], [3], [4], [5], or [6]: ",
+        false,
+        false,
+        CASINO_GUESSES
+      )
+    )
       .trim()
       .toLowerCase();
     if (!pc.on) return null;
@@ -1278,7 +1314,7 @@ async function casinoBankrupt() {
   const short = CASINO_ROLL_COST - game.casinoMoney;
   await type("You're $" + short + " short...");
   await type("");
-  const gamble = await read("Gamble your save data to win $100? ([Y]/[N]): ", false, false);
+  const gamble = await read("Gamble your save data to win $100? ([Y]/[N]): ", false, false, YES_NO);
   if (!pc.on) return;
   await type("");
   if (gamble.trim().toLowerCase().charAt(0) !== "y") return;
@@ -1310,7 +1346,7 @@ async function play() {
     if (game.casinoVisited) {
       await type("Welcome back to my casino!");
       await type("");
-      const again = await read("Read the rules again? ([Y]/[N]): ", false, false);
+      const again = await read("Read the rules again? ([Y]/[N]): ", false, false, YES_NO);
       if (!pc.on) return;
       await type("");
       if (again.trim().toLowerCase().charAt(0) === "y") await paginate(CASINO_RULES.map(langText));
@@ -1334,7 +1370,8 @@ async function play() {
     const again = await read(
       (first ? "Roll the dice" : "Play again") + "? ([Y]/[N]): ",
       false,
-      false
+      false,
+      YES_NO
     );
     if (!pc.on) return;
     first = false;
@@ -1514,9 +1551,11 @@ function terminalLinkAt(uv) {
   return pc.label.hitLink(px, py);
 }
 
-// the bare "temp@temp ~$ " prompt has no [link] of its own, but clicking it still runs help — keeps the whole game playable without a keyboard
+// the bare "temp@temp ~$ " prompt has no [link] of its own, but clicking it still runs help — keeps the whole game playable without a keyboard.
+// hidden prompts (the sudo password) get the same fallback so a touch keyboard that fails to submit can't soft-lock the player - tapping it just sends a blank, incorrect attempt
 function terminalPromptHit(uv) {
-  if (!uv || pc.mode !== ASK || pc.prompt !== PROMPT || pc.buffer) return false;
+  if (!uv || pc.mode !== ASK || pc.buffer) return false;
+  if (pc.prompt !== PROMPT && !pc.hidden) return false;
   const py = (1 - uv.y) * pc.label.canvasHeight;
   const rows = Math.min(pc.out.length + 1, MAX_LINES);
   const rowTop = (rows - 1) * pc.label.height;
@@ -1596,6 +1635,11 @@ function pcInputOnInput() {
   }
   pc.buffer = next;
   if (pcInput.value !== next) pcInput.value = next;
+  if (autoAcceptReady()) {
+    pcInput.value = "";
+    submitCurrentLine();
+    return;
+  }
   paint();
 }
 
@@ -1620,7 +1664,7 @@ function tryTerminalClick() {
     return;
   }
   if (terminalPromptHit(uv)) {
-    submitLine("help");
+    submitLine(pc.prompt === PROMPT ? "help" : "");
     return;
   }
   const text = terminalLinkAt(uv);
@@ -1652,6 +1696,10 @@ window.addEventListener("keydown", (event) => {
     if (hint) pc.buffer = clip(pc.prompt, hint);
   } else if (event.key.length === 1 && pc.label.fits(pc.prompt + pc.buffer + event.key)) {
     pc.buffer += event.key;
+    if (autoAcceptReady()) {
+      submitCurrentLine();
+      return;
+    }
   }
   paint();
 });
@@ -1669,6 +1717,8 @@ const game = {
   pcOn: false,
   tvOn: false,
   coin: false,
+  donatePaid: false,
+  donateAsked: false,
   ramStolen: false,
   guitarLearned: false,
   chair: 0,
@@ -1676,7 +1726,6 @@ const game = {
   rug: 0,
   casinoMoney: CASINO_START,
   casinoVisited: false,
-  donateSeen: false,
   knowledge: {},
   plays: { before: 0, after: 0 },
   visits: 0,
@@ -1815,12 +1864,18 @@ async function actBed() {
 }
 
 async function ask(topic) {
-  if (topic === "donate" && (!game.donateSeen || !game.coin)) {
-    if (!game.donateSeen) {
-      game.donateSeen = true;
-      learn("donate-ask");
+  if (topic === "donate") {
+    const hasMoney = !!game.coin;
+    await textbox(hasMoney ? "plush-donate-coin" : "plush-donate");
+    if (hasMoney) {
+      game.coin = false;
+      game.donatePaid = true;
+      award("philanthropist");
+    } else {
+      game.donateAsked = true;
     }
-    await textbox("plush-donate");
+    saveGame();
+    if (game.donatePaid && game.donateAsked) learn("donate");
     return;
   }
   // line 3 of plush-remote is "you squeeze [Marketable Plush] and the TV turns on!", so the tv reacts right as that line is read, not after the whole exchange closes
@@ -1835,19 +1890,11 @@ async function ask(topic) {
           },
         }
       : null;
-  await textbox(
-    "plush-" + (topic === "donate" ? "donate-coin" : topic),
-    null,
-    false,
-    null,
-    onSqueeze
-  );
+  await textbox("plush-" + topic, null, false, null, onSqueeze);
   learn(topic);
   if (topic === "guitar") {
     game.guitarLearned = true;
     saveGame();
-  } else if (topic === "donate") {
-    award("philanthropist");
   }
 }
 
@@ -1907,7 +1954,7 @@ async function act(id) {
       award("chair", game.chair);
       break;
     case "shelf":
-      game.shelf = Math.min(game.shelf + 1, 3);
+      game.shelf = Math.min(game.shelf + 1, 2);
       saveGame();
       await textbox("shelf-" + game.shelf);
       break;
@@ -2083,6 +2130,21 @@ canvas.addEventListener("pointerdown", (event) => {
   armed = "";
   playSfx("select");
   onClicked(hovered);
+});
+
+// clicks in the beige margin around the screen count as the back-zone tap too - trackPointer clamps out-of-canvas coordinates to the nearest edge (0 or 1), which lands well inside BACK_BAND
+document.addEventListener("pointerdown", (event) => {
+  if (blocked || !data) return;
+  if (event.target === canvas) return; // canvas' own handler above already covers this click
+  if (event.target.closest && event.target.closest(".cursorable, .settings, .achv, .dim, .choices, .textbox, .zone-back"))
+    return;
+  trackPointer(event);
+  stepMouse();
+  stepZones();
+  if (inBand) {
+    armed = "";
+    zoneBack();
+  }
 });
 
 backBtn.addEventListener("click", () => {

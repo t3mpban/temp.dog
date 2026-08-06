@@ -453,6 +453,13 @@ export function setCursorDark(on) {
   if (cursor) cursor.classList.toggle("dark", !!on);
 }
 
+// side is "left", "right", or falsy to clear - swaps the cursor for a rounded chevron cueing the tap-the-edge-to-go-back band
+export function setCursorEdge(side) {
+  if (!cursor) return;
+  cursor.classList.toggle("edge-left", side === "left");
+  cursor.classList.toggle("edge-right", side === "right");
+}
+
 // settings / achievements panel: 3D camera lookAt and tooltips pause while either is open
 var panelOpen = false;
 

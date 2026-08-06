@@ -215,7 +215,8 @@
           <span class="word">can</span> <span class="word">check</span>
           <span class="word">out</span> <span class="word">my</span>
           <span class="word">personal</span> <span class="word">site</span>
-          <a href="#" class="word">here</a><span class="word">,</span> <span class="word">or</span>
+          <a href="https://temp.dog/" class="word">here</a><span class="word">,</span>
+          <span class="word">or</span>
           <span class="word">contact</span>
           <span class="word">me:</span>
         </p>
@@ -272,28 +273,62 @@
       var offsetX = 0;
       var offsetY = 0;
 
-      titlebar.addEventListener("mousedown", function (e) {
-        if (e.target.classList.contains("dot") || e.target.classList.contains("idot")) return;
+      function startDrag(target, clientX, clientY) {
+        if (target.classList.contains("dot") || target.classList.contains("idot")) return;
         var rect = win.getBoundingClientRect();
         win.style.position = "fixed";
         win.style.margin = "0";
         win.style.left = rect.left + "px";
         win.style.top = rect.top + "px";
-        offsetX = e.clientX - rect.left;
-        offsetY = e.clientY - rect.top;
+        offsetX = clientX - rect.left;
+        offsetY = clientY - rect.top;
         dragging = true;
+      }
+
+      function moveDrag(clientX, clientY) {
+        if (!dragging) return;
+        win.style.left = clientX - offsetX + "px";
+        win.style.top = clientY - offsetY + "px";
+      }
+
+      function endDrag() {
+        dragging = false;
+      }
+
+      titlebar.addEventListener("mousedown", function (e) {
+        startDrag(e.target, e.clientX, e.clientY);
         e.preventDefault();
       });
 
       document.addEventListener("mousemove", function (e) {
-        if (!dragging) return;
-        win.style.left = e.clientX - offsetX + "px";
-        win.style.top = e.clientY - offsetY + "px";
+        moveDrag(e.clientX, e.clientY);
       });
 
-      document.addEventListener("mouseup", function () {
-        dragging = false;
-      });
+      document.addEventListener("mouseup", endDrag);
+
+      titlebar.addEventListener(
+        "touchstart",
+        function (e) {
+          var touch = e.touches[0];
+          startDrag(e.target, touch.clientX, touch.clientY);
+          if (dragging) e.preventDefault();
+        },
+        { passive: false }
+      );
+
+      document.addEventListener(
+        "touchmove",
+        function (e) {
+          if (!dragging) return;
+          var touch = e.touches[0];
+          moveDrag(touch.clientX, touch.clientY);
+          e.preventDefault();
+        },
+        { passive: false }
+      );
+
+      document.addEventListener("touchend", endDrag);
+      document.addEventListener("touchcancel", endDrag);
     </script>
   </body>
 </html>
