@@ -23,13 +23,15 @@
     />
     <meta name="author" content="t3mp" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta content="https://www.temp.dog/" property="og:url" />
+    <link rel="canonical" href="https://temp.dog/" />
+    <meta content="https://temp.dog/" property="og:url" />
     <meta content="https://temp.dog/images/banner.webp?v=2" property="og:image" />
     <meta content="#fed8b1" data-react-helmet="true" name="theme-color" />
 
     <!-- discord embed tags -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="temp.dog" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:title" content="t3mp's website" />
     <meta
       property="og:description"
@@ -37,11 +39,20 @@
     />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="t3mp's website banner" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@t3mpban" />
+    <meta name="twitter:title" content="t3mp's website" />
+    <meta
+      name="twitter:description"
+      content="My personal website disguised as a 3D point-and-click visual novel, with achievements, lore and secrets..."
+    />
+    <meta name="twitter:image" content="https://temp.dog/images/banner.webp?v=2" />
 
     <meta charset="utf-8" />
     <title>t3mp's website</title>
     <link rel="icon" type="image/png" href="images/favicon.png" />
+    <link rel="apple-touch-icon" href="images/favicon.png" />
     <link rel="preload" href="font/t3mp.ttf" as="font" type="font/ttf" crossorigin />
     <link rel="preload" href="font/JetBrainsMono.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
@@ -55,8 +66,40 @@
       src="https://cloud.umami.is/script.js"
       data-website-id="f8a25eb1-84d1-48ab-b56d-03a37097f3af"
     ></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "t3mp's website",
+        "url": "https://temp.dog/",
+        "description": "My personal website disguised as a 3D point-and-click visual novel, with achievements, lore and secrets...",
+        "author": {
+          "@type": "Person",
+          "name": "t3mp",
+          "url": "https://temp.dog/",
+          "sameAs": [
+            "https://x.com/t3mpban",
+            "https://www.twitch.tv/t3mplive",
+            "https://www.youtube.com/t3mpyt",
+            "https://github.com/t3mpban"
+          ]
+        }
+      }
+    </script>
   </head>
   <body>
+    <h1 class="sr-only">t3mp's website</h1>
+    <noscript>
+      <p>
+        t3mp's website — my personal website disguised as a 3D point-and-click visual novel, with
+        achievements, lore and secrets. This site needs JavaScript enabled to run.
+        <a href="/for-hire">Hire me</a> or find me at
+        <a href="https://x.com/t3mpban">x.com/t3mpban</a>,
+        <a href="https://www.twitch.tv/t3mplive">twitch.tv/t3mplive</a>,
+        <a href="https://www.youtube.com/t3mpyt">youtube.com/t3mpyt</a> and
+        <a href="https://github.com/t3mpban">github.com/t3mpban</a>.
+      </p>
+    </noscript>
     <!-- webgl game -->
     <div class="screen" id="screen" aria-hidden="true">
       <canvas class="game" id="game"></canvas>

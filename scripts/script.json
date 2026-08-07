@@ -3189,14 +3189,14 @@
         { "lang": "zh", "text": "股票暴涨" }
       ],
       "desc": [
-        { "lang": "en", "text": "cash out a profit in the casino" },
-        { "lang": "es", "text": "retírate con ganancias del casino" },
+        { "lang": "en", "text": "leave the casino with a profit" },
+        { "lang": "es", "text": "sal del casino con ganancias" },
         { "lang": "pt", "text": "saia do cassino com lucro" },
-        { "lang": "fr", "text": "encaisse un profit au casino" },
-        { "lang": "de", "text": "kassiere einen gewinn im casino" },
-        { "lang": "jp", "text": "カジノで利益を出して換金しよう" },
-        { "lang": "kr", "text": "카지노에서 수익을 내고 현금화하세요" },
-        { "lang": "zh", "text": "在赌场兑现利润" }
+        { "lang": "fr", "text": "quitte le casino avec un profit" },
+        { "lang": "de", "text": "verlasse das casino mit gewinn" },
+        { "lang": "jp", "text": "利益を出してカジノを後にしよう" },
+        { "lang": "kr", "text": "수익을 내고 카지노를 떠나세요" },
+        { "lang": "zh", "text": "带着盈利离开赌场" }
       ]
     },
     {

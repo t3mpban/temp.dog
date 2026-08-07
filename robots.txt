@@ -1,10 +1,4 @@
 User-agent: *
-Disallow: /scripts/script.js
-Disallow: /scripts/style.css
-Disallow: /images/favicon.png
-
-# Allow Googlebot to crawl everything
-User-agent: Googlebot
 Allow: /
 
 # Reference to XML Sitemap

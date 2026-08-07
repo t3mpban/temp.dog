@@ -185,6 +185,7 @@ const backBtn = document.getElementById("zoneBack");
 const pcInput = document.getElementById("pcInput");
 const edgeHintLeft = document.getElementById("edgeHintLeft");
 const edgeHintRight = document.getElementById("edgeHintRight");
+const menuBtn = document.getElementById("menuBtn");
 
 function hasWebGL() {
   try {
@@ -647,6 +648,19 @@ function overAchToast() {
   );
 }
 
+// the collapsed menu button sits in the top-right corner, inside the right-edge back-band - without this,
+// hovering it shows the back arrow instead of its own cursorable ring
+function overMenuBtn() {
+  if (!menuBtn) return false;
+  const r = menuBtn.getBoundingClientRect();
+  return (
+    pointerClientX >= r.left &&
+    pointerClientX <= r.right &&
+    pointerClientY >= r.top &&
+    pointerClientY <= r.bottom
+  );
+}
+
 let mouseMesh = null;
 let mouseEntry = null;
 let mouseBox = null;
@@ -771,8 +785,8 @@ function hoverLockBroken() {
 }
 
 function stepZones() {
-  if (isPanelOpen() || overAchToast()) {
-    // settings/achievements own hover + cursor while open; ignore the game world, but leave the ring alone so their own .cursorable hover state still shows
+  if (isPanelOpen() || overAchToast() || overMenuBtn()) {
+    // settings/achievements/menu-btn own hover + cursor while shown; ignore the game world, but leave the ring alone so their own .cursorable hover state still shows
     inBand = false;
     edgeHintLeft.classList.remove("show");
     edgeHintRight.classList.remove("show");
@@ -1450,7 +1464,7 @@ async function open(base, command) {
         await type("");
         break;
       }
-      if (beaten() >= achGoal(ACH[END])) {
+      if (achValue(END) >= achGoal(ACH[END])) {
         await paginate(SECRET_PAGES.map(langText));
       } else {
         await typeOut(langText(SECRET_LOCKED));
