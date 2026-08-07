@@ -866,7 +866,7 @@ const BOOT_LOG = `[    0.000000] Command line: BOOT SEQ START
 [0.401337] Reached target GUI               [  OK  ]
 [0.512004] Starting temp.dog message...     [  OK  ]`;
 
-const WELCOME = `Temp Linux (ver 5.48-060826+23*)
+const WELCOME = `Temp Linux (ver v5.55-070826+7)
 Copyright (c) t3mp 2026. All rights reserved.
 
 Welcome back, Temp!
@@ -2158,7 +2158,10 @@ canvas.addEventListener("pointerdown", (event) => {
 document.addEventListener("pointerdown", (event) => {
   if (blocked || !data) return;
   if (event.target === canvas) return; // canvas' own handler above already covers this click
-  if (event.target.closest && event.target.closest(".cursorable, .settings, .achv, .dim, .choices, .textbox, .zone-back"))
+  if (
+    event.target.closest &&
+    event.target.closest(".cursorable, .settings, .achv, .dim, .choices, .textbox, .zone-back")
+  )
     return;
   trackPointer(event);
   stepMouse();
