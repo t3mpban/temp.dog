@@ -50,6 +50,6 @@
 
 - added patches.md (hey!)
 
-<small>v5.56</small>
+<small>v5.58</small>
 
 - added night mode to clock.html
