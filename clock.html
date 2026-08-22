@@ -16,6 +16,18 @@
   --tan: #e0b98e;
 
   --ease: cubic-bezier(0.87, 0, 0.13, 1);
+
+  --bg: var(--soft-apricot);
+  --fg: var(--coffee-bean);
+  --pattern: var(--tan);
+  --sig-color: var(--camel);
+}
+
+body.night {
+  --bg: #4a3325;
+  --fg: var(--papaya-whip);
+  --pattern: var(--coffee-bean);
+  --sig-color: var(--tan);
 }
       * {
   -webkit-tap-highlight-color: transparent;
@@ -23,14 +35,15 @@
       body {
   min-height: 100svh;
   overflow: hidden;
-  background: var(--soft-apricot);
-  color: var(--coffee-bean);
+  background: var(--bg);
+  color: var(--fg);
   font-family: "temp-v2", "Trebuchet MS", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
   font-weight: 700;
+  transition: background 0.6s var(--ease), color 0.6s var(--ease);
 }
 
       body::before {
@@ -38,7 +51,7 @@
   position: fixed;
   inset: 0;
   z-index: -1;
-  background-color: var(--tan);
+  background-color: var(--pattern);
   -webkit-mask-image: url("/images/bg.webp");
   -webkit-mask-size: 256px 256px;
   -webkit-mask-repeat: repeat;
@@ -47,6 +60,7 @@
   mask-repeat: repeat;
   animation: bg-scroll 14s linear infinite;
   pointer-events: none;
+  transition: background-color 0.6s var(--ease);
 }
 
 .screen {
@@ -99,12 +113,13 @@
   left: 50%;
   z-index: 40;
   transform: translateX(-50%);
-  color: var(--camel);
+  color: var(--sig-color);
   font-size: 12px;
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
   text-shadow: var(--shadow);
+  transition: color 0.6s var(--ease);
 }
 
 @keyframes bg-scroll {
@@ -160,6 +175,12 @@
         year: "numeric",
       });
 
+      const hourFormatter = new Intl.DateTimeFormat("en-GB", {
+        timeZone: TIMEZONE,
+        hour: "2-digit",
+        hour12: false,
+      });
+
       let revertTimeout = null;
 
       function fitToWidth(el) {
@@ -179,6 +200,9 @@
         const now = new Date();
         clockTime.textContent = timeFormatter.format(now);
         calendarDate.textContent = fullDateFormatter.format(now);
+
+        const hour = parseInt(hourFormatter.format(now), 10);
+        document.body.classList.toggle("night", hour >= 22 || hour < 6);
 
         fitToWidth(clockTime);
         fitToWidth(calendarDate);

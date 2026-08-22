@@ -49,3 +49,7 @@
 - seo optimization
 
 - added patches.md (hey!)
+
+<small>v5.55</small>
+
+- added night mode to clock.html
