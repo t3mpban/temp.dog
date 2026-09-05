@@ -166,9 +166,9 @@ body.night {
 
       const timeFormatter = new Intl.DateTimeFormat("en-GB", {
         timeZone: TIMEZONE,
-        hour: "2-digit",
+        hour: "numeric",
         minute: "2-digit",
-        hour12: false,
+        hour12: true,
       });
 
       const fullDateFormatter = new Intl.DateTimeFormat("en-GB", {
@@ -200,9 +200,17 @@ body.night {
         el.style.transform = `scale(${scale})`;
       }
 
+      function formatTime(now) {
+        return timeFormatter
+          .formatToParts(now)
+          .filter(({ type }) => type === "hour" || type === "minute")
+          .map(({ value }) => value)
+          .join(":");
+      }
+
       function tick() {
         const now = new Date();
-        clockTime.textContent = timeFormatter.format(now);
+        clockTime.textContent = formatTime(now);
         calendarDate.textContent = fullDateFormatter.format(now);
 
         const hour = parseInt(hourFormatter.format(now), 10);
